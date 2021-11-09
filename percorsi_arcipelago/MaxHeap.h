@@ -22,7 +22,7 @@ class MaxHeap
         void max_heapify(int root);
         void build_max_heap();
     public:
-        // Costruttore
+        // Constructor
         MaxHeap(int capacity);
         MaxHeap(int *arr, int capacity, int heapsize);
 
