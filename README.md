@@ -24,6 +24,21 @@ Determinare i percorsi con la massima qualità totale tra l'isola sorgente e tut
 - 1 <= P <= 10000 (numero ponti tra 1 e 10000)
 - Q_i in Z per ogni collegamento
 
+#### Esempio
+input.txt | Output (partendo dall'isola 1)
+--------- | ------------------------------
+6 10 | 1->0 -infty
+0 1 5 | 1->1 0
+0 2 3 | 1->2 2
+1 3 6 | 1->3 9
+1 2 2 | 1->4 8
+2 4 4 | 1->5 10
+2 5 2 |
+2 3 7 |
+3 5 1 |
+3 4 -1|
+4 5 -2|
+
 ToDo List:
 - [ ] Implementare Alberi Red Black
 - [ ] Implementare Insiemi con Alberi Red Black
