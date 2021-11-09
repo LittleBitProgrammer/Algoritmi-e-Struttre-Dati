@@ -39,6 +39,8 @@ input.txt | Output (partendo dall'isola 1)
 3 4 -1|
 4 5 -2|
 
+![Grafo esempio](/images/Grafo.png)
+
 ToDo List:
 - [ ] Implementare Alberi Red Black
 - [ ] Implementare Insiemi con Alberi Red Black
