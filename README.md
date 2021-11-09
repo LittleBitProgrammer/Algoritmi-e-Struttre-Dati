@@ -51,7 +51,7 @@ ToDo List:
 - [ ] Implementare lettura da file per costruzione degli insiemi
 - [ ] Implementare un menu per effettuare operazioni canoniche sull'insieme
 - [X] Implementare un Max Heap per simulare una max priority queue
-- [ ] Implementare un grafo orientato pesato con funzione peso w:E->Z
+- [X] Implementare un grafo orientato pesato con funzione peso w:E->Z
 - [ ] Implementare lettura da file per generazione grafo
 - [ ] Implementare algoritmo per massima qualità totale tra le isole
 - [X] Implementare Heap Sort
