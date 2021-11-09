@@ -50,8 +50,8 @@ ToDo List:
 - [ ] Implementare operation Overloading per le operazioni canoniche degli insiemi
 - [ ] Implementare lettura da file per costruzione degli insiemi
 - [ ] Implementare un menu per effettuare operazioni canoniche sull'insieme
-- [ ] Implementare un Max Heap per simulare una max priority queue
+- [X] Implementare un Max Heap per simulare una max priority queue
 - [ ] Implementare un grafo orientato pesato con funzione peso w:E->Z
 - [ ] Implementare lettura da file per generazione grafo
 - [ ] Implementare algoritmo per massima qualità totale tra le isole
-- [ ] Implementare Heap Sort
+- [X] Implementare Heap Sort
