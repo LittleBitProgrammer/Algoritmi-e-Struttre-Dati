@@ -54,12 +54,12 @@ int MaxHeap::extractMax()
     heapsize--;
 
     // Lanciamo un max_heapify in modo da rispettare le regole dell'heap
-    max_heapify(0);
+    max_heapify(0,heapsize);
 
     return root;
 }
 
-void MaxHeap::max_heapify(int root)
+void MaxHeap::max_heapify(int root, int size)
 {
     // Dichiariamo il massimo come l'indice passato in input
     int max = root;
@@ -69,13 +69,13 @@ void MaxHeap::max_heapify(int root)
     int right = (2 * root) + 2;
 
     // Caso in cui il figlio sinistro sia maggiore della root
-    if(arr[left] > arr[max] && left < heapsize)
+    if(arr[left] > arr[max] && left < size)
     {
         max = left;
     }
 
     // Caso in cui il figlio destro sia maggiore della root
-    if(arr[right] > arr[max] && right < heapsize)
+    if(arr[right] > arr[max] && right < size)
     {
         max = right;
     }
@@ -86,7 +86,7 @@ void MaxHeap::max_heapify(int root)
         swap(arr[root], arr[max]);
 
         // Richiama ricorsivamente nel sottoalbero
-        max_heapify(max);
+        max_heapify(max,size);
     }
 }
 
@@ -144,7 +144,7 @@ void MaxHeap::build_max_heap()
     // Per cui iniziamo da size/2, ovvero il primo nodo non foglia disponibile
     for(auto i{(heapsize/2)-1}; i >= 0; i--)
     {
-        max_heapify(i);
+        max_heapify(i,heapsize);
     }
 }
 
@@ -164,4 +164,18 @@ void MaxHeap::print_array()
 void MaxHeap::operator+(int key)
 {
     insert_key(key);
+}
+
+void MaxHeap::heap_sort()
+{
+    build_max_heap();
+
+    // Estrazione degli elementi dall'heap uno ad uno 
+    for(auto i{heapsize - 1}; i >= 0; i--)
+    {
+        swap(arr[0], arr[i]);
+        
+        // Chiamiamo heapify con heap ridotto
+        max_heapify(0,i);
+    }
 }
