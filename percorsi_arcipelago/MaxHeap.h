@@ -19,7 +19,7 @@ class MaxHeap
         int heapsize; // Numero di elementi nel max_heap
     
         // Algoritmi di sostegno che servono per il normale funzionamento di un maxheap
-        void max_heapify(int root);
+        void max_heapify(int root, int size);
         void build_max_heap();
     public:
         // Constructor
@@ -52,6 +52,9 @@ class MaxHeap
 
         // Stampa array
         void print_array();
+
+        // Implementazione Heap sort
+        void heap_sort();
 
         // Operator overloading
         void operator+(int key);

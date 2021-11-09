@@ -64,8 +64,14 @@ int main()
 
     /* Overloading operatore */
     cout << "\nInserita la chiave 8" << endl;
-    cout << "In nostro array con la nuova chiave inseirta e':"<< endl;
+    cout << "In nostro array con la nuova chiave inseirta e':" << endl;
     max_heap + 8;
+    max_heap.print_array();
+
+    /* Ordinamento */
+    cout << "\nOrdinato array" << endl;
+    cout << "Il nostro array ordinato e':" << endl;
+    max_heap.heap_sort();
     max_heap.print_array();
 
     return 0;
