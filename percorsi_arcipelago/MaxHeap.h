@@ -1,3 +1,13 @@
+/**
+ * @file MaxHeap.h
+ * @author Roberto Vecchio (roberto.vecchio001@uniparthenope.it)
+ * @brief 
+ * @version 1.0
+ * @date 2021-11-09
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #ifndef _MAX_HEAP_H_
 #define _MAX_HEAP_H_
 
