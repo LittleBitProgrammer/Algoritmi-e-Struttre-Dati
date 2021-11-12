@@ -45,6 +45,12 @@ Graph *GraphGenrator::generate_graph()
                 filereader >> edge.destination;
                 filereader >> edge.weight;
 
+                /* Caso in cui la lettura degli interi non sia andata a buon */
+                if(filereader.fail())
+                {
+                    throw std::runtime_error("File contain non numeric value.");
+                }
+
                 edges.push_back(edge);
             }
         }
