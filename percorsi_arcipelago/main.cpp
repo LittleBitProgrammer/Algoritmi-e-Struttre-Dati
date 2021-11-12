@@ -10,26 +10,21 @@
  */
 #include <iostream>
 using std::cout;
-using std::cin;
 using std::endl;
 
-#include <string>
-using std::string;
-
-#include "GraphGenerator.h"
-#include "Graph.h"
+#include "GraphaNui.h"
 
 int main()
 {
-    string filename;
-
-    cout << "Enter the file name: " << endl;
-    cin >> filename;
-
-    GraphGenrator graph_gen(filename);
-
-    Graph *my_graph = graph_gen.generate_graph();
-    my_graph->printGraph();
+    try
+    {
+        GraphaNui *graphanui = GraphaNui::get_instace();
+        graphanui->get_archipelago()->printGraph();
+    }
+    catch(const std::exception& e)
+    {
+        cout << e.what() << endl;
+    }
     
     return 0;
 }
