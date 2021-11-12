@@ -8,23 +8,28 @@
  * @copyright Copyright (c) 2021
  * 
  */
-#include <vector>
-using std::vector;
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
 
+#include <string>
+using std::string;
+
+#include "GraphGenerator.h"
 #include "Graph.h"
 
 int main()
 {
-    vector<Edge> edges = 
-    {
-        /*(u,v,w) -> archi da u a v avente peso w */
-        {0,1,5},{0,2,3},{1,3,6},{1,2,2},{2,4,4},{2,5,2},{2,3,7},{3,5,1},{3,4,-1},{4,5,-2}
-    };
+    string filename;
 
-    int node_number{5};
-    Graph graph(edges,node_number);
+    cout << "Enter the file name: " << endl;
+    cin >> filename;
 
-    graph.printGraph();
+    GraphGenrator graph_gen(filename);
+
+    Graph *my_graph = graph_gen.generate_graph();
+    my_graph->printGraph();
     
     return 0;
 }

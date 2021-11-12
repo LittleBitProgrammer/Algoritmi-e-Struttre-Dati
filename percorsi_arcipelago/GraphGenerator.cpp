@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <vector>
 #include "GraphGenerator.h"
 
@@ -16,12 +17,13 @@ void GraphGenrator::set_filename(string filename)
     this->filename = filename;
 }
 
-Graph GraphGenrator::generate_graph()
+Graph *GraphGenrator::generate_graph()
 {
     using std::cout;
     using std::endl;
     using std::vector;
     using std::ifstream;
+    using std::stringstream;
 
     int node_numbers;
     int edges_number;
@@ -32,25 +34,33 @@ Graph GraphGenrator::generate_graph()
     if (!filereader.fail())
     {
         filereader >> node_numbers >> edges_number;
-        edges.resize(edges_number);
 
-        for(auto i{0}; i < edges_number; i++)
+        if(node_numbers >= 2 && node_numbers <= 1000 && edges_number >= 1 && edges_number <= 10000)
         {
-            Edge edge;
+            for(auto i{0}; i < edges_number && !filereader.eof(); i++)
+            {
+                Edge edge;
 
-            filereader >> edge.source;
-            filereader >> edge.destination;
-            filereader >> edge.weight;
+                filereader >> edge.source;
+                filereader >> edge.destination;
+                filereader >> edge.weight;
 
-            edges.push_back(edge);
+                edges.push_back(edge);
+            }
         }
+        else
+        {
+            throw std::invalid_argument("Invalid file data, Please insert in the file value N between 2 and 1000 and P between 1 and 10000");
+        }
+        filereader.close();
+
+        Graph *graph = new Graph(edges,node_numbers);
+        return graph;
     }
     else
     {
-        cout << "Il file non e' stato aperto con successo" << endl;
+        throw std::runtime_error("file does not exists");
     }
-    
-    filereader.close()
 }
 
 

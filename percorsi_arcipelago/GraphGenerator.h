@@ -21,7 +21,7 @@ class GraphGenrator
         void set_filename(string file_name);
 
         /* Methods */
-        Graph generate_graph();
+        Graph *generate_graph();
 };
 
 #endif
