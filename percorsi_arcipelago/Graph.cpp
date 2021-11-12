@@ -44,3 +44,13 @@ void Graph::printGraph()
         cout << endl;
     }
 }
+
+void Graph::set_adj_list(std::vector<std::vector<Pair>> adj_list)
+{
+    this->adj_list = adj_list;
+}
+
+std::vector<std::vector<Pair>> Graph::get_adj_list()
+{
+    return this->adj_list;
+}

@@ -32,6 +32,13 @@ class Graph
     public:
         Graph(std::vector<Edge> const &edges, int node_number);
 
+        /* Getter */
+        std::vector<std::vector<Pair>> get_adj_list();
+
+        /* Setter */
+        void set_adj_list(std::vector<std::vector<Pair>> adj_list);
+
+        /* Methods*/
         void printGraph();
 };
 

@@ -18,6 +18,7 @@ class GraphaNui
 
         /* Methods */
         void print_max_satisfaction_from_source(int source);
+        void initialize_single_source(int source);
     public:
         /* Metodo utile a ritornare istanza del singleton */
         static GraphaNui *get_instace();
