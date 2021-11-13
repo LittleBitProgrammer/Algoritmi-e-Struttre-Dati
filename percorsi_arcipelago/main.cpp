@@ -8,23 +8,24 @@
  * @copyright Copyright (c) 2021
  * 
  */
-#include <vector>
-using std::vector;
+#include <iostream>
+using std::cout;
+using std::endl;
 
-#include "Graph.h"
+#include "GraphaNui.h"
 
 int main()
 {
-    vector<Edge> edges = 
+    try
     {
-        /*(u,v,w) -> archi da u a v avente peso w */
-        {0,1,5},{0,2,3},{1,3,6},{1,2,2},{2,4,4},{2,5,2},{2,3,7},{3,5,1},{3,4,-1},{4,5,-2}
-    };
-
-    int node_number{5};
-    Graph graph(edges,node_number);
-
-    graph.printGraph();
+        GraphaNui *graphanui = GraphaNui::get_instace();
+        graphanui->get_archipelago()->display_adj_list();
+        graphanui->maximize_tourism(1);
+    }
+    catch(const std::exception& e)
+    {
+        cout << e.what() << endl;
+    }
     
     return 0;
 }
