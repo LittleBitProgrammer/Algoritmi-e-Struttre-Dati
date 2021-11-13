@@ -20,5 +20,8 @@ int main()
     bst.print_tree();
 
     cout << "\nAltezza ABR = " << bst.tree_height() << endl;
+    cout << "Minimo ABR = " << bst.minimum(bst.get_root())->key << endl;
+    cout << "Massimo ABR = " << bst.maximum(bst.get_root())->key << endl;
+    
     return 0;
 }

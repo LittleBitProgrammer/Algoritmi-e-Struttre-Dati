@@ -82,8 +82,6 @@ Node *Bst::search_helper(Node *node, int key)
 /* Ricerca del nodo con chiave minima */
 Node *Bst::minimum(Node *node)
 {
-    Node *x;
-
     /* 
     Per le proprietà dell'ABR avremo un valore minore rispetto alla chiave del nodo corrente
     nel corrispettivo figlio sinistro, peranto basterà iterare fino a quando esiste un figlio 
@@ -91,17 +89,15 @@ Node *Bst::minimum(Node *node)
     */
     while(node->left != nullptr)
     {
-        x = node->left;
+        node = node->left;
     }
 
-    return x;
+    return node;
 }
 
 /* Ricerca del nodo con chiave massima */
 Node *Bst::maximum(Node *node)
 {
-    Node *x;
-
     /* 
     Per le proprietà dell'ABR avremo un valore maggiore rispetto alla chiave del nodo corrente
     nel corrispettivo figlio destro, peranto basterà iterare fino a quando esiste un figlio 
@@ -109,10 +105,10 @@ Node *Bst::maximum(Node *node)
     */
    while(node->right != nullptr)
    {
-       x = node->right;
+       node = node->right;
    }
 
-   return x;
+   return node;
 }
 
 /* Trova il successore del dato nodo */
