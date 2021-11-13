@@ -19,7 +19,6 @@ struct Node
 {
     int id;     /* Id del nodo */
     int cost;   /* Costo per spostarsi a questo nodo */
-    int key;    /* Chiave del nodo */
     Node *next; /* Puntatore al prossimo nodo */
 };
 
@@ -38,7 +37,7 @@ class Graph
         std::vector<Node *>head_list; /* Lista di adiacenza come array di puntatori */
 
         /* Methods */
-        Node *generate_adj_node(int id, int cost, int key, Node* head);
+        Node *generate_adj_node(int id, int cost, Node* head);
     public:
         /* Costruttori */
         Graph(std::vector<Edge> edges, int edges_number, int nodes_number);

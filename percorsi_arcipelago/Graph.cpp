@@ -29,14 +29,14 @@ Graph::Graph(std::vector<Edge> edges, int edges_number, int nodes_number):
         int destination{edges.at(i).destination};
         int weight{edges.at(i).weight};
 
-        Node *new_node{generate_adj_node(destination,weight,INT_MIN,head_list.at(source))};
+        Node *new_node{generate_adj_node(destination,weight,head_list.at(source))};
 
         /* Puntatore ad head come nuovo nodo */
         head_list.at(source) = new_node;
     }
 }
 
-Node *Graph::generate_adj_node(int id, int cost, int key, Node* head)
+Node *Graph::generate_adj_node(int id, int cost, Node* head)
 {
     /* Allochiamo un nuovo nodo */
     Node *adj_node = new Node;
@@ -44,7 +44,6 @@ Node *Graph::generate_adj_node(int id, int cost, int key, Node* head)
     /* Costruiamo il nodo con i valori passati in input */
     adj_node->id = id;
     adj_node->cost = cost;
-    adj_node->key = key;
     adj_node->next = head;
 
     /* Ritorniamo il nuovo nodo */

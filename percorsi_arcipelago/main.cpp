@@ -20,6 +20,7 @@ int main()
     {
         GraphaNui *graphanui = GraphaNui::get_instace();
         graphanui->get_archipelago()->display_adj_list();
+        graphanui->maximize_tourism(1);
     }
     catch(const std::exception& e)
     {

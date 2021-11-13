@@ -1,6 +1,9 @@
 #ifndef _GRAPHANUI_H_
 #define _GRAPHANUI_H_
 
+#include <stack>
+using std::stack;
+
 #include <string>
 using std::string;
 
@@ -17,8 +20,7 @@ class GraphaNui
         GraphaNui(string filename);
 
         /* Methods */
-        void print_max_satisfaction_from_source(int source);
-        void initialize_single_source(int source);
+        void topological_order(stack<int> &tolpological_stack, bool visited[], int node);
     public:
         /* Metodo utile a ritornare istanza del singleton */
         static GraphaNui *get_instace();
