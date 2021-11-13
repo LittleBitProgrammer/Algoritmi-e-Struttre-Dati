@@ -140,7 +140,7 @@ Node *Bst::predecessor(Node *node)
     /* Se il nodo ha un figlio sinistro allora il successore è il massimo del sottoalbero sinistro */
     if(node->left != nullptr)
     {
-        return maximum(node->right);
+        return maximum(node->left);
     }
 
     /* 

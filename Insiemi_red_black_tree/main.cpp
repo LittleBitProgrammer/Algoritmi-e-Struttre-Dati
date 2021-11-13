@@ -22,6 +22,8 @@ int main()
     cout << "\nAltezza ABR = " << bst.tree_height() << endl;
     cout << "Minimo ABR = " << bst.minimum(bst.get_root())->key << endl;
     cout << "Massimo ABR = " << bst.maximum(bst.get_root())->key << endl;
+    cout << "Successore radice = " << bst.successor(bst.get_root())->key << endl;
+    cout << "Predecessore radice = " << bst.predecessor(bst.get_root())->key << endl;
     
     return 0;
 }
