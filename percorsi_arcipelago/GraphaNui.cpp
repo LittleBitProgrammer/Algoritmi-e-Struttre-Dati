@@ -123,11 +123,17 @@ void GraphaNui::maximize_tourism(int source)
        }
    }
 
-   char infty = static_cast<char>(236);
-
    for(auto i{0}; i < nodes_number; i++)
     {
-        cout << source << " -> " << i << " = " << ((dist[i] == INT_MIN)? infty : dist[i]) << endl;
-        
+        if(dist[i] == INT_MIN)
+        {
+            cout << source << " -> " << i << " = " << "\u221E" << endl;
+        }
+        else
+        {
+            cout << source << " -> " << i << " = " << dist[i] << endl;
+        }
     }
+
+    /* Deallochiamo visited */
 }
