@@ -45,19 +45,23 @@ void GraphaNui::set_archipelago(Graph *archipelago_grapha_nui)
 
 void GraphaNui::initialize_single_source(int source)
 {
-   /* unsigned int i = 0;
-    for(auto u:archipelago_grapha_nui->get_adj_list())
+   unsigned int i = 0;
+    for(auto u:archipelago_grapha_nui->get_head_list())
     {
         if(source == i)
         {
             continue;
         }
-        
+
+        /* Impostiamo la chiave di u ad infinito */
+        u->key = INT_MAX;
         i++;
-    }*/
+    }
+
+    archipelago_grapha_nui->get_head_list().at(source)->key = 0;
 }
 
 void GraphaNui::maximize_tourism(int source)
 {
-
+    initialize_single_source(source);
 }

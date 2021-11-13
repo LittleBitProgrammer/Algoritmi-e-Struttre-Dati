@@ -35,7 +35,7 @@ class Graph
 {
     private:
         int nodes_number; /* Numero di nodi nel grafo */
-        Node **head_list; /* Lista di adiacenza come array di puntatori */
+        std::vector<Node *>head_list; /* Lista di adiacenza come array di puntatori */
 
         /* Methods */
         Node *generate_adj_node(int id, int cost, int key, Node* head);
@@ -48,10 +48,10 @@ class Graph
 
         /* Getter */
         int get_nodes_number();
-        Node **get_head_list();
+        std::vector<Node *>get_head_list();
 
         /* Setter */
-        void set_head_list(Node **head_list);
+        void set_head_list(std::vector<Node *>head_list);
         
         /* Methods */
         void display_adj_nodes(Node* pointer,int i);

@@ -12,12 +12,14 @@
 #include "Graph.h"
 
 Graph::Graph(std::vector<Edge> edges, int edges_number, int nodes_number):
-    nodes_number{nodes_number}, head_list{new Node*[nodes_number]}
+    nodes_number{nodes_number}
 {
+    head_list.resize(nodes_number);
+
     /* Inizializziamo il puntatore a head per ogni nodo a nullptr */
     for(auto i{0}; i < nodes_number; i++)
     {
-        head_list[i] = nullptr;
+        head_list.at(i) = nullptr;
     }
 
     /* Utilizziamo gli archi per costruire la lista di adiacenza */
@@ -27,10 +29,10 @@ Graph::Graph(std::vector<Edge> edges, int edges_number, int nodes_number):
         int destination{edges.at(i).destination};
         int weight{edges.at(i).weight};
 
-        Node *new_node{generate_adj_node(destination,weight,INT_MAX,head_list[source])};
+        Node *new_node{generate_adj_node(destination,weight,INT_MIN,head_list.at(source))};
 
         /* Puntatore ad head come nuovo nodo */
-        head_list[source] = new_node;
+        head_list.at(source) = new_node;
     }
 }
 
@@ -60,8 +62,7 @@ Graph::~Graph()
      /* Iteriamo ogni nodo */
      for(auto i{0}; i < nodes_number; i++)
      {
-         delete[] head_list[i];
-         delete[] head_list;
+         delete[] head_list.at(i);
      }  
 }
 
@@ -70,12 +71,12 @@ int Graph::get_nodes_number()
     return this->nodes_number;
 }
 
-Node **Graph::get_head_list()
+std::vector<Node *>Graph::get_head_list()
 {
     return this->head_list;
 }
 
-void Graph::set_head_list(Node **head_list)
+void Graph::set_head_list(std::vector<Node *>head_list)
 {
     this->head_list = head_list;
 }
@@ -95,7 +96,7 @@ void Graph::display_adj_nodes(Node* pointer,int i)
 
 std::vector<Node *> Graph::get_adj_nodes(int i)
 {
-    Node *pointer{head_list[i]};
+    Node *pointer{head_list.at(i)};
     std::vector<Node *> adj_nodes;
 
     while (pointer != nullptr)
