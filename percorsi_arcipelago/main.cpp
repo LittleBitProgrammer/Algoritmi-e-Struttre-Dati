@@ -19,7 +19,7 @@ int main()
     try
     {
         GraphaNui *graphanui = GraphaNui::get_instace();
-        graphanui->get_archipelago()->printGraph();
+        graphanui->get_archipelago()->display_adj_list();
     }
     catch(const std::exception& e)
     {

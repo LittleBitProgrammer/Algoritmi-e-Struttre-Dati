@@ -45,7 +45,7 @@ void GraphaNui::set_archipelago(Graph *archipelago_grapha_nui)
 
 void GraphaNui::initialize_single_source(int source)
 {
-    unsigned int i = 0;
+   /* unsigned int i = 0;
     for(auto u:archipelago_grapha_nui->get_adj_list())
     {
         if(source == i)
@@ -54,7 +54,7 @@ void GraphaNui::initialize_single_source(int source)
         }
         
         i++;
-    }
+    }*/
 }
 
 void GraphaNui::maximize_tourism(int source)

@@ -41,7 +41,7 @@ class Graph
         Node *generate_adj_node(int id, int cost, int key, Node* head);
     public:
         /* Costruttori */
-        Graph(std::vector<Edge> edges, int edge_number, int nodes_number);
+        Graph(std::vector<Edge> edges, int edges_number, int nodes_number);
 
         /* Distruttore */
         ~Graph();

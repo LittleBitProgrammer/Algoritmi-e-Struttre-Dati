@@ -25,7 +25,7 @@ Graph *GraphGenrator::generate_graph()
     using std::ifstream;
     using std::stringstream;
 
-    int node_numbers;
+    int nodes_numbers;
     int edges_number;
 
     vector<Edge> edges;
@@ -33,9 +33,9 @@ Graph *GraphGenrator::generate_graph()
 
     if (!filereader.fail())
     {
-        filereader >> node_numbers >> edges_number;
+        filereader >> nodes_numbers >> edges_number;
 
-        if(node_numbers >= 2 && node_numbers <= 1000 && edges_number >= 1 && edges_number <= 10000)
+        if(nodes_numbers >= 2 && nodes_numbers <= 1000 && edges_number >= 1 && edges_number <= 10000)
         {
             for(auto i{0}; i < edges_number && !filereader.eof(); i++)
             {
@@ -60,7 +60,7 @@ Graph *GraphGenrator::generate_graph()
         }
         filereader.close();
 
-        Graph *graph = new Graph(edges,node_numbers);
+        Graph *graph = new Graph(edges, edges_number,nodes_numbers);
         return graph;
     }
     else
