@@ -24,6 +24,25 @@ int main()
     cout << "Massimo ABR = " << bst.maximum(bst.get_root())->key << endl;
     cout << "Successore radice = " << bst.successor(bst.get_root())->key << endl;
     cout << "Predecessore radice = " << bst.predecessor(bst.get_root())->key << endl;
+    cout << "Cancelliamo nodo con chiave 70" << endl;
+
+    Node *searched = bst.search(70);
+    bst.delete_node(searched);
+    bst.print_tree();
+
+    cout << "\n\n\n";
+
+    cout << "Visita preorder: " << endl;
+    bst.preorder();
+    cout << endl;
+
+    cout << "Visita inorder: " << endl;
+    bst.inorder();
+    cout << endl;
+
+    cout << "Visita postorder: " << endl;
+    bst.postorder();
+    cout << endl;
     
     return 0;
 }
