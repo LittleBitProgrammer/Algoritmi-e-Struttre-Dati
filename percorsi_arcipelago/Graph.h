@@ -14,10 +14,16 @@
 #include <utility>
 #include <vector>
 
-// Modo coinciso per dichiarare un pair di interi
-typedef std::pair<int,int>Pair;
+/* Struttura per gli item nella lista di adiacenza */
+struct Node
+{
+    int id;     /* Id del nodo */
+    int cost;   /* Costo per spostarsi a questo nodo */
+    int key;    /* Chiave del nodo */
+    Node *next; /* Puntatore al prossimo nodo */
+};
 
-// Struttura dati per memorizzare un arco (orientato, pesato)
+// Struttura per memorizzare un arco (orientato, pesato)
 struct Edge
 {
     int source;
@@ -28,18 +34,29 @@ struct Edge
 class Graph
 {
     private:
-        std::vector<std::vector<Pair>> adj_list;
+        int nodes_number; /* Numero di nodi nel grafo */
+        Node **head_list; /* Lista di adiacenza come array di puntatori */
+
+        /* Methods */
+        Node *generate_adj_node(int id, int cost, int key, Node* head);
     public:
-        Graph(std::vector<Edge> const &edges, int node_number);
+        /* Costruttori */
+        Graph(std::vector<Edge> edges, int edge_number, int nodes_number);
+
+        /* Distruttore */
+        ~Graph();
 
         /* Getter */
-        std::vector<std::vector<Pair>> get_adj_list();
+        int get_nodes_number();
+        Node **get_head_list();
 
         /* Setter */
-        void set_adj_list(std::vector<std::vector<Pair>> adj_list);
-
-        /* Methods*/
-        void printGraph();
+        void set_head_list(Node **head_list);
+        
+        /* Methods */
+        void display_adj_nodes(Node* pointer,int i);
+        void display_adj_list();
+        std::vector<Node *> get_adj_nodes(int i);
 };
 
 #endif
