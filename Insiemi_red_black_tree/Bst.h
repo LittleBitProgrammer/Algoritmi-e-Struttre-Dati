@@ -10,36 +10,36 @@ using std::max;
 using std::string;
 
 /* Struttura dati utile a memorizzare un nodo in un albero */
-struct Node
+struct BNode
 {
     int key;      /* chiave del nodo */
-    Node *parent; /* Puntatore al padre */
-    Node *left;   /* Puntatore al figlio sinistro */
-    Node *right;  /* Puntatore al figlio destro */
+    BNode *parent; /* Puntatore al padre */
+    BNode *left;   /* Puntatore al figlio sinistro */
+    BNode *right;  /* Puntatore al figlio destro */
 };
 
 /* Classe per rappresentare gli alberi binari di ricerca */
 class Bst
 {
     private:
-        Node *root; /* radice dell'albero binario di ricerca */
+        BNode *root; /* radice dell'albero binario di ricerca */
 
         /* Methods */
 
         /* Metodo helper sfruttato dalla preorder */
-        void preorder_helper(Node *node);
+        void preorder_helper(BNode *node);
         /* Metodo helper sfruttato dalla inorder */
-        void inorder_helper(Node *node);
+        void inorder_helper(BNode *node);
         /* Metodo helper sfruttato dalla postorder */
-        void postorder_helper(Node *node);
+        void postorder_helper(BNode *node);
         /* Metodo helper sfruttato dalla tree_height */
-        int tree_height_helper(Node *node);
+        int tree_height_helper(BNode *node);
         /* Metodo helper sfruttato dalla search */
-        Node *search_helper(Node *node,int key);
+        BNode *search_helper(BNode *node,int key);
         /* Metodo per sostituire un sottoalbero con un altro */
-        void transplant(Node *u, Node *v);
+        void transplant(BNode *u, BNode *v);
         /* Metodo helper sfruttato dalla print */
-        void print_helper(Node *node, string indentation, bool last);
+        void print_helper(BNode *node, string indentation, bool last);
     
     public:
         /* Constructor */
@@ -56,24 +56,24 @@ class Bst
         /* Calcola altezza albero binario di ricerca */
         int tree_height();
         /* Ricerca in un albero binario di ricerca */
-        Node *search(int key);
+        BNode *search(int key);
         /* Ricerca del nodo con chiave minima */
-        Node *minimum(Node *node);
+        BNode *minimum(BNode *node);
         /* Ricerca del nodo con chiave massima */
-        Node *maximum(Node *node);
+        BNode *maximum(BNode *node);
         /* Trova il successore del dato nodo */
-        Node *successor(Node* node);
+        BNode *successor(BNode* node);
         /* Trova il predecessore di un dato nodo */
-        Node *predecessor(Node* node);
+        BNode *predecessor(BNode* node);
         /* Inserimento di una chiave in un albero di ricerca binaria */
         void insert(int key);
         /* Cancellazione di un nodo con una data chiave */
-        Node *delete_node(Node *node);
+        BNode *delete_node(BNode *node);
         /* Stampa dell'albero */
         void print_tree();
 
         /* Getter */
-        Node *get_root();
+        BNode *get_root();
 };
 
 #endif

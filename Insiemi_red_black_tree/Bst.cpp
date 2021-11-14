@@ -6,7 +6,7 @@ Bst::Bst()
 }
 
 /* Metodo helper sfruttato dalla preorder */
-void Bst::preorder_helper(Node *node)
+void Bst::preorder_helper(BNode *node)
 {
     if(node != nullptr)
     {
@@ -17,7 +17,7 @@ void Bst::preorder_helper(Node *node)
 }
 
 /* Metodo helper sfruttato dalla inorder */
-void Bst::inorder_helper(Node *node)
+void Bst::inorder_helper(BNode *node)
 {
     if(node != nullptr)
     {
@@ -28,7 +28,7 @@ void Bst::inorder_helper(Node *node)
 }
 
 /* Metodo helper sfruttato dalla postorder */
-void Bst::postorder_helper(Node *node)
+void Bst::postorder_helper(BNode *node)
 {
     if(node != nullptr)
     {
@@ -39,7 +39,7 @@ void Bst::postorder_helper(Node *node)
 }
 
 /* Metodo helper sfruttato dalla tree_height */
-int Bst::tree_height_helper(Node *node)
+int Bst::tree_height_helper(BNode *node)
 {
     if(node != nullptr)
     {
@@ -52,7 +52,7 @@ int Bst::tree_height_helper(Node *node)
 }
 
 /* Metodo helper sfruttato dalla search */
-Node *Bst::search_helper(Node *node, int key)
+BNode *Bst::search_helper(BNode *node, int key)
 {
     /* Se il nodo è nullo o se la chiave ricercata coincide con la chiave del nodo */
     if(node == nullptr || key == node->key)
@@ -80,7 +80,7 @@ Node *Bst::search_helper(Node *node, int key)
 }
 
 /* Ricerca del nodo con chiave minima */
-Node *Bst::minimum(Node *node)
+BNode *Bst::minimum(BNode *node)
 {
     /* 
     Per le proprietà dell'ABR avremo un valore minore rispetto alla chiave del nodo corrente
@@ -96,7 +96,7 @@ Node *Bst::minimum(Node *node)
 }
 
 /* Ricerca del nodo con chiave massima */
-Node *Bst::maximum(Node *node)
+BNode *Bst::maximum(BNode *node)
 {
     /* 
     Per le proprietà dell'ABR avremo un valore maggiore rispetto alla chiave del nodo corrente
@@ -112,7 +112,7 @@ Node *Bst::maximum(Node *node)
 }
 
 /* Trova il successore del dato nodo */
-Node *Bst::successor(Node *node)
+BNode *Bst::successor(BNode *node)
 {
     /* Se il nodo ha un figlio destro allora il successore è il minimo del sottoalbero destro */
     if(node->right != nullptr)
@@ -124,7 +124,7 @@ Node *Bst::successor(Node *node)
     Altrimenti il successore è il primo antenato del nodo tale che il nodo si trovi nel 
     sottoalbero sinistro
     */
-   Node *y = node->parent;
+   BNode *y = node->parent;
    while(y != nullptr && node == y->right)
    {
        node = y;
@@ -135,7 +135,7 @@ Node *Bst::successor(Node *node)
 }
 
 /* Trova il predecessore di un dato nodo */
-Node *Bst::predecessor(Node *node)
+BNode *Bst::predecessor(BNode *node)
 {
     /* Se il nodo ha un figlio sinistro allora il successore è il massimo del sottoalbero sinistro */
     if(node->left != nullptr)
@@ -147,7 +147,7 @@ Node *Bst::predecessor(Node *node)
     Altrimenti il successore è il primo antenato del nodo tale che il nodo si trovi nel 
     sottoalbero destro
     */
-   Node *y = node->parent;
+   BNode *y = node->parent;
    while(y != nullptr && node == y->left)
    {
        node = y;
@@ -161,17 +161,17 @@ Node *Bst::predecessor(Node *node)
 void Bst::insert(int key)
 {
     /* Costruiamo un nuovo nodo con la chiave passata come argomento */
-    Node *node_to_add = new Node;
+    BNode *node_to_add = new BNode;
     node_to_add->parent = nullptr;
     node_to_add->left = nullptr;
     node_to_add->right =  nullptr;
     node_to_add->key = key;
 
     /* Dichiariamo un puntatore a nodo e inizializziamolo a nullptr */
-    Node *y = nullptr;
+    BNode *y = nullptr;
 
     /* Prendiamo la root ed assegnamola ad x */
-    Node *x = root;
+    BNode *x = root;
 
     while(x != nullptr)
     {
@@ -215,13 +215,13 @@ void Bst::insert(int key)
 }
 
 /* Getter della rooot */
-Node *Bst::get_root()
+BNode *Bst::get_root()
 {
     return this->root;
 }
 
 /* Cancellazione di un nodo con una data chiave */
-Node *Bst::delete_node(Node *node)
+BNode *Bst::delete_node(BNode *node)
 {
     /* Se il nodo da cancellare non ha figlio sinistro */
     if(node->left == nullptr)
@@ -243,7 +243,7 @@ Node *Bst::delete_node(Node *node)
         In questo caso il nodo da eliminare avrà entrambi i figli.
         Troviamo il successore del nodo:
         */
-       Node *y = minimum(node->right);
+       BNode *y = minimum(node->right);
 
        /* Se il nodo da eliminare non è il padre del successore */
        if(y->parent != node)
@@ -267,7 +267,7 @@ Node *Bst::delete_node(Node *node)
 }
 
 /* Metodo per sostituire un sottoalbero con un altro */
-void Bst::transplant(Node *u, Node *v)
+void Bst::transplant(BNode *u, BNode *v)
 {
     /* Se il padre di u è nullo allora la nuova root è v */
     if(u->parent == nullptr)
@@ -292,9 +292,8 @@ void Bst::transplant(Node *u, Node *v)
 }
 
 /* Metodo helper sfruttato dalla print */
-void Bst::print_helper(Node *node, string indentation, bool last)
+void Bst::print_helper(BNode *node, string indentation, bool last)
 {
-    //TODO::commentare questo metodo
     if(node != nullptr)
     {
         cout << indentation;
@@ -341,7 +340,7 @@ int Bst::tree_height()
 }
 
 /* Ricerca in un albero binario di ricerca */
-Node *Bst::search(int key)
+BNode *Bst::search(int key)
 {
     return search_helper(root,key);
 }
