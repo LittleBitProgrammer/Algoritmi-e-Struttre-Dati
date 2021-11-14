@@ -26,7 +26,7 @@ int main()
     cout << "Predecessore radice = " << bst.predecessor(bst.get_root())->key << endl;
     cout << "Cancelliamo nodo con chiave 70" << endl;
 
-    BNode *searched = bst.search(70);
+    Node *searched = bst.search(70);
     bst.delete_node(searched);
     bst.print_tree();
 
