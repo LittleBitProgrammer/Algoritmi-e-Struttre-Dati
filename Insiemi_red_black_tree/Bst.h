@@ -5,13 +5,7 @@
 
 /* Classe per rappresentare gli alberi binari di ricerca */
 class Bst:public AbstractBinarySearchTree<Node>
-{
-    private:
-        /* Methods */
-        
-        /* Metodo per sostituire un sottoalbero con un altro */
-        void transplant(Node *u, Node *v);
-
+{   
     protected:
         /* Override */
 

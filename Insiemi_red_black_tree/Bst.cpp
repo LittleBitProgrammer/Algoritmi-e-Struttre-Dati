@@ -46,31 +46,6 @@ Node *Bst::delete_node(Node *node)
     return node;
 }
 
-/* Metodo per sostituire un sottoalbero con un altro */
-void Bst::transplant(Node *u, Node *v)
-{
-    /* Se il padre di u è nullo allora la nuova root è v */
-    if(u->parent == nullptr)
-    {
-        this->root = v;
-    }
-    else if (u == u->parent->left)
-    {
-        /* Se u è il figlio sinistro del padre allora il nuovo figlio sinistro del padre è v */
-        u->parent->left = v;
-    }
-    else
-    {
-        /* Altrimenti il fliglio destro del padre  di u sarà v */
-        u->parent->right = v;
-    }
-
-    if(v != nullptr)
-    {
-        v->parent = u->parent;
-    }
-}
-
 /* Metodo helper sfruttato dalla print */
 void Bst::print_helper(Node *node, string indentation, bool last)
 {

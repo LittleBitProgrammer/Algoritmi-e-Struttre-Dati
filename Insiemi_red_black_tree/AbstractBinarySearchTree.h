@@ -73,6 +73,8 @@ class AbstractBinarySearchTree
 
         /* Metodo helper sfruttato dalla print */
         virtual void print_helper(T *node, string indentation, bool last) = 0;
+        /* Metodo per sostituire un sottoalbero con un altro */
+        void transplant(T *u, T *v);
 
     public:
         /* Constructor */
@@ -326,6 +328,32 @@ template<typename T>
 void AbstractBinarySearchTree<T>::print_tree()
 {
     print_helper(root,"",true);
+}
+
+/* Metodo per sostituire un sottoalbero con un altro */
+template<typename T>
+void AbstractBinarySearchTree<T>::transplant(T *u, T *v)
+{
+    /* Se il padre di u è nullo allora la nuova root è v */
+    if(u->parent == nullptr)
+    {
+        this->root = v;
+    }
+    else if (u == u->parent->left)
+    {
+        /* Se u è il figlio sinistro del padre allora il nuovo figlio sinistro del padre è v */
+        u->parent->left = v;
+    }
+    else
+    {
+        /* Altrimenti il fliglio destro del padre  di u sarà v */
+        u->parent->right = v;
+    }
+
+    if(v != nullptr)
+    {
+        v->parent = u->parent;
+    }
 }
 
 #endif
