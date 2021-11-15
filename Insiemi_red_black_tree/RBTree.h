@@ -44,7 +44,7 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         /* Inserimento di un nodo in un BST */
         RBNode *bst_insert_helper(RBNode *root, RBNode *node_to_add);    
         /* Rispristino di un albero RB dalle violazioni causate dall'inserimento BST */
-        void insert_fixup(RBNode *root, RBNode *node_to_add);
+        void insert_fixup(RBNode *&root, RBNode *&node_to_add);
         /* Metodo di supporto utilizzato dalla print */
         void print_helper(RBNode *root, string idnentation, bool last);
         
@@ -52,13 +52,15 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         /* Methods */
         
         /* Rotazione a sinistra */
-        void left_rotate(RBNode *x);
+        void left_rotate(RBNode *&root,RBNode *&x);
         /* Rotazione a destra */
-        void right_rotate(RBNode *y);
+        void right_rotate(RBNode *&root, RBNode *&y);
         /* Inserimento di una chiave nell'albero RB */
         void insert(int key);
         /* Stampa dell'albero RB */;
         void print();
+        /* Cancellazione di un nodo con una data chiave */
+        RBNode *delete_node(RBNode *node);
 };
 
 #endif

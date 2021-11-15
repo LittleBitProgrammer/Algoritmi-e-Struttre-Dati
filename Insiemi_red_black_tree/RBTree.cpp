@@ -1,4 +1,6 @@
+#include <type_traits> /* swap */
 #include "RBTree.h"
+
 
 /*===============================
            ROTATION
@@ -12,7 +14,7 @@ mediante modifiche alla struttura dei puntatori mediante rotazioni:
 */
 
 /* Rotazione a sinistra */
-void RBTree::left_rotate(RBNode *x)
+void RBTree::left_rotate(RBNode *&root, RBNode *&x)
 {
     /* Identifichiamo il nodo y come il figlio destro di x */
     RBNode *y = x->right;
@@ -52,7 +54,7 @@ void RBTree::left_rotate(RBNode *x)
 }
 
 /* Rotazione a destra */
-void RBTree::right_rotate(RBNode *x)
+void RBTree::right_rotate(RBNode *&root, RBNode *&x)
 {
     /* Identifichiamo il nodo y come il figlio sinistro di x */
     RBNode *y = x->left;
@@ -139,7 +141,7 @@ RBNode *RBTree::bst_insert_helper(RBNode *root, RBNode *node_to_add)
 }  
 
 /* Rispristino di un albero RB dalle violazioni causate dall'inserimento BST */
-void RBTree::insert_fixup(RBNode *root, RBNode *x)
+void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
 {
     /* 
     Il colore rosso viene assegnato durante la costruzione del nodo, pertanto qui 
@@ -147,103 +149,115 @@ void RBTree::insert_fixup(RBNode *root, RBNode *x)
 
     Dichiariamo ora il nodo uncle(zio), il quale sarà utile durante l'iterazione.
     */
-   RBNode *uncle = nullptr;
+    RBNode *uncle = nullptr;
 
-   /*
-   Il processo verrà iterato dal basso verso l'alto, pertanto
-   continuerà fintanto che il nodo è rosso e fintanto che la x non diventa la root 
-   (ad fine iterazione la x analizzata diventerà il padre della vecchia x "parent[x]"). 
-   */
+    /* Dichiariamo il nodo parent(padre) e grand parent(nonno) utili durante l'iterazione */
+    RBNode *parent = nullptr;
+    RBNode *grand_parent = nullptr;
 
-  while((x != root) && (x->parent->color == RED))
-  {
-      if(x->parent == x->parent->parent->left)
-      {
-          /* Se il padre di x è il figlio sinistro del nonno di x*/
-          /* Lo zio di x sarà il figlio destro del nonno di x */
-          uncle = x->parent->parent->right;
+    /*
+    Il processo verrà iterato dal basso verso l'alto, pertanto
+    continuerà fintanto che il nodo è rosso e fintanto che la x non diventa la root 
+    (ad fine iterazione la x analizzata diventerà il padre della vecchia x "parent[x]"). 
+    */
 
-          /* Caso 1: lo zio di x è rosso, allora abbiamo bisogno di ricolorare i nodi */
-          if(uncle != nullptr && uncle->color == RED)
-          {
-              /* Coloriamo il padre di x e lo zio di x di nero */
-              x->parent->color = BLACK;
-              uncle->color = BLACK;
-              /* Coloriamo il nonno di x di rosso */
-              x->parent->parent->color = RED;
+    while((x != root) && (x->color != BLACK) && (x->parent->color == RED))
+    {
+        /* Inizializziamo il parent ed il grand_parent del nodo */
+        parent = x->parent;
+        grand_parent = x->parent->parent;
 
-              /* Il nuovo x diventerà il padre di x */
-              x = x->parent;
-          }
-          else
-          {
-            /* 
-            Caso 2: lo zio di x è nero e x è figlio destro del padre 
-            Sarà necessaria una rotazione sinistra per trasformare il caso 2 nel caso 3
-            */
-            if(x == x->parent->right)
-            {
-                /* Ruotiamo a sinistra x*/
-                left_rotate(x);
-                /* Il nuovo x diventerà il padre di x */
-                x = x->parent;
-            }
-
-            /* 
-            Caso 3: lo zio di x è nero e x è figlio sinistro del padre,
-            in questo caso eseguiamo alcuni cambi di colore e eseguiamo una rotazioneverso
-            destra
-            */
-            right_rotate(x->parent);
-            x->parent->color = BLACK;
-            x->parent->parent->color = RED;
-            x = x->parent;
-          }
-      }
-      else
-      {
-        /* Caso speculare */
-        /* Lo zio di x sarà il figlio sinistro del nonno di x */
-        uncle = x->parent->parent->left;
-
-        /* Caso 1: lo zio di x è rosso, allora abbiamo bisogno di ricolorare i nodi */
-        if(uncle != nullptr && uncle->color == RED)
+        if(parent == grand_parent->left)
         {
-            /* Coloriamo il padre di x e lo zio di x di nero */
-            x->parent->color = BLACK;
-            uncle->color = BLACK;
-            /* Coloriamo il nonno di x di rosso */
-            x->parent->parent->color = RED;
+            /* Se il padre di x è il figlio sinistro del nonno di x*/
+            /* Lo zio di x sarà il figlio destro del nonno di x */
+            uncle = grand_parent->right;
 
-            /* Il nuovo x diventerà il padre di x */
-            x = x->parent;
+            /* Caso 1: lo zio di x è rosso, allora abbiamo bisogno di ricolorare i nodi */
+            if((uncle != nullptr) && (uncle->color == RED))
+            {
+                /* Coloriamo il nonno di x di rosso */
+                grand_parent->color = RED;
+
+                /* Coloriamo il padre di x e lo zio di x di nero */
+                parent->color = BLACK;
+                uncle->color = BLACK;
+
+                /* Il nuovo x diventerà il nonno di x */
+                x = grand_parent;
+            }
+            else
+            {
+                /* 
+                Caso 2: lo zio di x è nero e x è figlio destro del padre 
+                Sarà necessaria una rotazione sinistra per trasformare il caso 2 nel caso 3
+                */
+                if(x == parent->right)
+                {
+                    /* Ruotiamo a sinistra x*/
+                    left_rotate(root, parent);
+                    /* Il nuovo x diventerà il padre di x */
+                    x = parent;
+                    parent = x->parent;
+                }
+
+                /* 
+                Caso 3: lo zio di x è nero e x è figlio sinistro del padre,
+                in questo caso eseguiamo alcuni cambi di colore e eseguiamo una rotazioneverso
+                destra
+                */
+                right_rotate(root,grand_parent);
+                std::swap(parent->color, grand_parent->color);
+                x = parent;
+            }
         }
         else
         {
-            /* 
-            Caso 2: lo zio di x è nero e x è figlio sinistro del padre 
-            Sarà necessaria una rotazione destra per trasformare il caso 2 nel caso 3
-            */ 
-            if(x == x->parent->left)
-            {
-                /* Ruotiamo a destra x*/
-                right_rotate(x);
-                /* Il nuovo x diventerà il padre di x */
-                x = x->parent;
-            }
+            /* Caso speculare */
+            /* Lo zio di x sarà il figlio sinistro del nonno di x */
+            uncle = grand_parent->left;
 
-            /* 
-            Caso 3: lo zio di x è nero e x è figlio destro del padre,
-            in questo caso eseguiamo alcuni cambi di colore e eseguiamo una rotazione verso
-            sinsitra
-            */
-            left_rotate(x->parent);
-            x->parent->color = BLACK;
-            x->parent->parent->color = RED;
-            x = x->parent;
+            /* Caso 1: lo zio di x è rosso, allora abbiamo bisogno di ricolorare i nodi */
+            if((uncle != nullptr) && (uncle->color == RED))
+            {
+                /* Coloriamo il nonno di x di rosso */
+                grand_parent->color = RED;
+
+                /* Coloriamo il padre di x e lo zio di x di nero */
+                parent->color = BLACK;
+                uncle->color = BLACK;
+
+                /* Il nuovo x diventerà il padre di x */
+                x = grand_parent;
+            }
+            else
+            {
+                /* 
+                Caso 2: lo zio di x è nero e x è figlio sinistro del padre 
+                Sarà necessaria una rotazione destra per trasformare il caso 2 nel caso 3
+                */ 
+                if(x == parent->left)
+                {
+                    /* Ruotiamo a destra x*/
+                    right_rotate(root,parent);
+                    /* Il nuovo x diventerà il padre di x */
+                    x = parent;
+                    parent = x->parent;
+                }
+
+                /* 
+                Caso 3: lo zio di x è nero e x è figlio destro del padre,
+                in questo caso eseguiamo alcuni cambi di colore e eseguiamo una rotazione verso
+                sinsitra
+                */
+                left_rotate(root,grand_parent);
+                std::swap(parent->color,grand_parent->color);
+                x = parent;
+            }
         }
-      }
-  }
+    }
+
+    root->color = BLACK;
 }
 
 /* Inserimento di una chiave nell'albero RB */
@@ -296,4 +310,14 @@ void RBTree::print()
     {
         print_helper(this->root, "", true);
     }
+}
+
+/*===============================
+            DELETE
+================================*/
+
+/* Cancellazione di un nodo con una data chiave */
+RBNode *RBTree::delete_node(RBNode *node)
+{
+
 }
