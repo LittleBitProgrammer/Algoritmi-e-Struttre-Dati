@@ -12,46 +12,9 @@ using std::string;
 #include <type_traits>
 using std::is_base_of;
 
-/* Enum dei differenti colori che possono assumere i nodi degli alberi red black */
-enum Color{RED,BLACK};
-
-/* 
-Struttura dati utile a memorizzare un nodo in un albero binario, il quale deve contenere:
-- puntatore al padre
-- puntatore al figlio sinistro
-- puntatore al figlio destro
-- chiave
- */
-struct Node
-{
-    int key;      /* chiave del nodo */
-    Node *parent; /* Puntatore al padre */
-    Node *left;   /* Puntatore al figlio sinistro */
-    Node *right;  /* Puntatore al figlio destro */
-};
-
-/* 
-Struttura dati utile a memorizzare un nodo in un albero Red Black, il quale deve contenere:
-- puntatore al padre
-- puntatore al figlio sinistro
-- puntatore al figlio destro
-- chiave
-- colore (rosso,nero)
-
-Pertanto ereditiamo gli attributi da Node per rappresentare un nuovo nodo più specifico che 
-aggiunge il colore tra le proprie informazioni
- */
-struct RBNode:Node
-{
-    bool color;
-};
-
 template<typename T>
 class AbstractBinarySearchTree
 {
-    /* Assicuriamoci che la classe generica sia un derivato di node */
-    static_assert(is_base_of<Node,T>::value);
-
     private:
         /* Methods */
 
