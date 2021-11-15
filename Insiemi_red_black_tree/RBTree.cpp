@@ -245,3 +245,55 @@ void RBTree::insert_fixup(RBNode *root, RBNode *x)
       }
   }
 }
+
+/* Inserimento di una chiave nell'albero RB */
+void RBTree::insert(int key)
+{
+    /* Dichiamo e inizializziamo un nuovo nodo */
+    RBNode *node_to_add = new RBNode(key);
+
+    /* Lanciamo un insert BST */
+    root = bst_insert_helper(root,node_to_add);
+
+    /* Correggiamo le violazioni sull'albero RB */
+    insert_fixup(root, node_to_add);
+}
+
+/*===============================
+            PRINTING
+================================*/
+
+/* Metodo di supporto utilizzato dalla print */
+void RBTree::print_helper(RBNode *root, string indentation, bool last)
+{
+    /* Stampa la struttura dell'albero a schermo */
+    if(root != nullptr)
+    {
+        cout << indentation;
+        if(last)
+        {
+            cout << "R----";
+            indentation += "     ";
+        }
+        else
+        {
+            cout << "L----";
+            indentation += "|     ";
+        }
+
+        string node_color = root->color? "BLACK" : "RED";
+        cout << root->key << "(" << node_color << ")" << endl;
+
+        print_helper(root->left, indentation, false);
+        print_helper(root->right, indentation, true);
+    }
+}
+
+/* Stampa dell'albero RB */;
+void RBTree::print()
+{
+    if(root != nullptr)
+    {
+        print_helper(this->root, "", true);
+    }
+}
