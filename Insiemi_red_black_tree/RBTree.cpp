@@ -316,8 +316,237 @@ void RBTree::print()
             DELETE
 ================================*/
 
-/* Cancellazione di un nodo con una data chiave */
-RBNode *RBTree::delete_node(RBNode *node)
-{
+/* 
+La cancellazione di un nodo in un albero RB è complesso ma viene eseguito in un tempo log n.
+L'algoritmo di cancellazione oer alberi RB è costruito sull'algoritmo di cancellazione per 
+alberi binari di ricerca, però dopo la cancellazione si deve decidere se è necessario 
+ribilanciare o meno.
 
+In particolare le operazioni di ripristino del bilanciamento sono necessarie solo quando il nodo
+cancellato/spostato è nero.
+*/
+
+/* Metodo di supporto utilizzato dalla delete_node */
+void RBTree::delete_helper(RBNode *node, int key)
+{
+    /* Inizializziamo z a nullptr */
+    RBNode *z = nullptr;
+    /* Dichiariamo x e y come due nodi */
+    RBNode *x, *y;
+
+    /* Prima di cancellare il nodo verifichiamo che il nodo esista */
+    while(node != nullptr)
+    {
+        /* se la chiave coincide con il nodo analizzato */
+        if(node->key == key)
+        {
+            /* assegnamo tale nodo a z */
+            z = node;
+            break;
+        }
+
+        /* Se la chiave è >=  della chiave del nodo vai a destra altrimenti a sinistra */
+        if(key >= node->key)
+        {
+            node = node->right;
+        }
+        else
+        {
+            node = node->left;
+        }
+    }
+
+    /* Se la chiave non è stata trovata, lanciamo un errore */
+    if(z == nullptr)
+    {
+        cout << "Chiave non trovata nell'albero" << endl;
+        return;
+    }
+
+    /* 
+    Se la chiave verrà trovata in un nodo, possiamo  proseguire con l'esecuzione del
+    nostro algoritmo.
+
+    Quindi teniamo traccia di z, assegnandola ad y.
+    */
+   y = z;
+   /* Pochè il colore del nodo y potrebbe cambiare, memorizziamolo in una variabile */
+   bool y_original_color = y->color;
+
+   /* Se il figlio sinistro di z è nullo */
+   if(z->left == nullptr)
+   {
+       cout << "Z left" << endl;
+       /* Assegnamo ad x il figlio destro di z */
+       x = z->right;
+       /* Scambiamo z con z->right */
+       transplant(z,z->right);
+   }
+   else if(z->right == nullptr)
+   {
+       cout << "Z right" << endl;
+       /* 
+       Se il figlio destro di z è nullo,
+       assegnamo ad x il figlio destro di z
+       */
+      x = z->left;
+      /* Scambiamo z con z->left */
+      transplant(z,z->left);
+   }
+   else
+   {
+       /* 
+       In questo caso z ha entrambi i figli.
+       y assumerà il valore del suo successore
+       */
+      y = minimum(z->right);
+      /* Aggiorniamo il colore originale */
+      y_original_color = y->color;
+      /* Assegnamo ad x il figlio destro di z */
+      x = y->right;
+
+      /* Se il padre di y è z*/
+      if(y->parent == z)
+      {
+          /* Aggiorniamo il padre di x */
+          x->parent = y;
+      }
+      else
+      {
+          /* Scambiamo y con il suo figlio destro ed aggiorniamo i suo collegamenti */
+          transplant(y,y->right);
+          y->right = z->right;
+          y->right->parent = y;
+      }
+      /* Scambiamo z e y ed aggiorniamo y */
+      transplant(z,y);
+      y->left = z->left;
+      y->left->parent = y;
+      y->color = z->color;
+   }
+
+    cout << "Fine delete" << endl;
+    cout << (x == nullptr ? "NULL" : "GINO") << endl;
+   /* Solo nel caso in cui il colore originale sia nero passiamo lanciare la delete fixup */
+   if(y_original_color == BLACK)
+   {
+       delete_fixup(x);
+   }
+}
+
+/* Ripristino delle violazioni dovute alla cancellazione di un nodo nell'albero RB */
+void RBTree::delete_fixup(RBNode *x)
+{
+    cout << "FIXUP" << endl;
+    cout << (x == nullptr ? "NULL" : "GINO") << endl;
+   RBNode *w;
+
+   /* 
+   Eseguiremo un ciclo while fintanto che il nodo è diverso dalla radice e fino a quando 
+   il suo colore sarà nero 
+   */ 
+  while((x != root) && x->color == BLACK)
+  {
+      cout << "WHILE" << endl;
+      /* 
+      Prima di tutto dobbiamo capire se x è figlio sinistro o destro, così da applicare
+      regole attinenti al ramo in cui si trovano.
+
+      Logicamente le applicazioni di un ramo, esempio il sinistro, saranno le speculari del
+      suo opposto, ovvero il destro.
+      */
+     if(x == x->parent->left)
+     {
+         cout << "IF 1" << endl;
+         /* Figlio sinistro */
+
+         /* Assegnamo a w il fratello di x */
+         w = x->parent->right;
+         if(w->color == RED)
+         {
+             /* Caso 1: il fratello w di x è rosso */
+             w->color = BLACK;
+             x->parent->color = RED;
+             left_rotate(root,x->parent);
+             w = x->parent->right;
+         }
+         if((w->left->color == BLACK) && (w->right->color == BLACK))
+         {
+             /* Caso 2: il fratello w di x è nero ed entrambi i suoi figli sono neri */
+             w->color = RED;
+             x = x->parent;
+         }
+         else
+         {
+             if(w->right->color == BLACK)
+             {
+                /* 
+                Caso 3: il fratello w di x è nero, il figlio sinistro di w è rosso e il 
+                figlio destro di w è nero
+                */
+               w->left->color = BLACK;
+               w->color = RED;
+               right_rotate(root,w);
+               w = x->parent->right;
+             }
+             /* Caso 4: il fratello w di x è nero e il figlio destro di w è rosso */
+             w->color = x->parent->color;
+             x->parent->color = BLACK;
+             w->right->color = BLACK;
+             left_rotate(root,x->parent);
+             x = root;
+         }
+     }
+     else
+     {
+         cout << "IF 2" << endl;
+         /* Figlio destro */
+
+         /* Assegnamo a w il fratello di x */
+         w = x->parent->left;
+         if(w->color == RED)
+         {
+             /* Caso 1: il fratello w di x è rosso */
+             w->color = BLACK;
+             x->parent->color = RED;
+             right_rotate(root,x->parent);
+             w = x->parent->left;
+         }
+         if((w->right->color == BLACK) && (w->right->color == BLACK))
+         {
+             /* Caso 2: il fratello w di x è nero ed entrambi i suoi figli sono neri */
+             w->color = RED;
+             x = x->parent;
+         }
+         else
+         {
+             if(w->left->color == BLACK)
+             {
+                /* 
+                Caso 3: il fratello w di x è nero, il figlio sinistro di w è rosso e il 
+                figlio destro di w è nero
+                */
+               w->right->color = BLACK;
+               w->color = RED;
+               left_rotate(root,w);
+               w = x->parent->left;
+             }
+             /* Caso 4: il fratello w di x è nero e il figlio destro di w è rosso */
+             w->color = x->parent->color;
+             x->parent->color = BLACK;
+             w->left->color = BLACK;
+             right_rotate(root,x->parent);
+             x = root;
+         }
+     }
+  }
+  cout << "COLOR" << endl;
+  /* Assegnamo ad x il colore nero */
+  x->color = BLACK;
+}
+
+/* Cancellazione di un nodo con una data chiave */
+void RBTree::delete_node(int key)
+{
+    delete_helper(root,key);
 }
