@@ -15,7 +15,13 @@ int main()
     rb.insert(3);
     rb.insert(1);
     rb.insert(80);
-    //rb.delete_node(17);
+    rb.insert(100);
+    rb.insert(123);
+    rb.insert(110);
+    rb.insert(12);
+    rb.insert(7);
+
+    rb.delete_node(17);
 
     rb.print();
 

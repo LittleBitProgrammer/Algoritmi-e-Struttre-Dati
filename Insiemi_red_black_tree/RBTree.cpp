@@ -335,12 +335,12 @@ cancellato/spostato è nero.
 void RBTree::delete_helper(RBNode *node, int key)
 {
     /* Inizializziamo z a nullptr */
-    RBNode *z = nullptr;
+    RBNode *z = TNULL;
     /* Dichiariamo x e y come due nodi */
     RBNode *x, *y;
 
     /* Prima di cancellare il nodo verifichiamo che il nodo esista */
-    while(node != nullptr)
+    while(node != TNULL)
     {
         /* se la chiave coincide con il nodo analizzato */
         if(node->key == key)
@@ -362,7 +362,7 @@ void RBTree::delete_helper(RBNode *node, int key)
     }
 
     /* Se la chiave non è stata trovata, lanciamo un errore */
-    if(z == nullptr)
+    if(z == TNULL)
     {
         cout << "Chiave non trovata nell'albero" << endl;
         return;
@@ -379,7 +379,7 @@ void RBTree::delete_helper(RBNode *node, int key)
    bool y_original_color = y->color;
 
    /* Se il figlio sinistro di z è nullo */
-   if(z->left == nullptr)
+   if(z->left == TNULL)
    {
        cout << "Z left" << endl;
        /* Assegnamo ad x il figlio destro di z */
@@ -387,7 +387,7 @@ void RBTree::delete_helper(RBNode *node, int key)
        /* Scambiamo z con z->right */
        transplant(z,z->right);
    }
-   else if(z->right == nullptr)
+   else if(z->right == TNULL)
    {
        cout << "Z right" << endl;
        /* 
@@ -405,6 +405,7 @@ void RBTree::delete_helper(RBNode *node, int key)
        y assumerà il valore del suo successore
        */
       y = minimum(z->right);
+      cout <<"CHIAVE = "<< y->key << endl;
       /* Aggiorniamo il colore originale */
       y_original_color = y->color;
       /* Assegnamo ad x il figlio destro di z */
@@ -563,4 +564,36 @@ RBTree::RBTree()
     TNULL->left = nullptr;
     TNULL->right = nullptr;
     root = TNULL;
+}
+
+/* Ricerca del nodo con chiave minima */
+RBNode *RBTree::minimum(RBNode *node)
+{
+    /* 
+    Per le proprietà dell'ABR avremo un valore minore rispetto alla chiave del nodo corrente
+    nel corrispettivo figlio sinistro, peranto basterà iterare fino a quando esiste un figlio 
+    sinistro per trovare il valore minimo presente nell'ABR
+    */
+    while(node->left != TNULL)
+    {
+        node = node->left;
+    }
+
+    return node;
+}
+
+/* Ricerca del nodo con chiave massima */
+RBNode *RBTree::maximum(RBNode *node)
+{
+    /* 
+    Per le proprietà dell'ABR avremo un valore maggiore rispetto alla chiave del nodo corrente
+    nel corrispettivo figlio destro, peranto basterà iterare fino a quando esiste un figlio 
+    destro per trovare il valore massimo presente nell'ABR
+    */
+   while(node->right != TNULL)
+   {
+       node = node->right;
+   }
+
+   return node;
 }

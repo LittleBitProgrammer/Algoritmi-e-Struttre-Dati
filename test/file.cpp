@@ -423,11 +423,15 @@ int main() {
     rb.insert(3);
     rb.insert(1);
     rb.insert(80);
-    
+    rb.insert(100);
+    rb.insert(123);
+    rb.insert(110);
+    rb.insert(12);
+    rb.insert(7);
 
     rb.printTree();
     cout << endl;
-    //<< "After deleting" << endl;
-    //rb.deleteNode(17);
-    //rb.printTree();
+    << "After deleting" << endl;
+    rb.deleteNode(17);
+    rb.printTree();
 }

@@ -55,10 +55,6 @@ class AbstractBinarySearchTree
         int tree_height();
         /* Ricerca in un albero binario di ricerca */
         T *search(int key);
-        /* Ricerca del nodo con chiave minima */
-        T *minimum(T *node);
-        /* Ricerca del nodo con chiave massima */
-        T *maximum(T *node);
         /* Trova il successore del dato nodo */
         T *successor(T* node);
         /* Trova il predecessore di un dato nodo */
@@ -75,6 +71,10 @@ class AbstractBinarySearchTree
         virtual void insert(int key) = 0;
         /* Cancellazione di un nodo con una data chiave */
         virtual void delete_node(int key) = 0;
+        /* Ricerca del nodo con chiave minima */
+        virtual T *minimum(T *node) = 0;
+        /* Ricerca del nodo con chiave massima */
+        virtual T *maximum(T *node) = 0;
 };
 
 template<typename T>
@@ -160,40 +160,6 @@ T *AbstractBinarySearchTree<T>::search_helper(T *node, int key)
         */
        return search_helper(node->right,key);
     }
-}
-
-/* Ricerca del nodo con chiave minima */
-template<typename T>
-T *AbstractBinarySearchTree<T>::minimum(T *node)
-{
-    /* 
-    Per le proprietà dell'ABR avremo un valore minore rispetto alla chiave del nodo corrente
-    nel corrispettivo figlio sinistro, peranto basterà iterare fino a quando esiste un figlio 
-    sinistro per trovare il valore minimo presente nell'ABR
-    */
-    while(node->left != nullptr)
-    {
-        node = node->left;
-    }
-
-    return node;
-}
-
-/* Ricerca del nodo con chiave massima */
-template<typename T>
-T *AbstractBinarySearchTree<T>::maximum(T *node)
-{
-    /* 
-    Per le proprietà dell'ABR avremo un valore maggiore rispetto alla chiave del nodo corrente
-    nel corrispettivo figlio destro, peranto basterà iterare fino a quando esiste un figlio 
-    destro per trovare il valore massimo presente nell'ABR
-    */
-   while(node->right != nullptr)
-   {
-       node = node->right;
-   }
-
-   return node;
 }
 
 /* Trova il successore del dato nodo */

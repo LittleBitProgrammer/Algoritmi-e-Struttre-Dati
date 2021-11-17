@@ -72,6 +72,10 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         void delete_node(int key);
         /* Stampa dell'albero RB */;
         void print();
+        /* Ricerca del nodo con chiave minima */
+        RBNode *minimum(RBNode *node);
+        /* Ricerca del nodo con chiave massima */
+        RBNode *maximum(RBNode *node);
 };
 
 #endif
