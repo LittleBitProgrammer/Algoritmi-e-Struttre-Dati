@@ -597,3 +597,123 @@ RBNode *RBTree::maximum(RBNode *node)
 
    return node;
 }
+
+/* Metodo helper sfruttato dalla preorder */
+void RBTree::preorder_helper(RBNode *node)
+{
+    if(node != TNULL)
+    {
+        cout << node->key << " ";     /* visita nodo */
+        preorder_helper(node->left);  /* visita figlio sinistro */
+        preorder_helper(node->right); /* visita figlio destro */
+    }
+}
+
+/* Metodo helper sfruttato dalla inorder */
+void RBTree::inorder_helper(RBNode *node)
+{
+    if(node != TNULL)
+    {
+        inorder_helper(node->left);  /* Visita figlio sinistro*/
+        cout << node->key << " ";    /* Visita nodo */
+        inorder_helper(node->right); /* Visita figlio destro */
+    }
+}
+
+/* Metodo helper sfruttato dalla postorder */
+void RBTree::postorder_helper(RBNode *node)
+{
+    if(node != TNULL)
+    {
+        postorder_helper(node->left);  /* Visita figlio sinistro*/
+        postorder_helper(node->right); /* Visita figlio destro */
+        cout << node->key << " ";      /* Visita nodo */
+    }
+}
+
+/* Trova il successore del dato nodo */
+RBNode *RBTree::successor(RBNode *node)
+{
+    /* Se il nodo ha un figlio destro allora il successore è il minimo del sottoalbero destro */
+    if(node->right != TNULL)
+    {
+        return minimum(node->right);
+    }
+
+    /* 
+    Altrimenti il successore è il primo antenato del nodo tale che il nodo si trovi nel 
+    sottoalbero sinistro
+    */
+   RBNode *y = node->parent;
+   while(y != TNULL && node == y->right)
+   {
+       node = y;
+       y = y->parent;
+   }
+
+   return y;
+}
+
+/* Trova il predecessore di un dato nodo */
+RBNode *RBTree::predecessor(RBNode *node)
+{
+    /* Se il nodo ha un figlio sinistro allora il successore è il massimo del sottoalbero sinistro */
+    if(node->left != TNULL)
+    {
+        return maximum(node->left);
+    }
+
+    /* 
+    Altrimenti il successore è il primo antenato del nodo tale che il nodo si trovi nel 
+    sottoalbero destro
+    */
+   RBNode *y = node->parent;
+   while(y != TNULL && node == y->left)
+   {
+       node = y;
+       y = y->parent;
+   }
+
+   return y;
+}
+
+/* Metodo helper sfruttato dalla search */
+RBNode *RBTree::search_helper(RBNode *node, int key)
+{
+    /* Se il nodo è nullo o se la chiave ricercata coincide con la chiave del nodo */
+    if(node == TNULL || key == node->key)
+    {
+        /* Ritorna il nodo */
+        return node;
+    }
+
+    /* 
+    Se la chiave è minore di quella del nodo attuale allora dobbiamo proseguire 
+    la ricerca con il figlio sinistro viste le proprietà dell'albero binario di ricerca
+    */
+    if(key < node->key)
+    {
+        return search_helper(node->left,key);
+    }
+    else
+    {
+        /* 
+        Altrimenti la chiave sarà maggiore di quella del nodo attuale, per cui dovremo
+        proseguire la ricerca con il figlio destro viste le proprietà dell'ABR
+        */
+       return search_helper(node->right,key);
+    }
+}
+
+/* Metodo helper sfruttato dalla tree_height */
+int RBTree::tree_height_helper(RBNode *node)
+{
+    if(node != TNULL)
+    {
+        return 1 + max(tree_height_helper(node->right),tree_height_helper(node->left));
+    }
+    else
+    {
+        return 0;
+    }
+}

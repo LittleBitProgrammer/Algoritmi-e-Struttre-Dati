@@ -431,7 +431,21 @@ int main() {
 
     rb.printTree();
     cout << endl;
-    << "After deleting" << endl;
+    cout << "After deleting" << endl;
     rb.deleteNode(17);
     rb.printTree();
+
+    cout << "\nPREORDER = " << endl;
+    rb.preorder();
+    cout << "\nINORDER = " << endl;
+    rb.inorder();
+    cout << "\nPOSTORDER = " << endl;
+    rb.postorder();
+
+    NodePtr searched = rb.searchTree(15);
+    cout << "\nNodo cercato con chiave = " << searched->data << endl;
+
+    cout << "\nSuccessore di 15 = " << rb.successor((rb.searchTree(15)))->data << endl;
+    cout << "\nPredecessore di 15 = " << rb.predecessor((rb.searchTree(15)))->data << endl;
+
 }

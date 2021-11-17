@@ -60,6 +60,16 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         void left_rotate(RBNode *x);
         /* Rotazione a destra */
         void right_rotate(RBNode *y);
+        /* Metodo helper sfruttato dalla preorder */
+        void preorder_helper(RBNode *node);
+        /* Metodo helper sfruttato dalla inorder */
+        void inorder_helper(RBNode *node);
+        /* Metodo helper sfruttato dalla postorder */
+        void postorder_helper(RBNode *node);
+        /* Metodo helper sfruttato dalla search */
+        RBNode *search_helper(RBNode *node,int key);
+        /* Metodo helper sfruttato dalla tree_height */
+        int tree_height_helper(RBNode *node);
         
     public:
         /* Constructor */
@@ -76,6 +86,10 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         RBNode *minimum(RBNode *node);
         /* Ricerca del nodo con chiave massima */
         RBNode *maximum(RBNode *node);
+        /* Trova il successore del dato nodo */
+        RBNode *successor(RBNode* node);
+        /* Trova il predecessore di un dato nodo */
+        RBNode *predecessor(RBNode* node);
 };
 
 #endif
