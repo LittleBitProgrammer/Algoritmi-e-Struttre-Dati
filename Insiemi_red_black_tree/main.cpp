@@ -1,48 +1,45 @@
-#include "Bst.h"
+#include "RBTree.h"
 
 int main()
 {
-    Bst bst;
+    RBTree rb;
 
-    bst.insert(50);
-    bst.insert(30);
-    bst.insert(70);
-    bst.insert(23);
-    bst.insert(35);
-    bst.insert(11);
-    bst.insert(25);
-    bst.insert(31);
-    bst.insert(42);
-    bst.insert(80);
-    bst.insert(73);
-    bst.insert(85);
+    /* Inserimento nodi */
+    rb.insert(8);
+    rb.insert(18);
+    rb.insert(5);
+    rb.insert(15);
+    rb.insert(17);
+    rb.insert(25);
+    rb.insert(40);
+    rb.insert(3);
+    rb.insert(1);
+    rb.insert(80);
+    rb.insert(100);
+    rb.insert(123);
+    rb.insert(110);
+    rb.insert(12);
+    rb.insert(7);
 
-    bst.print_tree();
+    rb.delete_node(17);
+    rb.print();
 
-    cout << "\nAltezza ABR = " << bst.tree_height() << endl;
-    cout << "Minimo ABR = " << bst.minimum(bst.get_root())->key << endl;
-    cout << "Massimo ABR = " << bst.maximum(bst.get_root())->key << endl;
-    cout << "Successore radice = " << bst.successor(bst.get_root())->key << endl;
-    cout << "Predecessore radice = " << bst.predecessor(bst.get_root())->key << endl;
-    cout << "Cancelliamo nodo con chiave 70" << endl;
+    cout << "\nPREORDER = " << endl;
+    rb.preorder();
+    cout << "\nINORDER = " << endl;
+    rb.inorder();
+    cout << "\nPOSTORDER = " << endl;
+    rb.postorder();
 
-    Node *searched = bst.search(70);
-    bst.delete_node(searched);
-    bst.print_tree();
+    RBNode *searched = rb.search(15);
+    cout << "\nNodo cercato con chiave = " << searched->key;
 
-    cout << "\n\n\n";
+    cout << "\nSuccessore di 15 = " << rb.successor((rb.search(15)))->key << endl;
+    cout << "\nPredecessore di 15 = " << rb.predecessor((rb.search(15)))->key << endl;
 
-    cout << "Visita preorder: " << endl;
-    bst.preorder();
-    cout << endl;
+    cout << "\nALTEZZA = " << rb.tree_height() << endl;
+    cout << "\nALTEZZA NERA = " << rb.black_height(rb.get_root()) << endl;
 
-    cout << "Visita inorder: " << endl;
-    bst.inorder();
-    cout << endl;
 
-    cout << "Visita postorder: " << endl;
-    bst.postorder();
-    cout << endl;
-    
     return 0;
 }
