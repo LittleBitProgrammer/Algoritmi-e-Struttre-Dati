@@ -381,7 +381,6 @@ void RBTree::delete_helper(RBNode *node, int key)
    /* Se il figlio sinistro di z è nullo */
    if(z->left == TNULL)
    {
-       cout << "Z left" << endl;
        /* Assegnamo ad x il figlio destro di z */
        x = z->right;
        /* Scambiamo z con z->right */
@@ -389,7 +388,6 @@ void RBTree::delete_helper(RBNode *node, int key)
    }
    else if(z->right == TNULL)
    {
-       cout << "Z right" << endl;
        /* 
        Se il figlio destro di z è nullo,
        assegnamo ad x il figlio destro di z
@@ -405,7 +403,6 @@ void RBTree::delete_helper(RBNode *node, int key)
        y assumerà il valore del suo successore
        */
       y = minimum(z->right);
-      cout <<"CHIAVE = "<< y->key << endl;
       /* Aggiorniamo il colore originale */
       y_original_color = y->color;
       /* Assegnamo ad x il figlio destro di z */
@@ -431,8 +428,6 @@ void RBTree::delete_helper(RBNode *node, int key)
       y->color = z->color;
    }
 
-    cout << "Fine delete" << endl;
-    cout << (x == nullptr ? "NULL" : "GINO") << endl;
    /* Solo nel caso in cui il colore originale sia nero passiamo lanciare la delete fixup */
    if(y_original_color == BLACK)
    {
@@ -443,8 +438,6 @@ void RBTree::delete_helper(RBNode *node, int key)
 /* Ripristino delle violazioni dovute alla cancellazione di un nodo nell'albero RB */
 void RBTree::delete_fixup(RBNode *x)
 {
-    cout << "FIXUP" << endl;
-    cout << (x == nullptr ? "NULL" : "GINO") << endl;
    RBNode *w;
 
    /* 
@@ -453,7 +446,6 @@ void RBTree::delete_fixup(RBNode *x)
    */ 
   while((x != root) && x->color == BLACK)
   {
-      cout << "WHILE" << endl;
       /* 
       Prima di tutto dobbiamo capire se x è figlio sinistro o destro, così da applicare
       regole attinenti al ramo in cui si trovano.
@@ -463,7 +455,6 @@ void RBTree::delete_fixup(RBNode *x)
       */
      if(x == x->parent->left)
      {
-         cout << "IF 1" << endl;
          /* Figlio sinistro */
 
          /* Assegnamo a w il fratello di x */
@@ -505,7 +496,6 @@ void RBTree::delete_fixup(RBNode *x)
      }
      else
      {
-         cout << "IF 2" << endl;
          /* Figlio destro */
 
          /* Assegnamo a w il fratello di x */
@@ -546,7 +536,6 @@ void RBTree::delete_fixup(RBNode *x)
          }
      }
   }
-  cout << "COLOR" << endl;
   /* Assegnamo ad x il colore nero */
   x->color = BLACK;
 }
