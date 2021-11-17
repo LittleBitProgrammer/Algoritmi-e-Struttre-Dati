@@ -14,7 +14,7 @@ mediante modifiche alla struttura dei puntatori mediante rotazioni:
 */
 
 /* Rotazione a sinistra */
-void RBTree::left_rotate(RBNode *&root, RBNode *&x)
+void RBTree::left_rotate(RBNode *x)
 {
     /* Identifichiamo il nodo y come il figlio destro di x */
     RBNode *y = x->right;
@@ -22,10 +22,10 @@ void RBTree::left_rotate(RBNode *&root, RBNode *&x)
     x->right = y->left;
 
     /* Se la right di x non è nulla */
-    if(x->right != nullptr)
+    if(y->left != TNULL)
     {
         /* Aggiorniamo il padre del figlio destro di x precedentemente cambiato */
-        x->right->parent = x;
+        y->left->parent = x;
     }
     /* Cambiamo il padre di y con il padre di x */
     y->parent = x->parent;
@@ -54,7 +54,7 @@ void RBTree::left_rotate(RBNode *&root, RBNode *&x)
 }
 
 /* Rotazione a destra */
-void RBTree::right_rotate(RBNode *&root, RBNode *&x)
+void RBTree::right_rotate(RBNode *x)
 {
     /* Identifichiamo il nodo y come il figlio sinistro di x */
     RBNode *y = x->left;
@@ -62,10 +62,10 @@ void RBTree::right_rotate(RBNode *&root, RBNode *&x)
     x->left = y->right;
 
     /* Se la left di x non è nulla */
-    if(x->left != nullptr)
+    if(y->right != TNULL)
     {
         /* Aggiorniamo il padre del figlio sinistro di x precedentemente cambiato */
-        x->left->parent = x;
+        y->right->parent = x;
     }
     /* Cambiamo il padre di y con il padre di x */
     y->parent = x->parent;
@@ -115,7 +115,7 @@ Le istruzioni dei tre casi vengono commentate nella fixup dell'insert.
 RBNode *RBTree::bst_insert_helper(RBNode *root, RBNode *node_to_add)
 {
     /* Se l'albero è vuoto, allora il nuovo nodo inserito è la radice */
-    if(root == nullptr)
+    if(root == TNULL)
     {
         return node_to_add;
     }
@@ -195,7 +195,7 @@ void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
                 if(x == parent->right)
                 {
                     /* Ruotiamo a sinistra x*/
-                    left_rotate(root, parent);
+                    left_rotate(parent);
                     /* Il nuovo x diventerà il padre di x */
                     x = parent;
                     parent = x->parent;
@@ -206,7 +206,7 @@ void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
                 in questo caso eseguiamo alcuni cambi di colore e eseguiamo una rotazioneverso
                 destra
                 */
-                right_rotate(root,grand_parent);
+                right_rotate(grand_parent);
                 std::swap(parent->color, grand_parent->color);
                 x = parent;
             }
@@ -239,7 +239,7 @@ void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
                 if(x == parent->left)
                 {
                     /* Ruotiamo a destra x*/
-                    right_rotate(root,parent);
+                    right_rotate(parent);
                     /* Il nuovo x diventerà il padre di x */
                     x = parent;
                     parent = x->parent;
@@ -250,7 +250,7 @@ void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
                 in questo caso eseguiamo alcuni cambi di colore e eseguiamo una rotazione verso
                 sinsitra
                 */
-                left_rotate(root,grand_parent);
+                left_rotate(grand_parent);
                 std::swap(parent->color,grand_parent->color);
                 x = parent;
             }
@@ -264,7 +264,12 @@ void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
 void RBTree::insert(int key)
 {
     /* Dichiamo e inizializziamo un nuovo nodo */
-    RBNode *node_to_add = new RBNode(key);
+    RBNode *node_to_add = new RBNode;
+    node_to_add->parent = nullptr;
+    node_to_add->key = key;
+    node_to_add->left = TNULL;
+    node_to_add->right = TNULL;
+    node_to_add->color = RED;
 
     /* Lanciamo un insert BST */
     root = bst_insert_helper(root,node_to_add);
@@ -281,7 +286,7 @@ void RBTree::insert(int key)
 void RBTree::print_helper(RBNode *root, string indentation, bool last)
 {
     /* Stampa la struttura dell'albero a schermo */
-    if(root != nullptr)
+    if(root != TNULL)
     {
         cout << indentation;
         if(last)
@@ -330,12 +335,12 @@ cancellato/spostato è nero.
 void RBTree::delete_helper(RBNode *node, int key)
 {
     /* Inizializziamo z a nullptr */
-    RBNode *z = nullptr;
+    RBNode *z = TNULL;
     /* Dichiariamo x e y come due nodi */
     RBNode *x, *y;
 
     /* Prima di cancellare il nodo verifichiamo che il nodo esista */
-    while(node != nullptr)
+    while(node != TNULL)
     {
         /* se la chiave coincide con il nodo analizzato */
         if(node->key == key)
@@ -357,7 +362,7 @@ void RBTree::delete_helper(RBNode *node, int key)
     }
 
     /* Se la chiave non è stata trovata, lanciamo un errore */
-    if(z == nullptr)
+    if(z == TNULL)
     {
         cout << "Chiave non trovata nell'albero" << endl;
         return;
@@ -374,17 +379,15 @@ void RBTree::delete_helper(RBNode *node, int key)
    bool y_original_color = y->color;
 
    /* Se il figlio sinistro di z è nullo */
-   if(z->left == nullptr)
+   if(z->left == TNULL)
    {
-       cout << "Z left" << endl;
        /* Assegnamo ad x il figlio destro di z */
        x = z->right;
        /* Scambiamo z con z->right */
        transplant(z,z->right);
    }
-   else if(z->right == nullptr)
+   else if(z->right == TNULL)
    {
-       cout << "Z right" << endl;
        /* 
        Se il figlio destro di z è nullo,
        assegnamo ad x il figlio destro di z
@@ -425,8 +428,6 @@ void RBTree::delete_helper(RBNode *node, int key)
       y->color = z->color;
    }
 
-    cout << "Fine delete" << endl;
-    cout << (x == nullptr ? "NULL" : "GINO") << endl;
    /* Solo nel caso in cui il colore originale sia nero passiamo lanciare la delete fixup */
    if(y_original_color == BLACK)
    {
@@ -437,8 +438,6 @@ void RBTree::delete_helper(RBNode *node, int key)
 /* Ripristino delle violazioni dovute alla cancellazione di un nodo nell'albero RB */
 void RBTree::delete_fixup(RBNode *x)
 {
-    cout << "FIXUP" << endl;
-    cout << (x == nullptr ? "NULL" : "GINO") << endl;
    RBNode *w;
 
    /* 
@@ -447,7 +446,6 @@ void RBTree::delete_fixup(RBNode *x)
    */ 
   while((x != root) && x->color == BLACK)
   {
-      cout << "WHILE" << endl;
       /* 
       Prima di tutto dobbiamo capire se x è figlio sinistro o destro, così da applicare
       regole attinenti al ramo in cui si trovano.
@@ -457,7 +455,6 @@ void RBTree::delete_fixup(RBNode *x)
       */
      if(x == x->parent->left)
      {
-         cout << "IF 1" << endl;
          /* Figlio sinistro */
 
          /* Assegnamo a w il fratello di x */
@@ -467,7 +464,7 @@ void RBTree::delete_fixup(RBNode *x)
              /* Caso 1: il fratello w di x è rosso */
              w->color = BLACK;
              x->parent->color = RED;
-             left_rotate(root,x->parent);
+             left_rotate(x->parent);
              w = x->parent->right;
          }
          if((w->left->color == BLACK) && (w->right->color == BLACK))
@@ -486,20 +483,19 @@ void RBTree::delete_fixup(RBNode *x)
                 */
                w->left->color = BLACK;
                w->color = RED;
-               right_rotate(root,w);
+               right_rotate(w);
                w = x->parent->right;
              }
              /* Caso 4: il fratello w di x è nero e il figlio destro di w è rosso */
              w->color = x->parent->color;
              x->parent->color = BLACK;
              w->right->color = BLACK;
-             left_rotate(root,x->parent);
+             left_rotate(x->parent);
              x = root;
          }
      }
      else
      {
-         cout << "IF 2" << endl;
          /* Figlio destro */
 
          /* Assegnamo a w il fratello di x */
@@ -509,7 +505,7 @@ void RBTree::delete_fixup(RBNode *x)
              /* Caso 1: il fratello w di x è rosso */
              w->color = BLACK;
              x->parent->color = RED;
-             right_rotate(root,x->parent);
+             right_rotate(x->parent);
              w = x->parent->left;
          }
          if((w->right->color == BLACK) && (w->right->color == BLACK))
@@ -528,19 +524,18 @@ void RBTree::delete_fixup(RBNode *x)
                 */
                w->right->color = BLACK;
                w->color = RED;
-               left_rotate(root,w);
+               left_rotate(w);
                w = x->parent->left;
              }
              /* Caso 4: il fratello w di x è nero e il figlio destro di w è rosso */
              w->color = x->parent->color;
              x->parent->color = BLACK;
              w->left->color = BLACK;
-             right_rotate(root,x->parent);
+             right_rotate(x->parent);
              x = root;
          }
      }
   }
-  cout << "COLOR" << endl;
   /* Assegnamo ad x il colore nero */
   x->color = BLACK;
 }
@@ -549,4 +544,165 @@ void RBTree::delete_fixup(RBNode *x)
 void RBTree::delete_node(int key)
 {
     delete_helper(root,key);
+}
+
+RBTree::RBTree()
+{
+    TNULL = new RBNode;
+    TNULL->color = BLACK;
+    TNULL->left = nullptr;
+    TNULL->right = nullptr;
+    root = TNULL;
+}
+
+/* Ricerca del nodo con chiave minima */
+RBNode *RBTree::minimum(RBNode *node)
+{
+    /* 
+    Per le proprietà dell'ABR avremo un valore minore rispetto alla chiave del nodo corrente
+    nel corrispettivo figlio sinistro, peranto basterà iterare fino a quando esiste un figlio 
+    sinistro per trovare il valore minimo presente nell'ABR
+    */
+    while(node->left != TNULL)
+    {
+        node = node->left;
+    }
+
+    return node;
+}
+
+/* Ricerca del nodo con chiave massima */
+RBNode *RBTree::maximum(RBNode *node)
+{
+    /* 
+    Per le proprietà dell'ABR avremo un valore maggiore rispetto alla chiave del nodo corrente
+    nel corrispettivo figlio destro, peranto basterà iterare fino a quando esiste un figlio 
+    destro per trovare il valore massimo presente nell'ABR
+    */
+   while(node->right != TNULL)
+   {
+       node = node->right;
+   }
+
+   return node;
+}
+
+/* Metodo helper sfruttato dalla preorder */
+void RBTree::preorder_helper(RBNode *node)
+{
+    if(node != TNULL)
+    {
+        cout << node->key << " ";     /* visita nodo */
+        preorder_helper(node->left);  /* visita figlio sinistro */
+        preorder_helper(node->right); /* visita figlio destro */
+    }
+}
+
+/* Metodo helper sfruttato dalla inorder */
+void RBTree::inorder_helper(RBNode *node)
+{
+    if(node != TNULL)
+    {
+        inorder_helper(node->left);  /* Visita figlio sinistro*/
+        cout << node->key << " ";    /* Visita nodo */
+        inorder_helper(node->right); /* Visita figlio destro */
+    }
+}
+
+/* Metodo helper sfruttato dalla postorder */
+void RBTree::postorder_helper(RBNode *node)
+{
+    if(node != TNULL)
+    {
+        postorder_helper(node->left);  /* Visita figlio sinistro*/
+        postorder_helper(node->right); /* Visita figlio destro */
+        cout << node->key << " ";      /* Visita nodo */
+    }
+}
+
+/* Trova il successore del dato nodo */
+RBNode *RBTree::successor(RBNode *node)
+{
+    /* Se il nodo ha un figlio destro allora il successore è il minimo del sottoalbero destro */
+    if(node->right != TNULL)
+    {
+        return minimum(node->right);
+    }
+
+    /* 
+    Altrimenti il successore è il primo antenato del nodo tale che il nodo si trovi nel 
+    sottoalbero sinistro
+    */
+   RBNode *y = node->parent;
+   while(y != TNULL && node == y->right)
+   {
+       node = y;
+       y = y->parent;
+   }
+
+   return y;
+}
+
+/* Trova il predecessore di un dato nodo */
+RBNode *RBTree::predecessor(RBNode *node)
+{
+    /* Se il nodo ha un figlio sinistro allora il successore è il massimo del sottoalbero sinistro */
+    if(node->left != TNULL)
+    {
+        return maximum(node->left);
+    }
+
+    /* 
+    Altrimenti il successore è il primo antenato del nodo tale che il nodo si trovi nel 
+    sottoalbero destro
+    */
+   RBNode *y = node->parent;
+   while(y != TNULL && node == y->left)
+   {
+       node = y;
+       y = y->parent;
+   }
+
+   return y;
+}
+
+/* Metodo helper sfruttato dalla search */
+RBNode *RBTree::search_helper(RBNode *node, int key)
+{
+    /* Se il nodo è nullo o se la chiave ricercata coincide con la chiave del nodo */
+    if(node == TNULL || key == node->key)
+    {
+        /* Ritorna il nodo */
+        return node;
+    }
+
+    /* 
+    Se la chiave è minore di quella del nodo attuale allora dobbiamo proseguire 
+    la ricerca con il figlio sinistro viste le proprietà dell'albero binario di ricerca
+    */
+    if(key < node->key)
+    {
+        return search_helper(node->left,key);
+    }
+    else
+    {
+        /* 
+        Altrimenti la chiave sarà maggiore di quella del nodo attuale, per cui dovremo
+        proseguire la ricerca con il figlio destro viste le proprietà dell'ABR
+        */
+       return search_helper(node->right,key);
+    }
+}
+
+/* Metodo helper sfruttato dalla tree_height */
+int RBTree::tree_height_helper(RBNode *node)
+{
+    if(node != TNULL)
+    {
+        return 1 + max(tree_height_helper(node->right),tree_height_helper(node->left));
+    }
+    else
+    {
+        return 0;
+    }
 }

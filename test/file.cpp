@@ -423,11 +423,29 @@ int main() {
     rb.insert(3);
     rb.insert(1);
     rb.insert(80);
-    
+    rb.insert(100);
+    rb.insert(123);
+    rb.insert(110);
+    rb.insert(12);
+    rb.insert(7);
 
     rb.printTree();
-    cout << endl
-     << "After deleting" << endl;
+    cout << endl;
+    cout << "After deleting" << endl;
     rb.deleteNode(17);
     rb.printTree();
+
+    cout << "\nPREORDER = " << endl;
+    rb.preorder();
+    cout << "\nINORDER = " << endl;
+    rb.inorder();
+    cout << "\nPOSTORDER = " << endl;
+    rb.postorder();
+
+    NodePtr searched = rb.searchTree(15);
+    cout << "\nNodo cercato con chiave = " << searched->data << endl;
+
+    cout << "\nSuccessore di 15 = " << rb.successor((rb.searchTree(15)))->data << endl;
+    cout << "\nPredecessore di 15 = " << rb.predecessor((rb.searchTree(15)))->data << endl;
+
 }

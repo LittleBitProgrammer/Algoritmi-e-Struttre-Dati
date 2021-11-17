@@ -15,9 +15,29 @@ int main()
     rb.insert(3);
     rb.insert(1);
     rb.insert(80);
-    rb.delete_node(17);
+    rb.insert(100);
+    rb.insert(123);
+    rb.insert(110);
+    rb.insert(12);
+    rb.insert(7);
 
+    rb.delete_node(17);
     rb.print();
+
+    cout << "\nPREORDER = " << endl;
+    rb.preorder();
+    cout << "\nINORDER = " << endl;
+    rb.inorder();
+    cout << "\nPOSTORDER = " << endl;
+    rb.postorder();
+
+    RBNode *searched = rb.search(15);
+    cout << "\nNodo cercato con chiave = " << searched->key;
+
+    cout << "\nSuccessore di 15 = " << rb.successor((rb.search(15)))->key << endl;
+    cout << "\nPredecessore di 15 = " << rb.predecessor((rb.search(15)))->key << endl;
+
+    cout << "ALTEZZA = " << rb.tree_height() << endl;
 
     return 0;
 }
