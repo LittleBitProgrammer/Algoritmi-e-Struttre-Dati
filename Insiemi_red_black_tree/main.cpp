@@ -37,7 +37,9 @@ int main()
     cout << "\nSuccessore di 15 = " << rb.successor((rb.search(15)))->key << endl;
     cout << "\nPredecessore di 15 = " << rb.predecessor((rb.search(15)))->key << endl;
 
-    cout << "ALTEZZA = " << rb.tree_height() << endl;
+    cout << "\nALTEZZA = " << rb.tree_height() << endl;
+    cout << "\nALTEZZA NERA = " << rb.black_height(rb.get_root()) << endl;
+
 
     return 0;
 }

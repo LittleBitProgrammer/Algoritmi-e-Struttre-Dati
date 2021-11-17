@@ -90,6 +90,8 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         RBNode *successor(RBNode* node);
         /* Trova il predecessore di un dato nodo */
         RBNode *predecessor(RBNode* node);
+        /* Calcola l'altezza nera di un dato nodo x */
+        int black_height(RBNode *node);
 };
 
 #endif
