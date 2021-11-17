@@ -14,7 +14,7 @@ mediante modifiche alla struttura dei puntatori mediante rotazioni:
 */
 
 /* Rotazione a sinistra */
-void RBTree::left_rotate(RBNode *&root, RBNode *&x)
+void RBTree::left_rotate(RBNode *x)
 {
     /* Identifichiamo il nodo y come il figlio destro di x */
     RBNode *y = x->right;
@@ -22,10 +22,10 @@ void RBTree::left_rotate(RBNode *&root, RBNode *&x)
     x->right = y->left;
 
     /* Se la right di x non è nulla */
-    if(x->right != nullptr)
+    if(y->left != TNULL)
     {
         /* Aggiorniamo il padre del figlio destro di x precedentemente cambiato */
-        x->right->parent = x;
+        y->left->parent = x;
     }
     /* Cambiamo il padre di y con il padre di x */
     y->parent = x->parent;
@@ -54,7 +54,7 @@ void RBTree::left_rotate(RBNode *&root, RBNode *&x)
 }
 
 /* Rotazione a destra */
-void RBTree::right_rotate(RBNode *&root, RBNode *&x)
+void RBTree::right_rotate(RBNode *x)
 {
     /* Identifichiamo il nodo y come il figlio sinistro di x */
     RBNode *y = x->left;
@@ -62,10 +62,10 @@ void RBTree::right_rotate(RBNode *&root, RBNode *&x)
     x->left = y->right;
 
     /* Se la left di x non è nulla */
-    if(x->left != nullptr)
+    if(y->right != TNULL)
     {
         /* Aggiorniamo il padre del figlio sinistro di x precedentemente cambiato */
-        x->left->parent = x;
+        y->right->parent = x;
     }
     /* Cambiamo il padre di y con il padre di x */
     y->parent = x->parent;
@@ -115,7 +115,7 @@ Le istruzioni dei tre casi vengono commentate nella fixup dell'insert.
 RBNode *RBTree::bst_insert_helper(RBNode *root, RBNode *node_to_add)
 {
     /* Se l'albero è vuoto, allora il nuovo nodo inserito è la radice */
-    if(root == nullptr)
+    if(root == TNULL)
     {
         return node_to_add;
     }
@@ -195,7 +195,7 @@ void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
                 if(x == parent->right)
                 {
                     /* Ruotiamo a sinistra x*/
-                    left_rotate(root, parent);
+                    left_rotate(parent);
                     /* Il nuovo x diventerà il padre di x */
                     x = parent;
                     parent = x->parent;
@@ -206,7 +206,7 @@ void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
                 in questo caso eseguiamo alcuni cambi di colore e eseguiamo una rotazioneverso
                 destra
                 */
-                right_rotate(root,grand_parent);
+                right_rotate(grand_parent);
                 std::swap(parent->color, grand_parent->color);
                 x = parent;
             }
@@ -239,7 +239,7 @@ void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
                 if(x == parent->left)
                 {
                     /* Ruotiamo a destra x*/
-                    right_rotate(root,parent);
+                    right_rotate(parent);
                     /* Il nuovo x diventerà il padre di x */
                     x = parent;
                     parent = x->parent;
@@ -250,7 +250,7 @@ void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
                 in questo caso eseguiamo alcuni cambi di colore e eseguiamo una rotazione verso
                 sinsitra
                 */
-                left_rotate(root,grand_parent);
+                left_rotate(grand_parent);
                 std::swap(parent->color,grand_parent->color);
                 x = parent;
             }
@@ -264,7 +264,12 @@ void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
 void RBTree::insert(int key)
 {
     /* Dichiamo e inizializziamo un nuovo nodo */
-    RBNode *node_to_add = new RBNode(key);
+    RBNode *node_to_add = new RBNode;
+    node_to_add->parent = nullptr;
+    node_to_add->key = key;
+    node_to_add->left = TNULL;
+    node_to_add->right = TNULL;
+    node_to_add->color = RED;
 
     /* Lanciamo un insert BST */
     root = bst_insert_helper(root,node_to_add);
@@ -281,7 +286,7 @@ void RBTree::insert(int key)
 void RBTree::print_helper(RBNode *root, string indentation, bool last)
 {
     /* Stampa la struttura dell'albero a schermo */
-    if(root != nullptr)
+    if(root != TNULL)
     {
         cout << indentation;
         if(last)
@@ -467,7 +472,7 @@ void RBTree::delete_fixup(RBNode *x)
              /* Caso 1: il fratello w di x è rosso */
              w->color = BLACK;
              x->parent->color = RED;
-             left_rotate(root,x->parent);
+             left_rotate(x->parent);
              w = x->parent->right;
          }
          if((w->left->color == BLACK) && (w->right->color == BLACK))
@@ -486,14 +491,14 @@ void RBTree::delete_fixup(RBNode *x)
                 */
                w->left->color = BLACK;
                w->color = RED;
-               right_rotate(root,w);
+               right_rotate(w);
                w = x->parent->right;
              }
              /* Caso 4: il fratello w di x è nero e il figlio destro di w è rosso */
              w->color = x->parent->color;
              x->parent->color = BLACK;
              w->right->color = BLACK;
-             left_rotate(root,x->parent);
+             left_rotate(x->parent);
              x = root;
          }
      }
@@ -509,7 +514,7 @@ void RBTree::delete_fixup(RBNode *x)
              /* Caso 1: il fratello w di x è rosso */
              w->color = BLACK;
              x->parent->color = RED;
-             right_rotate(root,x->parent);
+             right_rotate(x->parent);
              w = x->parent->left;
          }
          if((w->right->color == BLACK) && (w->right->color == BLACK))
@@ -528,14 +533,14 @@ void RBTree::delete_fixup(RBNode *x)
                 */
                w->right->color = BLACK;
                w->color = RED;
-               left_rotate(root,w);
+               left_rotate(w);
                w = x->parent->left;
              }
              /* Caso 4: il fratello w di x è nero e il figlio destro di w è rosso */
              w->color = x->parent->color;
              x->parent->color = BLACK;
              w->left->color = BLACK;
-             right_rotate(root,x->parent);
+             right_rotate(x->parent);
              x = root;
          }
      }
@@ -549,4 +554,13 @@ void RBTree::delete_fixup(RBNode *x)
 void RBTree::delete_node(int key)
 {
     delete_helper(root,key);
+}
+
+RBTree::RBTree()
+{
+    TNULL = new RBNode;
+    TNULL->color = BLACK;
+    TNULL->left = nullptr;
+    TNULL->right = nullptr;
+    root = TNULL;
 }

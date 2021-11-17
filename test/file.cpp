@@ -426,8 +426,8 @@ int main() {
     
 
     rb.printTree();
-    cout << endl
-     << "After deleting" << endl;
-    rb.deleteNode(17);
-    rb.printTree();
+    cout << endl;
+    //<< "After deleting" << endl;
+    //rb.deleteNode(17);
+    //rb.printTree();
 }

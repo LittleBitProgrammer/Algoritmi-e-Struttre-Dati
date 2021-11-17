@@ -25,7 +25,7 @@ struct RBNode
     RBNode *right;  /* Puntatore al figlio destro */
     bool color;
 
-    /* Constructor */
+    /* Constructors */
     RBNode(int key)
     {
         this->key = key;
@@ -34,11 +34,16 @@ struct RBNode
         parent = nullptr;
         color = RED;
     }
+
+    RBNode(){}
 };
 
 class RBTree:public AbstractBinarySearchTree<RBNode>
 {
     private:
+        /* Attributes */
+        RBNode *TNULL;
+
         /* Methods */
 
         /* Inserimento di un nodo in un BST */
@@ -51,14 +56,16 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         void delete_helper(RBNode *node_to_delete, int key);
         /* Ripristino delle violazioni dovute alla cancellazione di un nodo nell'albero RB */
         void delete_fixup(RBNode *x);
+        /* Rotazione a sinistra */
+        void left_rotate(RBNode *x);
+        /* Rotazione a destra */
+        void right_rotate(RBNode *y);
         
     public:
+        /* Constructor */
+        RBTree();
+
         /* Methods */
-        
-        /* Rotazione a sinistra */
-        void left_rotate(RBNode *&root,RBNode *&x);
-        /* Rotazione a destra */
-        void right_rotate(RBNode *&root, RBNode *&y);
         /* Inserimento di una chiave nell'albero RB */
         void insert(int key);
         /* Cancellazione di un nodo con una data chiave */
