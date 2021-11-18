@@ -22,7 +22,7 @@ void RBTree::left_rotate(RBNode *x)
     x->right = y->left;
 
     /* Se la right di x non è nulla */
-    if(y->left != TNULL)
+    if((y->left->left) != nullptr && (y->left->right != nullptr))
     {
         /* Aggiorniamo il padre del figlio destro di x precedentemente cambiato */
         y->left->parent = x;
@@ -286,7 +286,7 @@ void RBTree::insert(int key)
 void RBTree::print_helper(RBNode *root, string indentation, bool last)
 {
     /* Stampa la struttura dell'albero a schermo */
-    if(root != TNULL)
+    if(root->left != nullptr && root->right != nullptr)
     {
         cout << indentation;
         if(last)
@@ -305,15 +305,6 @@ void RBTree::print_helper(RBNode *root, string indentation, bool last)
 
         print_helper(root->left, indentation, false);
         print_helper(root->right, indentation, true);
-    }
-}
-
-/* Stampa dell'albero RB */;
-void RBTree::print()
-{
-    if(root != nullptr)
-    {
-        print_helper(this->root, "", true);
     }
 }
 
@@ -546,17 +537,6 @@ void RBTree::delete_node(int key)
     delete_helper(root,key);
 }
 
-/* Metodo di supporto sfruttato dal distruttore */
-void RBTree::post_order_delete(RBNode *node)
-{
-    if(node != TNULL)
-    {
-        post_order_delete(node->left);  /* Visita figlio sinistro*/
-        post_order_delete(node->right); /* Visita figlio destro */
-        delete node;     /* Visita nodo */
-    }
-}
-
 RBTree::RBTree()
 {
     TNULL = new RBNode;
@@ -564,19 +544,6 @@ RBTree::RBTree()
     TNULL->left = nullptr;
     TNULL->right = nullptr;
     root = TNULL;
-}
-
-RBTree::~RBTree()
-{
-    if(root == TNULL)
-    {
-        delete TNULL;
-    }
-    else
-    {
-        post_order_delete(root);
-        delete TNULL;
-    }
 }
 
 /* Ricerca del nodo con chiave minima */
@@ -734,7 +701,7 @@ int RBTree::tree_height_helper(RBNode *node)
 /* Calcola l'altezza nera di un dato nodo x */
 int RBTree::black_height(RBNode *node)
 {
-    if(node == TNULL)
+    if(node->right == nullptr && node->left == nullptr)
     {
         return 0;
     }

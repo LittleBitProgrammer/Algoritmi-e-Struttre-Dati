@@ -14,7 +14,7 @@ private:
     /* Methods */
 
     /* Metodo di supporto alla join, utile ad eseguire un merge verso destra dell'albero sinistro */
-    RBTree *join_right(RBNode *left_tree, int k, RBNode *right_tree);
+    
     /* Metodo di supporto alla join, utile ad eseguire un merge verso sinistra dell'albero destro */
     RBTree *join_left(RBNode *left_tree, int k, RBNode *right_tree);
     /* 
@@ -53,9 +53,6 @@ public:
     /* Constructor */
     NumSet();
     NumSet(RBTree *rb_tree);
-    
-    /* destructor */
-    ~NumSet();
 
     /* Methods */
 
@@ -65,6 +62,7 @@ public:
     NumSet *set_intersection(NumSet *set2);
     /* Operazione di differenza tra insieme attuale e set2 */
     NumSet *set_difference(NumSet *set2);
+    RBNode *join_right(RBNode *left_tree, int k, RBNode *right_tree);
 
     /* Getter */
     RBTree *get_rbtree();

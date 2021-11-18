@@ -8,24 +8,15 @@ NumSet::NumSet(RBTree *rb_tree):rb_tree{rb_tree}{}
 NumSet::NumSet():NumSet{new RBTree}{}
 
 /*===============================
-           Destructor
-================================*/
-
-NumSet::~NumSet()
-{
-    delete rb_tree;
-}
-
-/*===============================
             METHODS
 ================================*/
 
 /* Metodo di supporto alla join, utile ad eseguire un merge verso destra dell'albero sinistro */
-RBTree *NumSet::join_right(RBNode *left_tree, int k, RBNode *right_tree)
+RBNode *NumSet::join_right(RBNode *left_tree, int k, RBNode *right_tree)
 {
     /* Calcoliamo la Black Height dei corrispettivi alberi passati in input */
-    auto left_tree_bh = rb_tree->black_height(left_tree);
-    auto right_tree_bh = rb_tree->black_height(right_tree);
+    auto left_tree_bh = RBTree::black_height(left_tree);
+    auto right_tree_bh = RBTree::black_height(right_tree);
 
     /* Se la Black Height dei due alberi coincide */
     if(left_tree_bh == right_tree_bh)
@@ -39,13 +30,10 @@ RBTree *NumSet::join_right(RBNode *left_tree, int k, RBNode *right_tree)
         root->color = RED;
         root->left =  left_tree;
         root->right = right_tree;
-        root->parent = nullptr;
-
-        /* Inseriamo il nuovo nodo nell'albero RB */
-        rbt->set_root(root);
+        root->parent = left_tree->parent;
 
         /* Ritorniamo il nuovo albero */
-        return rbt;
+        return root;
     }
     else
     {
@@ -83,9 +71,9 @@ RBTree *NumSet::join_right(RBNode *left_tree, int k, RBNode *right_tree)
        */
        t_first->key = k_first;
        t_first->color = c_first;
-       t_first->parent = nullptr;
+       t_first->parent = left_tree->parent;
        t_first->left = l_first;
-       t_first->right = join_right(r_first,k,right_tree)->get_root();
+       t_first->right = join_right(r_first,k,right_tree);
 
         /* 
         Se il nodo costruito è nero e se il corrispettivo figlio destro
@@ -96,21 +84,15 @@ RBTree *NumSet::join_right(RBNode *left_tree, int k, RBNode *right_tree)
             /* Cambiamo il colore del nipote destro a nero */
             t_first->right->right->color = BLACK;
             /* Ruotiamo T' a sinistra */
-            RBTree *T_first = new RBTree;
-            T_first->set_root(t_first);
-            T_first->left_rotate(T_first->get_root());
+            this->rb_tree->left_rotate(t_first);
 
             /* Ritorn a il nuovo albero*/
-            return T_first;
+            return t_first;
        }
        else
        {
-           /* Costruiamo l'abero da ritornare */
-            RBTree *T_first = new RBTree;
-            T_first->set_root(t_first);
-
-            /* Ritorn a il nuovo albero*/
-            return T_first;
+           /* Ritorn a il nuovo albero */
+            return t_first;
        }
     }
 }

@@ -66,22 +66,16 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         RBNode *search_helper(RBNode *node,int key);
         /* Metodo helper sfruttato dalla tree_height */
         int tree_height_helper(RBNode *node);
-        /* Metodo di supporto sfruttato dal distruttore */
-        void post_order_delete(RBNode *node);
         
     public:
         /* Constructor */
         RBTree();
-        /* Destructor */
-        ~RBTree();
 
         /* Methods */
         /* Inserimento di una chiave nell'albero RB */
         void insert(int key);
         /* Cancellazione di un nodo con una data chiave */
         void delete_node(int key);
-        /* Stampa dell'albero RB */;
-        void print();
         /* Ricerca del nodo con chiave minima */
         RBNode *minimum(RBNode *node);
         /* Ricerca del nodo con chiave massima */
@@ -95,7 +89,7 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         /* Rotazione a destra */
         void right_rotate(RBNode *y);
         /* Calcola l'altezza nera di un dato nodo x */
-        int black_height(RBNode *node);
+        static int black_height(RBNode *node);
 
         /* Setter */
         void set_root(RBNode *root);

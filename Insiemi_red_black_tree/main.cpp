@@ -25,7 +25,7 @@ int main()
     rb.insert(7);
 
     rb.delete_node(17);
-    rb.print();
+    rb.print_tree();
 
     cout << "\nPREORDER = " << endl;
     rb.preorder();
@@ -41,16 +41,21 @@ int main()
     cout << "\nPredecessore di 15 = " << rb.predecessor((rb.search(15)))->key << endl;
 
     cout << "\nALTEZZA = " << rb.tree_height() << endl;
-    cout << "\nALTEZZA NERA = " << rb.black_height(rb.get_root()) << endl;
+    cout << "\nALTEZZA NERA = " << RBTree::black_height(rb.get_root()) << endl;
 
     rb2.insert(124);
-    cout << "Albero 2:" << endl;
-    rb2.print();
+    cout << "\nAlbero 2:" << endl;
+    rb2.print_tree();
 
-    NumSet num1{rb};
-    NumSet num2{rb2};
+    cout << "ALTEZZA NERA ALBERO 2 = " << RBTree::black_height(rb2.get_root()) << endl;
 
-    
+    NumSet num1{&rb};
+    NumSet num2{&rb2};
+
+    RBNode *rb3 = num1.join_right(rb.get_root(),125,rb2.get_root());
+    RBTree rb4;
+    rb4.set_root(rb3);
+    rb4.print_tree();
 
     return 0;
 }

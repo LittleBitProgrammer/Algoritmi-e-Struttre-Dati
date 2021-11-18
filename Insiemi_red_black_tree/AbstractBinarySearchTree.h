@@ -40,8 +40,6 @@ class AbstractBinarySearchTree
     public:
         /* Constructor */
         AbstractBinarySearchTree();
-        /* Destructor */
-        virtual ~AbstractBinarySearchTree();
 
         /* Methods*/
 
@@ -85,9 +83,6 @@ AbstractBinarySearchTree<T>::AbstractBinarySearchTree()
 {
     root = nullptr;
 }
-
-template<typename T>
-AbstractBinarySearchTree<T>::~AbstractBinarySearchTree(){}
 
 /* Getter della rooot */
 template<typename T>
