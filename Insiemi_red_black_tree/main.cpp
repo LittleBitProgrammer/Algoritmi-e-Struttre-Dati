@@ -52,10 +52,10 @@ int main()
     NumSet num1{&rb};
     NumSet num2{&rb2};
 
-    RBNode *rb3 = num1.join_left(rb2.get_root(),4,rb.get_root());
-    RBTree rb4;
-    rb4.set_root(rb3);
-    rb4.print_tree();
+    //RBNode *rb3 = num1.join_left(rb2.get_root(),4,rb.get_root());
+    //RBTree rb4;
+    //rb4.set_root(rb3);
+    //rb4.print_tree();
 
     return 0;
 }

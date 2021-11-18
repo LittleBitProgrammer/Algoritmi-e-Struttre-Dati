@@ -177,6 +177,99 @@ RBNode *NumSet::join_left(RBNode *left_tree, int k, RBNode *right_tree)
     }
 }
 
+/* 
+    Metodo di supporto a diverse operazioni di insiemistica:
+    - split
+    - split_last
+    - join2
+    - union
+    - intersect
+*/
+RBNode *NumSet::join(RBNode *left_tree, int k, RBNode *right_tree)
+{
+    /* 
+    Per la join di due alberi RB possono esserci quattro casi:
+    - bh[left_tree] > bh[right_tree]
+    - bh[right_tree] > bh[left_tree]
+    - bh[left_tree] = bh[right_tree] con tl e tr neri
+    - bh[left_tree] = bh[right_tree] con tl e tr non entrambi neri
+
+    Per eseguire una join quindi dobbiamo prima individuare in quale dei tre casi ci troviamo
+    */
+
+   /* Calcoliamo la Black height dei due alberi */
+   int left_tree_bh = RBTree::black_height(left_tree);
+   int right_tree_bh = RBTree::black_height(right_tree);
+
+   /* Caso 1: bh[left_tree] > bh[right_tree] */
+   if(left_tree_bh > right_tree_bh)
+   {
+        /* 
+        Se la black height dell'albero di sinistra è maggiore di quella dell'albero di destra 
+        allora costruiremo un nuovo albero dato dalla join_right, che chiameremo T'
+        */
+        RBNode *t_first = join_right(left_tree,k,right_tree);
+        /* Verifichiamo che le proprietà dell'albero RB siano rispettate */
+        if((t_first->color == RED) && (t_first->right->color == RED))
+        {
+            /* Fix del colore sulla radice */
+            t_first->color = BLACK;
+        }
+
+        /* Ritorniamo il nuovo albero */
+        return t_first;
+   }
+   else if(right_tree_bh > left_tree_bh)
+   {
+        /* Caso 2: bh[right_tree] > bh[left_tree] */
+
+        /* 
+        Se la black height dell'albero di destra è maggiore di quella dell'albero di sinistra 
+        allora costruiremo un nuovo albero dato dalla join_left, che chiameremo T'
+        */
+        RBNode *t_first = join_left(left_tree,k,right_tree);
+        /* Verifichiamo che le proprietà dell'albero RB siano rispettate */
+        if((t_first->color == RED) && (t_first->left->color == RED))
+        {
+            /* Fix del colore sulla radice */
+            t_first->color = BLACK;
+        }
+
+        /* Ritorniamo il nuovo albero */
+        return t_first;
+   }
+   else if((left_tree->color == BLACK) && (right_tree->color == BLACK))
+   {
+        /* Caso 3: bh[left_tree] = bh[right_tree] con tl e tr neri*/ 
+
+        /* Creiamo un nuovo nodo che farà da radice per entrambi gli alberi */
+        RBNode *root = new RBNode;
+        root->key = key;
+        root->color = RED;
+        root->left = left_tree;
+        root->right = right_tree;
+        root->parent = nullptr;
+
+        /* Ritorniamo la radice */
+        return root;
+   }
+   else
+   {
+       /* Caso 4: bh[left_tree] = bh[right_tree] con tl e tr non entrambi neri */
+
+       /* Creiamo un nuovo nodo che farà da radice per entrambi gli alberi */
+        RBNode *root = new RBNode;
+        root->key = key;
+        root->color = BLACK;
+        root->left = left_tree;
+        root->right = right_tree;
+        root->parent = nullptr;
+
+        /* Ritorniamo la radice */
+        return root;
+   }
+}
+
 /* Getter */
 RBTree *NumSet::get_rbtree()
 {
