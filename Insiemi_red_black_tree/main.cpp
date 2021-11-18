@@ -43,7 +43,7 @@ int main()
     cout << "\nALTEZZA = " << rb.tree_height() << endl;
     cout << "\nALTEZZA NERA = " << RBTree::black_height(rb.get_root()) << endl;
 
-    rb2.insert(124);
+    rb2.insert(2);
     cout << "\nAlbero 2:" << endl;
     rb2.print_tree();
 
@@ -52,7 +52,7 @@ int main()
     NumSet num1{&rb};
     NumSet num2{&rb2};
 
-    RBNode *rb3 = num1.join_right(rb.get_root(),125,rb2.get_root());
+    RBNode *rb3 = num1.join_left(rb2.get_root(),4,rb.get_root());
     RBTree rb4;
     rb4.set_root(rb3);
     rb4.print_tree();

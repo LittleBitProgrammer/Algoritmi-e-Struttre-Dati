@@ -62,7 +62,7 @@ void RBTree::right_rotate(RBNode *x)
     x->left = y->right;
 
     /* Se la left di x non è nulla */
-    if(y->right != TNULL)
+    if((y->right->left) != nullptr && (y->right->right != nullptr))
     {
         /* Aggiorniamo il padre del figlio sinistro di x precedentemente cambiato */
         y->right->parent = x;
@@ -708,10 +708,12 @@ int RBTree::black_height(RBNode *node)
     else
     {
         /* calcoliamo l'altezza del sotto-ramo di sinistra */
-        int left_black_height = black_height(node->left) + ((node->left->color == BLACK) ? 1 : 0); 
+        int left_black_height = black_height(node->left);
 
         /* calcoliamo l'altezza del sotto-ramo di destra */
-        int right_black_height = black_height(node->right) + ((node->right->color == BLACK) ? 1 : 0); 
+        int right_black_height = black_height(node->right);
+
+        int add = node->color == BLACK ? 1 : 0;
 
         /* Se i due  sotto-ramo sono diversi allora mostriamo un errore */
         if(left_black_height != right_black_height)
@@ -720,7 +722,7 @@ int RBTree::black_height(RBNode *node)
         }
 
         /* Se sono uguali, basterà tornare l'altezza di un solo sottoramo */
-        return left_black_height;
+        return left_black_height + add;
     }
 }
 

@@ -16,7 +16,7 @@ private:
     /* Metodo di supporto alla join, utile ad eseguire un merge verso destra dell'albero sinistro */
     RBNode *join_right(RBNode *left_tree, int k, RBNode *right_tree);
     /* Metodo di supporto alla join, utile ad eseguire un merge verso sinistra dell'albero destro */
-    RBNode *join_left(RBNode *left_tree, int k, RBNode *right_tree);
+    
     /* 
     Metodo di supporto a diverse operazioni di insiemistica:
     - split
@@ -68,6 +68,8 @@ public:
 
     /* Setter */
     void set_rbtree(RBTree *rb_tree);
+
+    RBNode *join_left(RBNode *left_tree, int k, RBNode *right_tree);
 };
 
 

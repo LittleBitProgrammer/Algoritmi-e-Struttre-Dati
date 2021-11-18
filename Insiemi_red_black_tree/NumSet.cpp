@@ -162,7 +162,7 @@ RBNode *NumSet::join_left(RBNode *left_tree, int k, RBNode *right_tree)
        if((c_first == BLACK) && (t_first->left->color == RED) && (t_first->left->left->color == RED))
        {
             /* Cambiamo il colore del nipote sinistro a nero */
-            t_first->left->lwft->color = BLACK;
+            t_first->left->left->color = BLACK;
             /* Ruotiamo T' a sinistra */
             this->rb_tree->right_rotate(t_first);
 
