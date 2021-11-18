@@ -25,10 +25,10 @@ private:
     - union
     - intersect
     */
-   RBTree *join(RBTree *left_tree, int k, RBTree *right_tree);
-   /* 
+    RBNode *join(RBNode *left_tree, int k, RBNode *right_tree);
+   /*
    Metodo di supporto a diverse operazioni di insiemistica:
-   - union 
+   - union
    - intersect
    - difference
    */

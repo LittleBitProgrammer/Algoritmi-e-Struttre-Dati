@@ -244,7 +244,7 @@ RBNode *NumSet::join(RBNode *left_tree, int k, RBNode *right_tree)
 
         /* Creiamo un nuovo nodo che farà da radice per entrambi gli alberi */
         RBNode *root = new RBNode;
-        root->key = key;
+        root->key = k;
         root->color = RED;
         root->left = left_tree;
         root->right = right_tree;
@@ -259,7 +259,7 @@ RBNode *NumSet::join(RBNode *left_tree, int k, RBNode *right_tree)
 
        /* Creiamo un nuovo nodo che farà da radice per entrambi gli alberi */
         RBNode *root = new RBNode;
-        root->key = key;
+        root->key = k;
         root->color = BLACK;
         root->left = left_tree;
         root->right = right_tree;
