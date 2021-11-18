@@ -270,6 +270,60 @@ RBNode *NumSet::join(RBNode *left_tree, int k, RBNode *right_tree)
    }
 }
 
+/*
+Metodo di supporto a diverse operazioni di insiemistica:
+- union
+- intersect
+- difference
+*/
+pair<pair<RBNode *,RBNode *>,int> NumSet::split(RBNode *tree, int key)
+{
+    /* Caso nodo foglia */
+    if((tree->left == nullptr) && (tree->right == nullptr))
+    {
+        /* Creiamo il nostro pair */
+        pair<pair<RBNode *,RBNode *>,int> triple{{nullptr,nullptr},0};
+
+        /* Ritorniamo la nostra tripla */
+        return triple;
+    }
+    else
+    {
+        /* Creiamo il nostro pair */
+        pair<pair<RBNode *,RBNode *>,int> triple{{tree->left,tree->right},tree->key};
+
+        /* Se la chiave è uguale alla tree key */
+        if(key == triple.second)
+        {
+            triple.second = 1;
+            return triple;
+        }
+        else if (key < triple.second)
+        {
+            /* caso in cui la chiave è minore della tree key */
+
+            /* Ricaviamo una nuova tripla dalla split ricorsiva */
+            pair<pair<RBNode *,RBNode *>,int> triple2 = split(triple.first.first,key);
+
+            /* Creiamo un nuovo pair */
+            pair<pair<RBNode *,RBNode *>,int> triple3 = {{triple2.first.first,join(triple2.first.second,triple.second,triple.first.second)},triple2.second};
+         
+            /* Ritorniamo l'ultima tripla creata */
+            return triple3;
+        }
+        else
+        {
+            /* Ricaviamo una nuova tripla dalla split ricorsiva */
+            pair<pair<RBNode *,RBNode *>,int> triple2 = split(triple.first.second,key);
+
+            /* Creiamo un nuovo pair */
+            pair<pair<RBNode *,RBNode *>,int> triple3 = {{join(triple.first.first,triple.second,triple2.first.first),triple2.first.second},triple2.second};
+
+            return triple3;
+        }
+    }
+}
+
 /* Getter */
 RBTree *NumSet::get_rbtree()
 {

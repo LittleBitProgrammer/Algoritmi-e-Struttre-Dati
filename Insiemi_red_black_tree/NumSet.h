@@ -32,9 +32,9 @@ private:
    - intersect
    - difference
    */
-   pair<pair<RBTree *,RBTree *>,int> split(RBTree *, int key);
+   pair<pair<RBNode *,RBNode *>,int> split(RBNode *tree, int key);
    /* Metodo di supporto alla join 2 */
-   pair<RBTree *,int>split_last(RBTree *);
+   pair<RBTree *,int>split_last(RBTree *tree);
    /* 
    Metodo di supporto a diverse operazioni di insiemistica:
    - union 

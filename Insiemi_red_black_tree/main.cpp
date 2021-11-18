@@ -52,6 +52,7 @@ int main()
     NumSet num1{&rb};
     NumSet num2{&rb2};
 
+    //pair<pair<RBNode *,RBNode *>,int> triple = 
     //RBNode *rb3 = num1.join(rb.get_root(),4,rb2.get_root());
     //RBTree rb4;
     //rb4.set_root(rb3);
