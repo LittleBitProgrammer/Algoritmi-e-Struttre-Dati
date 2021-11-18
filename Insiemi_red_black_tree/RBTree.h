@@ -56,10 +56,6 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         void delete_helper(RBNode *node_to_delete, int key);
         /* Ripristino delle violazioni dovute alla cancellazione di un nodo nell'albero RB */
         void delete_fixup(RBNode *x);
-        /* Rotazione a sinistra */
-        void left_rotate(RBNode *x);
-        /* Rotazione a destra */
-        void right_rotate(RBNode *y);
         /* Metodo helper sfruttato dalla preorder */
         void preorder_helper(RBNode *node);
         /* Metodo helper sfruttato dalla inorder */
@@ -94,8 +90,15 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         RBNode *successor(RBNode* node);
         /* Trova il predecessore di un dato nodo */
         RBNode *predecessor(RBNode* node);
+        /* Rotazione a sinistra */
+        void left_rotate(RBNode *x);
+        /* Rotazione a destra */
+        void right_rotate(RBNode *y);
         /* Calcola l'altezza nera di un dato nodo x */
         int black_height(RBNode *node);
+
+        /* Setter */
+        void set_root(RBNode *root);
 };
 
 #endif

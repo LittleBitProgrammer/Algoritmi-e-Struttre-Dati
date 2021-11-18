@@ -756,3 +756,10 @@ int RBTree::black_height(RBNode *node)
         return left_black_height;
     }
 }
+
+/* Setter */
+void RBTree::set_root(RBNode *root)
+{
+    root->parent = TNULL;
+    this->root = root;
+}

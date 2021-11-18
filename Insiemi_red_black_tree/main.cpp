@@ -1,8 +1,11 @@
 #include "RBTree.h"
+#include "NumSet.h"
 
 int main()
 {
     RBTree rb;
+
+    RBTree rb2;
 
     /* Inserimento nodi */
     rb.insert(8);
@@ -40,6 +43,14 @@ int main()
     cout << "\nALTEZZA = " << rb.tree_height() << endl;
     cout << "\nALTEZZA NERA = " << rb.black_height(rb.get_root()) << endl;
 
+    rb2.insert(124);
+    cout << "Albero 2:" << endl;
+    rb2.print();
+
+    NumSet num1{rb};
+    NumSet num2{rb2};
+
+    
 
     return 0;
 }
