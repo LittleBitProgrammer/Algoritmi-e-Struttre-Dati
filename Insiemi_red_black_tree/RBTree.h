@@ -70,10 +70,14 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         RBNode *search_helper(RBNode *node,int key);
         /* Metodo helper sfruttato dalla tree_height */
         int tree_height_helper(RBNode *node);
+        /* Metodo di supporto sfruttato dal distruttore */
+        void post_order_delete(RBNode *node);
         
     public:
         /* Constructor */
         RBTree();
+        /* Destructor */
+        ~RBTree();
 
         /* Methods */
         /* Inserimento di una chiave nell'albero RB */

@@ -546,6 +546,17 @@ void RBTree::delete_node(int key)
     delete_helper(root,key);
 }
 
+/* Metodo di supporto sfruttato dal distruttore */
+void RBTree::post_order_delete(RBNode *node)
+{
+    if(node != TNULL)
+    {
+        post_order_delete(node->left);  /* Visita figlio sinistro*/
+        post_order_delete(node->right); /* Visita figlio destro */
+        delete node;     /* Visita nodo */
+    }
+}
+
 RBTree::RBTree()
 {
     TNULL = new RBNode;
@@ -553,6 +564,19 @@ RBTree::RBTree()
     TNULL->left = nullptr;
     TNULL->right = nullptr;
     root = TNULL;
+}
+
+RBTree::~RBTree()
+{
+    if(root == TNULL)
+    {
+        delete TNULL;
+    }
+    else
+    {
+        post_order_delete(root);
+        delete TNULL;
+    }
 }
 
 /* Ricerca del nodo con chiave minima */
