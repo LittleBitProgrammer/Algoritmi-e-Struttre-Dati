@@ -6,11 +6,9 @@ using std::pair;
 
 #include "RBTree.h" /* Rappresentazione di un Albero RB */
 
-class NumSet
+class NumSet:public RBTree
 {
 private:
-    RBTree *rb_tree;
-
     /* Methods */
 
     /* Metodo di supporto alla join, utile ad eseguire un merge verso destra dell'albero sinistro */
@@ -32,7 +30,7 @@ private:
    - intersect
    - difference
    */
-   pair<pair<RBNode *,RBNode *>,int> split(RBNode *tree, int key);
+
    /* Metodo di supporto alla join 2 */
    pair<RBTree *,int>split_last(RBTree *tree);
    /* 
@@ -50,10 +48,6 @@ private:
   RBTree *difference_helper(RBTree *tree1, RBTree *tree2);
 
 public:
-    /* Constructor */
-    NumSet();
-    NumSet(RBTree *rb_tree);
-
     /* Methods */
 
     /* Operazione di unione tra due insiemi */
@@ -67,7 +61,8 @@ public:
     RBTree *get_rbtree();
 
     /* Setter */
-    void set_rbtree(RBTree *rb_tree);
+    pair<pair<RBNode *,RBNode *>,int> split(RBNode *tree, int key);
+    //TODO: passare split nella private
 };
 
 

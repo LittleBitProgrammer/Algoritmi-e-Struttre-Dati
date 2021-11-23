@@ -3,60 +3,58 @@
 
 int main()
 {
-    RBTree rb;
-
-    RBTree rb2;
+    NumSet num1, num2;
 
     /* Inserimento nodi */
-    rb.insert(8);
-    rb.insert(18);
-    rb.insert(5);
-    rb.insert(15);
-    rb.insert(17);
-    rb.insert(25);
-    rb.insert(40);
-    rb.insert(3);
-    rb.insert(1);
-    rb.insert(80);
-    rb.insert(100);
-    rb.insert(123);
-    rb.insert(110);
-    rb.insert(12);
-    rb.insert(7);
+    num1.insert(8);
+    num1.insert(18);
+    num1.insert(5);
+    num1.insert(15);
+    //rb.insert(17);
+    num1.insert(25);
+    num1.insert(40);
+    num1.insert(3);
+    num1.insert(1);
+    num1.insert(80);
+    num1.insert(100);
+    num1.insert(123);
+    num1.insert(110);
+    num1.insert(12);
+    num1.insert(7);
 
-    rb.delete_node(17);
-    rb.print_tree();
+   // rb.delete_key(17);
+    num1.print_tree();
 
     cout << "\nPREORDER = " << endl;
-    rb.preorder();
+    num1.preorder();
     cout << "\nINORDER = " << endl;
-    rb.inorder();
+    num1.inorder();
     cout << "\nPOSTORDER = " << endl;
-    rb.postorder();
+    num1.postorder();
 
-    RBNode *searched = rb.search(15);
+    RBNode *searched = num1.search(15);
     cout << "\nNodo cercato con chiave = " << searched->key;
 
-    cout << "\nSuccessore di 15 = " << rb.successor((rb.search(15)))->key << endl;
-    cout << "\nPredecessore di 15 = " << rb.predecessor((rb.search(15)))->key << endl;
+    cout << "\nSuccessore di 15 = " << num1.successor((num1.search(15)))->key << endl;
+    cout << "\nPredecessore di 15 = " << num1.predecessor((num1.search(15)))->key << endl;
 
-    cout << "\nALTEZZA = " << rb.tree_height() << endl;
-    cout << "\nALTEZZA NERA = " << RBTree::black_height(rb.get_root()) << endl;
+    cout << "\nALTEZZA = " << num1.tree_height() << endl;
+    cout << "\nALTEZZA NERA = " << num1.black_height(num1.get_root()) << endl;
 
-    rb2.insert(2);
+    num2.insert(2);
     cout << "\nAlbero 2:" << endl;
-    rb2.print_tree();
+    num2.print_tree();
 
-    cout << "ALTEZZA NERA ALBERO 2 = " << RBTree::black_height(rb2.get_root()) << endl;
+    cout << "ALTEZZA NERA ALBERO 2 = " << num2.black_height(num2.get_root()) << endl;
 
-    NumSet num1{&rb};
-    NumSet num2{&rb2};
+    //pair<pair<RBNode *,RBNode *>,int> triple = num1.split(rb.get_root(),81);
 
-    //pair<pair<RBNode *,RBNode *>,int> triple = 
-    //RBNode *rb3 = num1.join(rb.get_root(),4,rb2.get_root());
-    //RBTree rb4;
-    //rb4.set_root(rb3);
-    //rb4.print_tree();
+    /*RBTree rb4;
+    RBTree rb5;
+    rb4.set_root(triple.first.first);
+    rb5.set_root(triple.first.second);
+    rb4.print_tree();
+    rb5.print_tree();*/
 
     return 0;
 }

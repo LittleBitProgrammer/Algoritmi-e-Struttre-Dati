@@ -46,13 +46,11 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
 
         /* Methods */
 
-        /* Inserimento di un nodo in un BST */
-        RBNode *bst_insert_helper(RBNode *root, RBNode *node_to_add);    
         /* Rispristino di un albero RB dalle violazioni causate dall'inserimento BST */
         void insert_fixup(RBNode *&root, RBNode *&node_to_add);
         /* Metodo di supporto utilizzato dalla print */
         void print_helper(RBNode *root, string idnentation, bool last);
-        /* Metodo di supporto utilizzato dalla delete_node */
+        /* Metodo di supporto utilizzato dalla delete_key */
         void delete_helper(RBNode *node_to_delete, int key);
         /* Ripristino delle violazioni dovute alla cancellazione di un nodo nell'albero RB */
         void delete_fixup(RBNode *x);
@@ -66,7 +64,12 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         RBNode *search_helper(RBNode *node,int key);
         /* Metodo helper sfruttato dalla tree_height */
         int tree_height_helper(RBNode *node);
-        
+
+    protected:
+        /* Rotazione a sinistra */
+        void left_rotate(RBNode *x);
+        /* Rotazione a destra */
+        void right_rotate(RBNode *y);
     public:
         /* Constructor */
         RBTree();
@@ -75,7 +78,7 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         /* Inserimento di una chiave nell'albero RB */
         void insert(int key);
         /* Cancellazione di un nodo con una data chiave */
-        void delete_node(int key);
+        void delete_key(int key);
         /* Ricerca del nodo con chiave minima */
         RBNode *minimum(RBNode *node);
         /* Ricerca del nodo con chiave massima */
@@ -84,15 +87,14 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         RBNode *successor(RBNode* node);
         /* Trova il predecessore di un dato nodo */
         RBNode *predecessor(RBNode* node);
-        /* Rotazione a sinistra */
-        void left_rotate(RBNode *x);
-        /* Rotazione a destra */
-        void right_rotate(RBNode *y);
         /* Calcola l'altezza nera di un dato nodo x */
-        static int black_height(RBNode *node);
+        int black_height(RBNode *node);
 
         /* Setter */
         void set_root(RBNode *root);
+
+        /* Getter */
+        RBNode *get_tnull();
 };
 
 #endif

@@ -67,7 +67,7 @@ class AbstractBinarySearchTree
         /* Inserimento di una chiave in un albero di ricerca binaria */
         virtual void insert(int key) = 0;
         /* Cancellazione di un nodo con una data chiave */
-        virtual void delete_node(int key) = 0;
+        virtual void delete_key(int key) = 0;
         /* Ricerca del nodo con chiave minima */
         virtual T *minimum(T *node) = 0;
         /* Ricerca del nodo con chiave massima */

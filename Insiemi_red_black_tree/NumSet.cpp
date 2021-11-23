@@ -1,13 +1,6 @@
 #include "NumSet.h"
 
 /*===============================
-           CONSTRUCTOR
-================================*/
-NumSet::NumSet(RBTree *rb_tree):rb_tree{rb_tree}{}
-
-NumSet::NumSet():NumSet{new RBTree}{}
-
-/*===============================
             METHODS
 ================================*/
 
@@ -81,7 +74,7 @@ RBNode *NumSet::join_right(RBNode *left_tree, int k, RBNode *right_tree)
             /* Cambiamo il colore del nipote destro a nero */
             t_first->right->right->color = BLACK;
             /* Ruotiamo T' a sinistra */
-            this->rb_tree->left_rotate(t_first);
+            left_rotate(t_first);
 
             /* Ritorna il nuovo albero*/
             return t_first;
@@ -164,7 +157,7 @@ RBNode *NumSet::join_left(RBNode *left_tree, int k, RBNode *right_tree)
             /* Cambiamo il colore del nipote sinistro a nero */
             t_first->left->left->color = BLACK;
             /* Ruotiamo T' a sinistra */
-            this->rb_tree->right_rotate(t_first);
+            right_rotate(t_first);
 
             /* Ritorna il nuovo albero*/
             return t_first;
@@ -281,8 +274,13 @@ pair<pair<RBNode *,RBNode *>,int> NumSet::split(RBNode *tree, int key)
     /* Caso nodo foglia */
     if((tree->left == nullptr) && (tree->right == nullptr))
     {
+        RBNode *TNULL = new RBNode;
+        TNULL->color = BLACK;
+        TNULL->left = nullptr;
+        TNULL->right = nullptr;
+
         /* Creiamo il nostro pair */
-        pair<pair<RBNode *,RBNode *>,int> triple{{nullptr,nullptr},0};
+        pair<pair<RBNode *,RBNode *>,int> triple{{TNULL,TNULL},0};
 
         /* Ritorniamo la nostra tripla */
         return triple;
@@ -322,16 +320,4 @@ pair<pair<RBNode *,RBNode *>,int> NumSet::split(RBNode *tree, int key)
             return triple3;
         }
     }
-}
-
-/* Getter */
-RBTree *NumSet::get_rbtree()
-{
-    return this->rb_tree;
-}
-
-/* Setter */
-void NumSet::set_rbtree(RBTree *rb_tree)
-{
-    this->rb_tree = rb_tree;
 }

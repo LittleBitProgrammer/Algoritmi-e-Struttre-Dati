@@ -325,7 +325,7 @@ class RedBlackTree {
       y->left->parent = x;
     }
     y->parent = x->parent;
-    if (x->parent == nullptr) {
+    if (x->parent == TNULL) {
       this->root = y;
     } else if (x == x->parent->left) {
       x->parent->left = y;
@@ -343,7 +343,7 @@ class RedBlackTree {
       y->right->parent = x;
     }
     y->parent = x->parent;
-    if (x->parent == nullptr) {
+    if (x->parent == TNULL) {
       this->root = y;
     } else if (x == x->parent->right) {
       x->parent->right = y;
@@ -363,7 +363,7 @@ class RedBlackTree {
     node->right = TNULL;
     node->color = 1;
 
-    NodePtr y = nullptr;
+    NodePtr y = TNULL;
     NodePtr x = this->root;
 
     while (x != TNULL) {
@@ -376,7 +376,7 @@ class RedBlackTree {
     }
 
     node->parent = y;
-    if (y == nullptr) {
+    if (y == TNULL) {
       root = node;
     } else if (node->data < y->data) {
       y->left = node;
@@ -384,12 +384,12 @@ class RedBlackTree {
       y->right = node;
     }
 
-    if (node->parent == nullptr) {
+    if (node->parent == TNULL) {
       node->color = 0;
       return;
     }
 
-    if (node->parent->parent == nullptr) {
+    if (node->parent->parent == TNULL) {
       return;
     }
 
@@ -417,7 +417,7 @@ int main() {
     rb.insert(18);
     rb.insert(5);
     rb.insert(15);
-    rb.insert(17);
+    //rb.insert(17);
     rb.insert(25);
     rb.insert(40);
     rb.insert(3);

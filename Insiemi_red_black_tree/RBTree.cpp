@@ -22,7 +22,7 @@ void RBTree::left_rotate(RBNode *x)
     x->right = y->left;
 
     /* Se la right di x non è nulla */
-    if((y->left->left) != nullptr && (y->left->right != nullptr))
+    if(y->left != TNULL)
     {
         /* Aggiorniamo il padre del figlio destro di x precedentemente cambiato */
         y->left->parent = x;
@@ -31,7 +31,7 @@ void RBTree::left_rotate(RBNode *x)
     y->parent = x->parent;
 
     /* Se il padre di x è nullo */
-    if(x->parent == nullptr)
+    if(x->parent == TNULL)
     {
         /* Allora x era la root, per cui y diventerà la nuova root */
         root = y;
@@ -62,7 +62,7 @@ void RBTree::right_rotate(RBNode *x)
     x->left = y->right;
 
     /* Se la left di x non è nulla */
-    if((y->right->left) != nullptr && (y->right->right != nullptr))
+    if(y->right != TNULL)
     {
         /* Aggiorniamo il padre del figlio sinistro di x precedentemente cambiato */
         y->right->parent = x;
@@ -71,7 +71,7 @@ void RBTree::right_rotate(RBNode *x)
     y->parent = x->parent;
 
     /* Se il padre di x è nullo */
-    if(x->parent == nullptr)
+    if(x->parent == TNULL)
     {
         /* Allora x era la root, per cui y diventerà la nuova root */
         root = y;
@@ -111,152 +111,49 @@ Possiamo infatti avere tre casi differenti aggiungendo un nodo x e comportarci d
 Le istruzioni dei tre casi vengono commentate nella fixup dell'insert.
 */
 
-/* Inserimento di un nodo in un BST */
-RBNode *RBTree::bst_insert_helper(RBNode *root, RBNode *node_to_add)
-{
-    /* Se l'albero è vuoto, allora il nuovo nodo inserito è la radice */
-    if(root == TNULL)
-    {
-        return node_to_add;
-    }
-
-    /* 
-    Altrimenti scorriamo in giu l'albero:
-    - Se il valore del nodo da aggiungere è minore di quello della root ci rechiamo a sinsitra
-    - Altrimenti a destra
-    */
-   if(node_to_add->key < root->key)
-   {
-       root->left = bst_insert_helper(root->left, node_to_add);
-       root->left->parent = root;
-   }
-   else
-   {
-       root->right = bst_insert_helper(root->right, node_to_add);
-       root->right->parent = root;
-   }
-   
-   /* Ritorniamo la root */
-   return root;
-}  
-
 /* Rispristino di un albero RB dalle violazioni causate dall'inserimento BST */
-void RBTree::insert_fixup(RBNode *&root, RBNode *&x)
+void RBTree::insert_fixup(RBNode *&root, RBNode *&k)
 {
-    /* 
-    Il colore rosso viene assegnato durante la costruzione del nodo, pertanto qui 
-    non abbiamo bisogno di colorare il nodo.
-
-    Dichiariamo ora il nodo uncle(zio), il quale sarà utile durante l'iterazione.
-    */
-    RBNode *uncle = nullptr;
-
-    /* Dichiariamo il nodo parent(padre) e grand parent(nonno) utili durante l'iterazione */
-    RBNode *parent = nullptr;
-    RBNode *grand_parent = nullptr;
-
-    /*
-    Il processo verrà iterato dal basso verso l'alto, pertanto
-    continuerà fintanto che il nodo è rosso e fintanto che la x non diventa la root 
-    (ad fine iterazione la x analizzata diventerà il padre della vecchia x "parent[x]"). 
-    */
-
-    while((x != root) && (x->color != BLACK) && (x->parent->color == RED))
-    {
-        /* Inizializziamo il parent ed il grand_parent del nodo */
-        parent = x->parent;
-        grand_parent = x->parent->parent;
-
-        if(parent == grand_parent->left)
-        {
-            /* Se il padre di x è il figlio sinistro del nonno di x*/
-            /* Lo zio di x sarà il figlio destro del nonno di x */
-            uncle = grand_parent->right;
-
-            /* Caso 1: lo zio di x è rosso, allora abbiamo bisogno di ricolorare i nodi */
-            if((uncle != nullptr) && (uncle->color == RED))
-            {
-                /* Coloriamo il nonno di x di rosso */
-                grand_parent->color = RED;
-
-                /* Coloriamo il padre di x e lo zio di x di nero */
-                parent->color = BLACK;
-                uncle->color = BLACK;
-
-                /* Il nuovo x diventerà il nonno di x */
-                x = grand_parent;
-            }
-            else
-            {
-                /* 
-                Caso 2: lo zio di x è nero e x è figlio destro del padre 
-                Sarà necessaria una rotazione sinistra per trasformare il caso 2 nel caso 3
-                */
-                if(x == parent->right)
-                {
-                    /* Ruotiamo a sinistra x*/
-                    left_rotate(parent);
-                    /* Il nuovo x diventerà il padre di x */
-                    x = parent;
-                    parent = x->parent;
-                }
-
-                /* 
-                Caso 3: lo zio di x è nero e x è figlio sinistro del padre,
-                in questo caso eseguiamo alcuni cambi di colore e eseguiamo una rotazioneverso
-                destra
-                */
-                right_rotate(grand_parent);
-                std::swap(parent->color, grand_parent->color);
-                x = parent;
-            }
+     RBNode *u;
+    while (k->parent->color == RED) {
+      if (k->parent == k->parent->parent->right) {
+        u = k->parent->parent->left;
+        if (u->color == RED) {
+          u->color = BLACK;
+          k->parent->color = BLACK;
+          k->parent->parent->color = RED;
+          k = k->parent->parent;
+        } else {
+          if (k == k->parent->left) {
+            k = k->parent;
+            right_rotate(k);
+          }
+          k->parent->color = BLACK;
+          k->parent->parent->color = RED;
+          left_rotate(k->parent->parent);
         }
-        else
-        {
-            /* Caso speculare */
-            /* Lo zio di x sarà il figlio sinistro del nonno di x */
-            uncle = grand_parent->left;
+      } else {
+        u = k->parent->parent->right;
 
-            /* Caso 1: lo zio di x è rosso, allora abbiamo bisogno di ricolorare i nodi */
-            if((uncle != nullptr) && (uncle->color == RED))
-            {
-                /* Coloriamo il nonno di x di rosso */
-                grand_parent->color = RED;
-
-                /* Coloriamo il padre di x e lo zio di x di nero */
-                parent->color = BLACK;
-                uncle->color = BLACK;
-
-                /* Il nuovo x diventerà il padre di x */
-                x = grand_parent;
-            }
-            else
-            {
-                /* 
-                Caso 2: lo zio di x è nero e x è figlio sinistro del padre 
-                Sarà necessaria una rotazione destra per trasformare il caso 2 nel caso 3
-                */ 
-                if(x == parent->left)
-                {
-                    /* Ruotiamo a destra x*/
-                    right_rotate(parent);
-                    /* Il nuovo x diventerà il padre di x */
-                    x = parent;
-                    parent = x->parent;
-                }
-
-                /* 
-                Caso 3: lo zio di x è nero e x è figlio destro del padre,
-                in questo caso eseguiamo alcuni cambi di colore e eseguiamo una rotazione verso
-                sinsitra
-                */
-                left_rotate(grand_parent);
-                std::swap(parent->color,grand_parent->color);
-                x = parent;
-            }
+        if (u->color == RED) {
+          u->color = BLACK;
+          k->parent->color = BLACK;
+          k->parent->parent->color = RED;
+          k = k->parent->parent;
+        } else {
+          if (k == k->parent->right) {
+            k = k->parent;
+            left_rotate(k);
+          }
+          k->parent->color = BLACK;
+          k->parent->parent->color = RED;
+          right_rotate(k->parent->parent);
         }
+      }
+      if (k == root) {
+        break;
+      }
     }
-
     root->color = BLACK;
 }
 
@@ -271,11 +168,50 @@ void RBTree::insert(int key)
     node_to_add->right = TNULL;
     node_to_add->color = RED;
 
-    /* Lanciamo un insert BST */
-    root = bst_insert_helper(root,node_to_add);
+    RBNode *y = TNULL;
+    RBNode *x = this->root;
+
+    while (x != TNULL) 
+    {
+        y = x;
+        if (node_to_add->key < x->key) 
+        {
+            x = x->left;
+        } 
+        else 
+        {
+            x = x->right;
+        }
+    }
+
+    node_to_add->parent = y;
+    if (y == TNULL) 
+    {
+      root = node_to_add;
+    } 
+    else if (node_to_add->key < y->key) 
+    {
+      y->left = node_to_add;
+    } 
+    else
+    {
+      y->right = node_to_add;
+    }
+
+    if (node_to_add->parent == TNULL) 
+    {
+      node_to_add->color = BLACK;
+      return;
+    }
+
+    if (node_to_add->parent->parent == TNULL) 
+    {
+      return;
+    }
 
     /* Correggiamo le violazioni sull'albero RB */
     insert_fixup(root, node_to_add);
+    
 }
 
 /*===============================
@@ -286,7 +222,7 @@ void RBTree::insert(int key)
 void RBTree::print_helper(RBNode *root, string indentation, bool last)
 {
     /* Stampa la struttura dell'albero a schermo */
-    if(root->left != nullptr && root->right != nullptr)
+    if(root != TNULL)
     {
         cout << indentation;
         if(last)
@@ -322,7 +258,7 @@ In particolare le operazioni di ripristino del bilanciamento sono necessarie sol
 cancellato/spostato è nero.
 */
 
-/* Metodo di supporto utilizzato dalla delete_node */
+/* Metodo di supporto utilizzato dalla delete_key */
 void RBTree::delete_helper(RBNode *node, int key)
 {
     /* Inizializziamo z a nullptr */
@@ -532,7 +468,7 @@ void RBTree::delete_fixup(RBNode *x)
 }
 
 /* Cancellazione di un nodo con una data chiave */
-void RBTree::delete_node(int key)
+void RBTree::delete_key(int key)
 {
     delete_helper(root,key);
 }
@@ -543,6 +479,7 @@ RBTree::RBTree()
     TNULL->color = BLACK;
     TNULL->left = nullptr;
     TNULL->right = nullptr;
+    TNULL->parent = nullptr;
     root = TNULL;
 }
 
@@ -701,7 +638,7 @@ int RBTree::tree_height_helper(RBNode *node)
 /* Calcola l'altezza nera di un dato nodo x */
 int RBTree::black_height(RBNode *node)
 {
-    if(node->right == nullptr && node->left == nullptr)
+    if(node == TNULL)
     {
         return 0;
     }
@@ -731,4 +668,10 @@ void RBTree::set_root(RBNode *root)
 {
     root->parent = TNULL;
     this->root = root;
+}
+
+/* Getter */
+RBNode *RBTree::get_tnull()
+{
+    return this->TNULL;
 }
