@@ -22,7 +22,7 @@ void RBTree::left_rotate(RBNode *x)
     x->right = y->left;
 
     /* Se la right di x non è nulla */
-    if(y->left != TNULL)
+    if(y->left->left != nullptr && y->left->right != nullptr)
     {
         /* Aggiorniamo il padre del figlio destro di x precedentemente cambiato */
         y->left->parent = x;
@@ -31,7 +31,7 @@ void RBTree::left_rotate(RBNode *x)
     y->parent = x->parent;
 
     /* Se il padre di x è nullo */
-    if(x->parent == TNULL)
+    if(x->parent->left == nullptr && x->parent->right == nullptr)
     {
         /* Allora x era la root, per cui y diventerà la nuova root */
         root = y;
@@ -61,8 +61,8 @@ void RBTree::right_rotate(RBNode *x)
     /* Il figlio sinistro di x diventa il figlio destro di y */
     x->left = y->right;
 
-    /* Se la left di x non è nulla */
-    if(y->right != TNULL)
+    /* Se la left di x non è nulla*/
+    if(y->right->right != nullptr && y->right->left != nullptr)
     {
         /* Aggiorniamo il padre del figlio sinistro di x precedentemente cambiato */
         y->right->parent = x;
@@ -70,21 +70,21 @@ void RBTree::right_rotate(RBNode *x)
     /* Cambiamo il padre di y con il padre di x */
     y->parent = x->parent;
 
-    /* Se il padre di x è nullo */
-    if(x->parent == TNULL)
+    /* Se il padre di x è nullo*/
+    if(x->parent->left == nullptr && x->parent->right == nullptr)
     {
         /* Allora x era la root, per cui y diventerà la nuova root */
         root = y;
     }
-    else if(x == x->parent->left)
+    else if(x == x->parent->right)
     {
         /* se x era il figlio sinistro del padre allora dobbiamo aggiornarlo con il nuovo valore y */
-        x->parent->left = y;
+        x->parent->right = y;
     }
     else
     {
         /* Altrimenti era il figlio destro, per cui dobbiamo aggiornarlo con il nuovo valore y */
-        x->parent->right = y;
+        x->parent->left = y;
     }
 
     /* Il nuovo figlio destro di y è x */
@@ -171,7 +171,7 @@ void RBTree::insert(int key)
     RBNode *y = TNULL;
     RBNode *x = this->root;
 
-    while (x != TNULL) 
+    while (x->right != nullptr && x->left != nullptr)
     {
         y = x;
         if (node_to_add->key < x->key) 
@@ -185,7 +185,7 @@ void RBTree::insert(int key)
     }
 
     node_to_add->parent = y;
-    if (y == TNULL) 
+    if (y->left == nullptr && y->right == nullptr)
     {
       root = node_to_add;
     } 
@@ -198,13 +198,13 @@ void RBTree::insert(int key)
       y->right = node_to_add;
     }
 
-    if (node_to_add->parent == TNULL) 
+    if (node_to_add->parent->left == nullptr && node_to_add->parent->right == nullptr)
     {
       node_to_add->color = BLACK;
       return;
     }
 
-    if (node_to_add->parent->parent == TNULL) 
+    if (node_to_add->parent->parent->left == nullptr && node_to_add->parent->parent->right == nullptr)
     {
       return;
     }
@@ -222,7 +222,7 @@ void RBTree::insert(int key)
 void RBTree::print_helper(RBNode *root, string indentation, bool last)
 {
     /* Stampa la struttura dell'albero a schermo */
-    if(root != TNULL)
+    if(root->left != nullptr && root->right != nullptr)
     {
         cout << indentation;
         if(last)
@@ -267,7 +267,7 @@ void RBTree::delete_helper(RBNode *node, int key)
     RBNode *x, *y;
 
     /* Prima di cancellare il nodo verifichiamo che il nodo esista */
-    while(node != TNULL)
+    while(node->left != nullptr && node->right != nullptr)
     {
         /* se la chiave coincide con il nodo analizzato */
         if(node->key == key)
@@ -289,7 +289,7 @@ void RBTree::delete_helper(RBNode *node, int key)
     }
 
     /* Se la chiave non è stata trovata, lanciamo un errore */
-    if(z == TNULL)
+    if(z->left == nullptr && z->right == nullptr)
     {
         cout << "Chiave non trovata nell'albero" << endl;
         return;
@@ -306,14 +306,14 @@ void RBTree::delete_helper(RBNode *node, int key)
    bool y_original_color = y->color;
 
    /* Se il figlio sinistro di z è nullo */
-   if(z->left == TNULL)
+   if(z->left->left == nullptr && z->left->right == nullptr)
    {
        /* Assegnamo ad x il figlio destro di z */
        x = z->right;
        /* Scambiamo z con z->right */
        transplant(z,z->right);
    }
-   else if(z->right == TNULL)
+   else if(z->right->left == nullptr && z->right->right == nullptr)
    {
        /* 
        Se il figlio destro di z è nullo,
@@ -491,7 +491,7 @@ RBNode *RBTree::minimum(RBNode *node)
     nel corrispettivo figlio sinistro, peranto basterà iterare fino a quando esiste un figlio 
     sinistro per trovare il valore minimo presente nell'ABR
     */
-    while(node->left != TNULL)
+    while(node->left->left != nullptr && node->left->right != nullptr)
     {
         node = node->left;
     }
@@ -507,7 +507,7 @@ RBNode *RBTree::maximum(RBNode *node)
     nel corrispettivo figlio destro, peranto basterà iterare fino a quando esiste un figlio 
     destro per trovare il valore massimo presente nell'ABR
     */
-   while(node->right != TNULL)
+   while(node->right->left != nullptr && node->right->right != nullptr)
    {
        node = node->right;
    }
@@ -518,7 +518,7 @@ RBNode *RBTree::maximum(RBNode *node)
 /* Metodo helper sfruttato dalla preorder */
 void RBTree::preorder_helper(RBNode *node)
 {
-    if(node != TNULL)
+    if(node->left != nullptr && node->right != nullptr)
     {
         cout << node->key << " ";     /* visita nodo */
         preorder_helper(node->left);  /* visita figlio sinistro */
@@ -529,7 +529,7 @@ void RBTree::preorder_helper(RBNode *node)
 /* Metodo helper sfruttato dalla inorder */
 void RBTree::inorder_helper(RBNode *node)
 {
-    if(node != TNULL)
+    if(node->left != nullptr && node->right != nullptr)
     {
         inorder_helper(node->left);  /* Visita figlio sinistro*/
         cout << node->key << " ";    /* Visita nodo */
@@ -540,7 +540,7 @@ void RBTree::inorder_helper(RBNode *node)
 /* Metodo helper sfruttato dalla postorder */
 void RBTree::postorder_helper(RBNode *node)
 {
-    if(node != TNULL)
+    if(node->left != nullptr && node->right != nullptr)
     {
         postorder_helper(node->left);  /* Visita figlio sinistro*/
         postorder_helper(node->right); /* Visita figlio destro */
@@ -552,7 +552,7 @@ void RBTree::postorder_helper(RBNode *node)
 RBNode *RBTree::successor(RBNode *node)
 {
     /* Se il nodo ha un figlio destro allora il successore è il minimo del sottoalbero destro */
-    if(node->right != TNULL)
+    if(node->right->left != nullptr && node->right->right != nullptr)
     {
         return minimum(node->right);
     }
@@ -562,7 +562,7 @@ RBNode *RBTree::successor(RBNode *node)
     sottoalbero sinistro
     */
    RBNode *y = node->parent;
-   while(y != TNULL && node == y->right)
+   while((y->left != nullptr && y->right != nullptr) && node == y->right)
    {
        node = y;
        y = y->parent;
@@ -575,7 +575,7 @@ RBNode *RBTree::successor(RBNode *node)
 RBNode *RBTree::predecessor(RBNode *node)
 {
     /* Se il nodo ha un figlio sinistro allora il successore è il massimo del sottoalbero sinistro */
-    if(node->left != TNULL)
+    if(node->left->left != nullptr && node->left->right != nullptr)
     {
         return maximum(node->left);
     }
@@ -585,7 +585,7 @@ RBNode *RBTree::predecessor(RBNode *node)
     sottoalbero destro
     */
    RBNode *y = node->parent;
-   while(y != TNULL && node == y->left)
+   while((y->left != nullptr && y->right != nullptr) && node == y->left)
    {
        node = y;
        y = y->parent;
@@ -598,7 +598,7 @@ RBNode *RBTree::predecessor(RBNode *node)
 RBNode *RBTree::search_helper(RBNode *node, int key)
 {
     /* Se il nodo è nullo o se la chiave ricercata coincide con la chiave del nodo */
-    if(node == TNULL || key == node->key)
+    if((node->left == nullptr && node->right == nullptr) || key == node->key)
     {
         /* Ritorna il nodo */
         return node;
@@ -625,7 +625,7 @@ RBNode *RBTree::search_helper(RBNode *node, int key)
 /* Metodo helper sfruttato dalla tree_height */
 int RBTree::tree_height_helper(RBNode *node)
 {
-    if(node != TNULL)
+    if(node->left != nullptr && node->right != nullptr)
     {
         return 1 + max(tree_height_helper(node->right),tree_height_helper(node->left));
     }
@@ -638,7 +638,7 @@ int RBTree::tree_height_helper(RBNode *node)
 /* Calcola l'altezza nera di un dato nodo x */
 int RBTree::black_height(RBNode *node)
 {
-    if(node == TNULL)
+    if(node->left == nullptr && node->right == nullptr)
     {
         return 0;
     }

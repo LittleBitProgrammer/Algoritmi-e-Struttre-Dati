@@ -41,20 +41,27 @@ int main()
     cout << "\nALTEZZA = " << num1.tree_height() << endl;
     cout << "\nALTEZZA NERA = " << num1.black_height(num1.get_root()) << endl;
 
-    num2.insert(2);
+    num2.insert(124);
     cout << "\nAlbero 2:" << endl;
     num2.print_tree();
 
     cout << "ALTEZZA NERA ALBERO 2 = " << num2.black_height(num2.get_root()) << endl;
 
-    //pair<pair<RBNode *,RBNode *>,int> triple = num1.split(rb.get_root(),81);
+    pair<pair<RBNode *,RBNode *>,int> triple = num1.split(num1.get_root(),81);
 
-    /*RBTree rb4;
-    RBTree rb5;
-    rb4.set_root(triple.first.first);
-    rb5.set_root(triple.first.second);
-    rb4.print_tree();
-    rb5.print_tree();*/
+    NumSet num3, num4;
+    
+    num3.set_root(triple.first.first);
+    num4.set_root(triple.first.second);
+    num3.print_tree();
+    num4.print_tree();
 
+    NumSet num5;
+
+    num5.insert(123);
+    num5.insert(100);
+    num5.insert(110);
+
+    num5.print_tree();
     return 0;
 }

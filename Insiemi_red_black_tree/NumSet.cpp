@@ -8,14 +8,14 @@
 RBNode *NumSet::join_right(RBNode *left_tree, int k, RBNode *right_tree)
 {
     /* Calcoliamo la Black Height dei corrispettivi alberi passati in input */
-    auto left_tree_bh = RBTree::black_height(left_tree);
-    auto right_tree_bh = RBTree::black_height(right_tree);
+    auto left_tree_bh = black_height(left_tree);
+    auto right_tree_bh = black_height(right_tree);
 
     /* Se la Black Height dei due alberi coincide */
     if(left_tree_bh == right_tree_bh)
     {
         /* Costruiamo un nuovo nodo da inserire come radice */
-        RBNode *root = new RBNode;
+        auto *root = new RBNode;
         root->key = k;
         root->color = RED;
         root->left =  left_tree;
@@ -37,7 +37,7 @@ RBNode *NumSet::join_right(RBNode *left_tree, int k, RBNode *right_tree)
         /* Costruiamo un nuovo nodo RB: R' */
         RBNode *r_first = left_tree->right;
         /* Costruiamo un nuovo nodo da inserire come radice del nuovo albero da costruire */
-        RBNode *t_first = new RBNode;
+        auto *t_first = new RBNode;
 
         /* 
         Prendiamo come nuova key, la chiave della radice dell'albero sinistro 
@@ -98,7 +98,7 @@ RBNode *NumSet::join_left(RBNode *left_tree, int k, RBNode *right_tree)
     if(right_tree_bh == left_tree_bh)
     {
         /* Costruiamo un nuovo nodo da inserire come radice */
-        RBNode *root = new RBNode;
+        auto *root = new RBNode;
         root->key = k;
         root->color = RED;
         root->left =  left_tree;
@@ -120,7 +120,7 @@ RBNode *NumSet::join_left(RBNode *left_tree, int k, RBNode *right_tree)
         /* Costruiamo un nuovo nodo RB: R' */
         RBNode *r_first = right_tree->right;
         /* Costruiamo un nuovo nodo da inserire come radice del nuovo albero da costruire */
-        RBNode *t_first = new RBNode;
+        auto *t_first = new RBNode;
 
         /* 
         Prendiamo come nuova key, la chiave della radice dell'albero sinistro 
@@ -236,7 +236,7 @@ RBNode *NumSet::join(RBNode *left_tree, int k, RBNode *right_tree)
         /* Caso 3: bh[left_tree] = bh[right_tree] con tl e tr neri*/ 
 
         /* Creiamo un nuovo nodo che farà da radice per entrambi gli alberi */
-        RBNode *root = new RBNode;
+        auto *root = new RBNode;
         root->key = k;
         root->color = RED;
         root->left = left_tree;
@@ -251,7 +251,7 @@ RBNode *NumSet::join(RBNode *left_tree, int k, RBNode *right_tree)
        /* Caso 4: bh[left_tree] = bh[right_tree] con tl e tr non entrambi neri */
 
        /* Creiamo un nuovo nodo che farà da radice per entrambi gli alberi */
-        RBNode *root = new RBNode;
+        auto *root = new RBNode;
         root->key = k;
         root->color = BLACK;
         root->left = left_tree;
@@ -274,13 +274,8 @@ pair<pair<RBNode *,RBNode *>,int> NumSet::split(RBNode *tree, int key)
     /* Caso nodo foglia */
     if((tree->left == nullptr) && (tree->right == nullptr))
     {
-        RBNode *TNULL = new RBNode;
-        TNULL->color = BLACK;
-        TNULL->left = nullptr;
-        TNULL->right = nullptr;
-
         /* Creiamo il nostro pair */
-        pair<pair<RBNode *,RBNode *>,int> triple{{TNULL,TNULL},0};
+        pair<pair<RBNode *,RBNode *>,int> triple{{tree,tree},0};
 
         /* Ritorniamo la nostra tripla */
         return triple;

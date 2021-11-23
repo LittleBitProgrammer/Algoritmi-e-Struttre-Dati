@@ -61,8 +61,9 @@ public:
     RBTree *get_rbtree();
 
     /* Setter */
-    pair<pair<RBNode *,RBNode *>,int> split(RBNode *tree, int key);
     //TODO: passare split nella private
+    pair<pair<RBNode *,RBNode *>,int> split(RBNode *tree, int key);
+    
 };
 
 
