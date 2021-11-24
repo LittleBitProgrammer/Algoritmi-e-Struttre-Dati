@@ -642,28 +642,31 @@ int RBTree::tree_height_helper(RBNode *node)
 /* Calcola l'altezza nera di un dato nodo x */
 int RBTree::black_height(RBNode *node)
 {
-    if(node == TNULL)
+    if(node->right == nullptr && node->left == nullptr)
     {
         return 0;
     }
     else
     {
         /* calcoliamo l'altezza del sotto-ramo di sinistra */
-        int left_black_height = black_height(node->left) + ((node->left->color == BLACK) ? 1 : 0);
+        int left_black_height = black_height(node->left);
 
         /* calcoliamo l'altezza del sotto-ramo di destra */
-        int right_black_height = black_height(node->right) + ((node->right->color == BLACK) ? 1 : 0);
+        int right_black_height = black_height(node->right);
+
+        int add = node->color == BLACK ? 1 : 0;
 
         /* Se i due  sotto-ramo sono diversi allora mostriamo un errore */
         if(left_black_height != right_black_height)
         {
-            //throw std::runtime_error("the tree does not respect the properties of Red Black Trees");
+            throw std::runtime_error("the tree does not respect the properties of Red Black Trees");
         }
 
         /* Se sono uguali, basterà tornare l'altezza di un solo sottoramo */
-        return left_black_height;
+        return left_black_height + add;
     }
 }
+
 
 /* Setter */
 void RBTree::set_root(RBNode *root)

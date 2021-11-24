@@ -23,7 +23,7 @@ int main()
     num1.insert(7);
 
    // rb.delete_key(17);
-    num1.print_tree();
+    //num1.print_tree();
 
     pair<pair<RBNode *,RBNode *>,int> triple = num1.split(num1.get_root(),81);
 
