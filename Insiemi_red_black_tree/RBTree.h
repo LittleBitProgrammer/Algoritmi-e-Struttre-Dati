@@ -42,7 +42,7 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
 {
     private:
         /* Attributes */
-        RBNode *TNULL;
+        static RBNode *TNULL;
 
         /* Methods */
 
