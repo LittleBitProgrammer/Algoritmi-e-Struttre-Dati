@@ -16,7 +16,8 @@
   <component name="ChangeListManager">
     <list default="true" id="75cdcfe1-325e-4383-9754-fb764c592360" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RBTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/RBTree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NumSet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/NumSet.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NumSet.h" beforeDir="false" afterPath="$PROJECT_DIR$/NumSet.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Insiemi_red_black_tree.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Insiemi_red_black_tree.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Insiemi_red_black_tree" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Insiemi_red_black_tree" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
@@ -63,6 +64,11 @@
   </component>
   <component name="RunManager">
     <configuration name="Insiemi_red_black_tree" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Insiemi_red_black_tree" TARGET_NAME="Insiemi_red_black_tree" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Insiemi_red_black_tree" RUN_TARGET_NAME="Insiemi_red_black_tree">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>

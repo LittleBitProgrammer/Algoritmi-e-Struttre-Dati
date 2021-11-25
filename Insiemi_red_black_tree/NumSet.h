@@ -12,9 +12,9 @@ private:
     /* Methods */
 
     /* Metodo di supporto alla join, utile ad eseguire un merge verso destra dell'albero sinistro */
-
+    RBNode *join_left(RBNode *left_tree, int k, RBNode *right_tree);
     /* Metodo di supporto alla join, utile ad eseguire un merge verso sinistra dell'albero destro */
-
+    RBNode *join_right(RBNode *left_tree, int k, RBNode *right_tree);
     /* 
     Metodo di supporto a diverse operazioni di insiemistica:
     - split
@@ -30,42 +30,34 @@ private:
    - intersect
    - difference
    */
-
+   pair<pair<RBNode *,RBNode *>,int> split(RBNode *tree, int key);
    /* Metodo di supporto alla join 2 */
-   pair<RBTree *,int>split_last(RBTree *tree);
+   pair<RBNode *,int>split_last(RBNode *tree);
    /* 
    Metodo di supporto a diverse operazioni di insiemistica:
    - union 
    - intersect
    - difference
    */
-  pair<RBTree *,int> join2(RBTree *left_tree, RBTree *right_tree);
+  RBNode *join2(RBNode *left_tree, RBNode *right_tree);
   /* Metodo helper per l'operazione di unione */
-  RBTree *union_helper(RBTree *tree1, RBTree *tree2);
+  RBNode *union_helper(RBNode *set1, RBNode *set2);
   /* Metodo helper per l'operazione di intersezione */
-  RBTree *intersection_helper(RBTree *tree1, RBTree *tree2);
+
   /* Metodo helper per l'operazione di unione */
-  RBTree *difference_helper(RBTree *tree1, RBTree *tree2);
+  RBNode *difference_helper(RBNode *tree1, RBNode *tree2);
 
 public:
     /* Methods */
 
     /* Operazione di unione tra due insiemi */
-    NumSet *set_union(NumSet *set2);
+    NumSet *set_union(NumSet *set1, NumSet *set2);
     /* Operazione di intersezione tra due insiemi */
     NumSet *set_intersection(NumSet *set2);
     /* Operazione di differenza tra insieme attuale e set2 */
     NumSet *set_difference(NumSet *set2);
 
-    /* Getter */
-    RBTree *get_rbtree();
-
-    /* Setter */
-    //TODO: passare split nella private
-    pair<pair<RBNode *,RBNode *>,int> split(RBNode *tree, int key);
-    //TODO: passare join left nella private
-    RBNode *join_left(RBNode *left_tree, int k, RBNode *right_tree);
-    RBNode *join_right(RBNode *left_tree, int k, RBNode *right_tree);
+    RBNode *intersection_helper(RBNode *tree1, RBNode *tree2);
 };
 
 

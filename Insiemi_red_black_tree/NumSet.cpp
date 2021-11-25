@@ -347,3 +347,75 @@ pair<pair<RBNode *,RBNode *>,int> NumSet::split(RBNode *tree, int key)
         }
     }
 }
+
+/* Operazione di unione tra due insiemi */
+RBNode *NumSet::union_helper(RBNode *set1, RBNode *set2)
+{
+    if (set1 == get_tnull())
+    {
+        return set2;
+    }
+    else if (set2 == get_tnull())
+    {
+        return set1;
+    }
+    else
+    {
+        std::pair<std::pair<RBNode *, RBNode *>, int> triple2 {{set2->left,set2->right}, set2->key};
+        auto triple = split(set1, triple2.second);
+
+        auto tree_left = union_helper(triple.first.first, triple2.first.first);
+        auto tree_right = union_helper(triple.first.second, triple2.first.second);
+
+        return join(tree_left, triple2.second, tree_right);
+    }
+}
+
+RBNode *NumSet::intersection_helper(RBNode *set1, RBNode *set2)
+{
+    if (set1 == get_tnull() || set2 == get_tnull())
+    {
+        return get_tnull();
+    }
+    else
+    {
+        std::pair<std::pair<RBNode *, RBNode *>, int> triple2 {{set2->left,set2->right}, set2->key};
+        auto triple = split(set1, triple2.second);
+
+        auto tree_left = intersection_helper(triple.first.first,triple2.first.first);
+        auto tree_right = intersection_helper(triple.first.second,triple2.first.second);
+
+        return (triple.second) ? join(tree_left,triple2.second,tree_right) : join2(tree_left,tree_right);
+    }
+}
+
+pair<RBNode *,int> NumSet::split_last(RBNode *tree)
+{
+    std::pair<std::pair<RBNode *, RBNode*>, int> triple {{tree->left,tree->right},tree->key};
+
+    if(triple.first.second == get_tnull())
+    {
+        std::pair<RBNode *,int> couple {triple.first.first,triple.second};
+        return couple;
+    }
+    else
+    {
+        auto couple = split_last(triple.first.second);
+        std::pair<RBNode *, int> couple2 {join(triple.first.first,triple.second,couple.first),couple.second};
+
+        return couple2;
+    }
+}
+
+RBNode *NumSet::join2(RBNode *left_tree, RBNode *right_tree)
+{
+    if (left_tree == get_tnull())
+    {
+        return right_tree;
+    }
+    else
+    {
+        auto couple = split_last(left_tree);
+        return join(couple.first,couple.second,right_tree);
+    }
+}
