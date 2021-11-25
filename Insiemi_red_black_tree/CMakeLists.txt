@@ -11,4 +11,4 @@ add_executable(Insiemi_red_black_tree
         NumSet.cpp
         NumSet.h
         RBTree.cpp
-        RBTree.h)
+        RBTree.h SetGenerator.cpp SetGenerator.h)

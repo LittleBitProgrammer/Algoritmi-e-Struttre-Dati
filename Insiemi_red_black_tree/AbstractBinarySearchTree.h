@@ -40,6 +40,8 @@ class AbstractBinarySearchTree
     public:
         /* Constructor */
         AbstractBinarySearchTree();
+        /* Destructor */
+        virtual ~AbstractBinarySearchTree() = 0;
 
         /* Methods*/
 
@@ -165,5 +167,7 @@ void AbstractBinarySearchTree<T>::transplant(T *u, T *v)
         v->parent = u->parent;
     }
 }
+template<typename T>
+AbstractBinarySearchTree<T>::~AbstractBinarySearchTree<T>() = default;;
 
 #endif

@@ -97,6 +97,12 @@
 		<Unit filename="/Users/robertovecchio/Desktop/workspace/Algoritmi-e-Struttre-Dati/Insiemi_red_black_tree/RBTree.h">
 			<Option target="Insiemi_red_black_tree"/>
 		</Unit>
+		<Unit filename="/Users/robertovecchio/Desktop/workspace/Algoritmi-e-Struttre-Dati/Insiemi_red_black_tree/SetGenerator.cpp">
+			<Option target="Insiemi_red_black_tree"/>
+		</Unit>
+		<Unit filename="/Users/robertovecchio/Desktop/workspace/Algoritmi-e-Struttre-Dati/Insiemi_red_black_tree/SetGenerator.h">
+			<Option target="Insiemi_red_black_tree"/>
+		</Unit>
 		<Unit filename="/Users/robertovecchio/Desktop/workspace/Algoritmi-e-Struttre-Dati/Insiemi_red_black_tree/main.cpp">
 			<Option target="Insiemi_red_black_tree"/>
 		</Unit>

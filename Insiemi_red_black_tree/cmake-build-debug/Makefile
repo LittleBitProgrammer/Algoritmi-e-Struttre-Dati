@@ -177,6 +177,30 @@ RBTree.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Insiemi_red_black_tree.dir/build.make CMakeFiles/Insiemi_red_black_tree.dir/RBTree.cpp.s
 .PHONY : RBTree.cpp.s
 
+SetGenerator.o: SetGenerator.cpp.o
+.PHONY : SetGenerator.o
+
+# target to build an object file
+SetGenerator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Insiemi_red_black_tree.dir/build.make CMakeFiles/Insiemi_red_black_tree.dir/SetGenerator.cpp.o
+.PHONY : SetGenerator.cpp.o
+
+SetGenerator.i: SetGenerator.cpp.i
+.PHONY : SetGenerator.i
+
+# target to preprocess a source file
+SetGenerator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Insiemi_red_black_tree.dir/build.make CMakeFiles/Insiemi_red_black_tree.dir/SetGenerator.cpp.i
+.PHONY : SetGenerator.cpp.i
+
+SetGenerator.s: SetGenerator.cpp.s
+.PHONY : SetGenerator.s
+
+# target to generate assembly for a file
+SetGenerator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Insiemi_red_black_tree.dir/build.make CMakeFiles/Insiemi_red_black_tree.dir/SetGenerator.cpp.s
+.PHONY : SetGenerator.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -216,6 +240,9 @@ help:
 	@echo "... RBTree.o"
 	@echo "... RBTree.i"
 	@echo "... RBTree.s"
+	@echo "... SetGenerator.o"
+	@echo "... SetGenerator.i"
+	@echo "... SetGenerator.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

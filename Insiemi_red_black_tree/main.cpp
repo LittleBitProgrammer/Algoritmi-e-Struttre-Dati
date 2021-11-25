@@ -1,42 +1,15 @@
-#include "RBTree.h"
-#include "NumSet.h"
+#include "SetGenerator.h"
 
 int main()
 {
-    NumSet *num1 = new NumSet, *num2 = new NumSet, *num3;
+    SetGenerator setGenerator{"input1_1_0.txt"};
 
-    /* Inserimento nodi */
-    num1->insert(8);
-    num1->insert(18);
-    num1->insert(5);
-    num1->insert(15);
-    num1->insert(25);
-    num1->insert(40);
-    num1->insert(3);
+    vector<NumSet> sets = setGenerator.generate_sets();
 
-    num2->insert(18);
-    num2->insert(25);
-    num2->insert(1);
-    num2->insert(80);
-    num2->insert(100);
-    num2->insert(123);
-    num2->insert(110);
-    num2->insert(12);
-    num2->insert(7);
-
-    num1->print_tree();
-    num2->print_tree();
-
-
-    num1->inorder();
-    cout << endl;
-    num2->inorder();
-    cout << endl;
-
-    num3 = num1->set_intersection(num2);
-    num3->print_tree();
-
-    num3->inorder();
-
+    for(auto set:sets)
+    {
+        set.inorder();
+        cout << endl;
+    }
     return 0;
 }
