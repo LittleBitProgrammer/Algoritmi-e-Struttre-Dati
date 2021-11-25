@@ -442,3 +442,33 @@ RBNode *NumSet::difference_helper(RBNode *set1, RBNode *set2)
         return join2(tree_left,tree_right);
     }
 }
+
+/* Operazione di unione tra due insiemi */
+NumSet *NumSet::set_union(NumSet *set2)
+{
+    auto node = union_helper(this->get_root(),set2->get_root());
+    auto new_set = new NumSet;
+
+    new_set->set_root(node);
+    return new_set;
+}
+
+/* Operazione di intersezione tra due insiemi */
+NumSet *NumSet::set_intersection(NumSet *set2)
+{
+   auto node = intersection_helper(this->get_root(),set2->get_root());
+   auto new_set = new NumSet;
+
+   new_set->set_root(node);
+   return new_set;
+}
+
+/* Operazione di differenza tra insieme attuale e set2 */
+NumSet *NumSet::set_difference(NumSet *set2)
+{
+    auto node = difference_helper(this->get_root(),set2->get_root());
+    auto new_set = new NumSet;
+
+    new_set->set_root(node);
+    return new_set;
+}

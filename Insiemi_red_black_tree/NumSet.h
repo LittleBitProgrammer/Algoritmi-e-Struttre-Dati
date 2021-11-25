@@ -45,19 +45,17 @@ private:
   /* Metodo helper per l'operazione di intersezione */
   RBNode *intersection_helper(RBNode *set1, RBNode *set2);
   /* Metodo helper per l'operazione di unione */
-
+  RBNode *difference_helper(RBNode *set1, RBNode *set2);
 
 public:
     /* Methods */
 
     /* Operazione di unione tra due insiemi */
-    NumSet *set_union(NumSet *set1, NumSet *set2);
+    NumSet *set_union(NumSet *set2);
     /* Operazione di intersezione tra due insiemi */
     NumSet *set_intersection(NumSet *set2);
     /* Operazione di differenza tra insieme attuale e set2 */
     NumSet *set_difference(NumSet *set2);
-
-    RBNode *difference_helper(RBNode *set1, RBNode *set2);
 };
 
 
