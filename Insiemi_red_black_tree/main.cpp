@@ -33,7 +33,7 @@ int main()
     num2.inorder();
     cout << endl;
 
-    num3.set_root(num3.intersection_helper(num1.get_root(),num2.get_root()));
+    num3.set_root(num3.difference_helper(num1.get_root(),num2.get_root()));
     num3.print_tree();
 
     num3.inorder();

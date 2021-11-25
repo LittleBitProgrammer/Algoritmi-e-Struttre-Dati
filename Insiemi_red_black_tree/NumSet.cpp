@@ -419,3 +419,26 @@ RBNode *NumSet::join2(RBNode *left_tree, RBNode *right_tree)
         return join(couple.first,couple.second,right_tree);
     }
 }
+
+/* Metodo helper per l'operazione di unione */
+RBNode *NumSet::difference_helper(RBNode *set1, RBNode *set2)
+{
+    if (set1 == get_tnull())
+    {
+        return get_tnull();
+    }
+    else if (set2 == get_tnull())
+    {
+        return set1;
+    }
+    else
+    {
+        std::pair<std::pair<RBNode *, RBNode *>, int> triple2 {{set2->left,set2->right},set2->key};
+        auto triple = split(set1,triple2.second);
+
+        auto tree_left = difference_helper(triple.first.first,triple2.first.first);
+        auto tree_right = difference_helper(triple.first.second,triple2.first.second);
+
+        return join2(tree_left,tree_right);
+    }
+}

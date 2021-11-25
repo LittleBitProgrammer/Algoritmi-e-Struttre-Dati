@@ -43,9 +43,9 @@ private:
   /* Metodo helper per l'operazione di unione */
   RBNode *union_helper(RBNode *set1, RBNode *set2);
   /* Metodo helper per l'operazione di intersezione */
-
+  RBNode *intersection_helper(RBNode *set1, RBNode *set2);
   /* Metodo helper per l'operazione di unione */
-  RBNode *difference_helper(RBNode *tree1, RBNode *tree2);
+
 
 public:
     /* Methods */
@@ -57,7 +57,7 @@ public:
     /* Operazione di differenza tra insieme attuale e set2 */
     NumSet *set_difference(NumSet *set2);
 
-    RBNode *intersection_helper(RBNode *tree1, RBNode *tree2);
+    RBNode *difference_helper(RBNode *set1, RBNode *set2);
 };
 
 
