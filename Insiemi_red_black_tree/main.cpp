@@ -10,6 +10,12 @@ int main()
     cout << "Inserire il nome del file per la popolazione degli insiemi:" << endl;
     cin >> filename;
 
+    /* Generiamo gli insiemi sfruttando il file indicato dall'utente */
+    SetGenerator setGenerator{filename};
+    vector<NumSet> sets = setGenerator.generate_sets();
+
+    cout << "\n**\t Generazione degli insiemi avvenuta con successo \t**\n" << endl;
+
     do
     {
         /* Stampa del menu */
@@ -22,8 +28,6 @@ int main()
         cout << "[5] Eseguire operazione canonica di unione tra due insieme scelti" << endl;
         cout << "[6] Eseguire operazione canonica di intersezione tra due insiemi scelti" << endl;
         cout << "[7] Eseguire operazione canonica di differenza tra due insiemi scelti" << endl;
-        cout << "[8] Aggiungere un valore numerico ad un dato insieme" << endl;
-        cout << "[9] Rimuovere un valore da un dato insieme" << endl;
 
         /* Resettiamo lo stream associato allo standard input */
         cin.clear();
@@ -34,35 +38,167 @@ int main()
         switch(menu)
         {
             case 0:
+                cout << "\nProgramma terminato con successo.\n" << endl;
                 exit(0);
             case 1:
+                if (!sets.empty())
+                {
+                    int i{0};
+
+                    cout << "\nInorder: " << endl;
+                    for(auto set:sets)
+                    {
+                        cout << "Insieme [" << ++i << "] = ";
+                        set.inorder();
+                        cout << endl;
+                    }
+                    cout << endl;
+                }
+                else
+                {
+                    cout << "\nNessun insieme presente in memoria\n" << endl;
+                }
                 break;
             case 2:
+                if (!sets.empty())
+                {
+                    int i{0};
+
+                    cout << "\nPreorder: " << endl;
+                    for(auto set:sets)
+                    {
+                        cout << "Insieme [" << ++i << "] = ";
+                        set.preorder();
+                        cout << endl;
+                    }
+                    cout << endl;
+                }
+                else
+                {
+                    cout << "\nNessun insieme presente in memoria\n" << endl;
+                }
                 break;
             case 3:
+                if (!sets.empty())
+                {
+                    int i{0};
+
+                    cout << "\nPostorder: " << endl;
+                    for(auto set:sets)
+                    {
+                        cout << "Insieme [" << ++i << "] = ";
+                        set.postorder();
+                        cout << endl;
+                    }
+                    cout << endl;
+                }
+                else
+                {
+                    cout << "\nNessun insieme presente in memoria\n" << endl;
+                }
                 break;
             case 4:
+                if (!sets.empty())
+                {
+                    int set_choice; /* Variabile utile a identificare quale insieme l'utente vuole stampare come RB Tree */
+
+                    cout << "\nDi quale insieme si vuole conoscere la rappresentazione Red-Black Tree?" << endl;
+
+                    int i{0};
+
+                    cout << "\nInsiemi: " << endl;
+                    for(auto set:sets)
+                    {
+                        cout << "Insieme [" << ++i << "] = ";
+                        set.inorder();
+                        cout << endl;
+                    }
+                    cout << "\nScelta insieme: ";
+                    cin.clear();
+                    cin >> set_choice;
+
+                    if (set_choice == 0 || set_choice > sets.size())
+                    {
+                        cout << "\nScelta non valida, ravvio il menu." << endl;
+                        break;
+                    }
+                    cout << "Rappresentazione Red-Black Tree dell'insieme [" << set_choice << "]:" << endl;
+                    sets.at(set_choice-1).print_tree();
+                }
+                else
+                {
+                    cout << "\nNessun insieme presente in memoria\n" << endl;
+                }
                 break;
             case 5:
+                if (!sets.empty())
+                {
+                    int set1, set2; /* Variabili utili ad identificare gli insiemi su cui eseguire l'operazione di unione */
+
+                    cout << "\nSu quali insiemi si vuole effettuare l'operazione di unione?" << endl;
+
+                    int i{0};
+
+                    cout << "\nInsiemi: " << endl;
+                    for(auto set:sets)
+                    {
+                        cout << "Insieme [" << ++i << "] = ";
+                        set.inorder();
+                        cout << endl;
+                    }
+                    cout << "\nInsieme 1: ";
+                    cin.clear();
+                    cin >> set1;
+                    cout << "\nInsieme 2:";
+                    cin.clear();
+                    cin >> set2;
+
+                    if (set1 == 0 || set2 == 0 || set1 > sets.size() || set2 > sets.size())
+                    {
+                        cout << "\nScelta non valida, ravvio il menu." << endl;
+                        break;
+                    }
+
+                    NumSet *union_set = sets.at(set1-1).set_union(&sets.at(set2-1));
+
+                    cout << "Union = ";
+                    union_set->inorder();
+                    cout << endl;
+                }
+                else
+                {
+                    cout << "\nNessun insieme presente in memoria\n" << endl;
+                }
                 break;
             case 6:
+                if (!sets.empty())
+                {
+                    int set1, set2; /* Variabili utili ad identificare gli insiemi su cui eseguire l'operazione di unione */
+
+                    cout << "\nSu quali insiemi si vuole effettuare l'operazione di unione?" << endl;
+                }
+                else
+                {
+                    cout << "\nNessun insieme presente in memoria\n" << endl;
+                }
                 break;
             case 7:
-                break;
-            case 8:
-                break;
-            case 9:
+                if (!sets.empty())
+                {
+                    int set1, set2; /* Variabili utili ad identificare gli insiemi su cui eseguire l'operazione di unione */
+
+                    cout << "\nSu quali insiemi si vuole effettuare l'operazione di unione?" << endl;
+                }
+                else
+                {
+                    cout << "\nNessun insieme presente in memoria\n" << endl;
+                }
                 break;
             default:
-                cout << "Scelta non presente, riprovare.";
+                cout << "\nScelta non presente, riprovare.\n" << endl;
                 /* Break non necessario */
         }
     } while (menu != 0);
-
-    SetGenerator setGenerator{"input1_1_0.txt"};
-
-    vector<NumSet> sets = setGenerator.generate_sets();
-
 
     return 0;
 }
