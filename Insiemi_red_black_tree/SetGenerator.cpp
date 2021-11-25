@@ -25,7 +25,7 @@ void SetGenerator::set_filename(string filename)
 vector<NumSet> SetGenerator::generate_sets()
 {
     vector<NumSet> sets;
-    ifstream filereader(filename);
+    ifstream filereader(filename.c_str());
     string row;
 
     if (!filereader.fail())
