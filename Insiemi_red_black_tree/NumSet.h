@@ -56,6 +56,9 @@ public:
     NumSet *set_intersection(NumSet *set2);
     /* Operazione di differenza tra insieme attuale e set2 */
     NumSet *set_difference(NumSet *set2);
+
+    /* clone helper */
+    RBNode *cloning(RBNode *node, RBNode *parent);
 };
 
 

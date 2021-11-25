@@ -159,9 +159,15 @@ int main()
                         break;
                     }
 
-                    NumSet *union_set = sets.at(set1-1).set_union(&sets.at(set2-1));
+                    NumSet *temp_set1 = new NumSet;
+                    NumSet *temp_set2 = new NumSet;
 
-                    cout << "Union = ";
+                    temp_set1->set_root(sets.at(set1-1).cloning(sets.at(set1-1).get_root(),sets.at(set1-1).get_tnull()));
+                    temp_set2->set_root(sets.at(set2-1).cloning(sets.at(set2-1).get_root(),sets.at(set1-1).get_tnull()));
+
+                    NumSet *union_set = temp_set1->set_union(temp_set2);
+
+                    cout << "Unione = ";
                     union_set->inorder();
                     cout << endl;
                 }
@@ -176,6 +182,40 @@ int main()
                     int set1, set2; /* Variabili utili ad identificare gli insiemi su cui eseguire l'operazione di unione */
 
                     cout << "\nSu quali insiemi si vuole effettuare l'operazione di unione?" << endl;
+
+                    int i{0};
+
+                    cout << "\nInsiemi: " << endl;
+                    for(auto set:sets)
+                    {
+                        cout << "Insieme [" << ++i << "] = ";
+                        set.inorder();
+                        cout << endl;
+                    }
+                    cout << "\nInsieme 1: ";
+                    cin.clear();
+                    cin >> set1;
+                    cout << "\nInsieme 2:";
+                    cin.clear();
+                    cin >> set2;
+
+                    if (set1 == 0 || set2 == 0 || set1 > sets.size() || set2 > sets.size())
+                    {
+                        cout << "\nScelta non valida, ravvio il menu." << endl;
+                        break;
+                    }
+
+                    NumSet *temp_set1 = new NumSet;
+                    NumSet *temp_set2 = new NumSet;
+
+                    temp_set1->set_root(sets.at(set1-1).cloning(sets.at(set1-1).get_root(),sets.at(set1-1).get_tnull()));
+                    temp_set2->set_root(sets.at(set2-1).cloning(sets.at(set2-1).get_root(),sets.at(set1-1).get_tnull()));
+
+                    NumSet *intersect_set = temp_set1->set_intersection(temp_set2);
+
+                    cout << "Intersezione = ";
+                    intersect_set->inorder();
+                    cout << endl;
                 }
                 else
                 {
@@ -187,7 +227,42 @@ int main()
                 {
                     int set1, set2; /* Variabili utili ad identificare gli insiemi su cui eseguire l'operazione di unione */
 
-                    cout << "\nSu quali insiemi si vuole effettuare l'operazione di unione?" << endl;
+                    cout << "\nSu quali insiemi si vuole effettuare l'operazione di differenza?" << endl;
+
+                    int i{0};
+
+                    cout << "\nInsiemi: " << endl;
+                    for(auto set:sets)
+                    {
+                        cout << "Insieme [" << ++i << "] = ";
+                        set.inorder();
+                        cout << endl;
+                    }
+                    cout << "\nInsieme 1: ";
+                    cin.clear();
+                    cin >> set1;
+                    cout << "\nInsieme 2:";
+                    cin.clear();
+                    cin >> set2;
+
+                    if (set1 == 0 || set2 == 0 || set1 > sets.size() || set2 > sets.size())
+                    {
+                        cout << "\nScelta non valida, ravvio il menu." << endl;
+                        break;
+                    }
+
+
+                    NumSet *temp_set1 = new NumSet;
+                    NumSet *temp_set2 = new NumSet;
+
+                    temp_set1->set_root(sets.at(set1-1).cloning(sets.at(set1-1).get_root(),sets.at(set1-1).get_tnull()));
+                    temp_set2->set_root(sets.at(set2-1).cloning(sets.at(set2-1).get_root(),sets.at(set1-1).get_tnull()));
+
+                    NumSet *difference_set = temp_set1->set_difference(temp_set2);
+
+                    cout << "Difference = ";
+                    difference_set->inorder();
+                    cout << endl;
                 }
                 else
                 {

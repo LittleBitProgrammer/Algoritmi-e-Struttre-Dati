@@ -472,3 +472,24 @@ NumSet *NumSet::set_difference(NumSet *set2)
     new_set->set_root(node);
     return new_set;
 }
+
+// Returns a cloning new binary tree
+RBNode *NumSet::cloning(RBNode *node, RBNode *parent)
+{
+    if (node != get_tnull())
+    {
+        // Create new node
+        RBNode *point = new RBNode(node->key);
+        // Construct parent
+        point->parent = parent;
+        // Construct color
+        point->color = node->color;
+        // Construct left subtree
+        point->left = this->cloning(node->left, point);
+        // Construct right subtree
+        point->right = this->cloning(node->right, point);
+
+        return point;
+    }
+    return get_tnull();
+}
