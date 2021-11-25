@@ -2,7 +2,7 @@
 Seguendo i principi di progettazione object oriented, progettare ed implementare in c++ i seguenti punti:
 
 ### 1) Insiemi implementati con Alberi Red Black
-Si vuole realizzare una struttura dati per insiemi generici basata su *alberi Red Black*. La struttura dati deve consentire di eseguire le operazioni canoniche di *unione*, *intersezione* e *differenza* tra due insiemi. Progettare ed implementare una struttura dati basata su alberi Red Black in cui ogni albero rappresenta un inesieme che consenta di effettuare le seguenti operazioni:
+Si vuole realizzare una struttura dati per insiemi generici basata su *alberi Red Black*. La struttura dati deve consentire di eseguire le operazioni canoniche di *unione*, *intersezione* e *differenza* tra due insiemi. Progettare ed implementare una struttura dati basata su alberi Red Black in cui ogni albero rappresenta un insieme che consenta di effettuare le seguenti operazioni:
 
 - UNION()
 - INTERSECT()
@@ -42,13 +42,13 @@ input.txt | Output (partendo dall'isola 1)
 ![Grafo esempio](/images/Grafo.png)
 
 ToDo List:
-- [ ] Implementare Alberi Red Black
-- [ ] Implementare Insiemi con Alberi Red Black
-- [ ] Implementare Unione tra alberi Red Black
-- [ ] Implementare Intersezione tra alberi Red Black
-- [ ] Implementare Differenza tra alberi Red Black
+- [X] Implementare Alberi Red Black
+- [X] Implementare Insiemi con Alberi Red Black
+- [X] Implementare Unione tra alberi Red Black
+- [X] Implementare Intersezione tra alberi Red Black
+- [X] Implementare Differenza tra alberi Red Black
 - [ ] Implementare operation Overloading per le operazioni canoniche degli insiemi
-- [ ] Implementare lettura da file per costruzione degli insiemi
+- [X] Implementare lettura da file per costruzione degli insiemi
 - [ ] Implementare un menu per effettuare operazioni canoniche sull'insieme
 - [X] Implementare un Max Heap per simulare una max priority queue
 - [X] Implementare un grafo orientato pesato con funzione peso w:E->Z
