@@ -40,6 +40,8 @@ class AbstractBinarySearchTree
     public:
         /* Constructor */
         AbstractBinarySearchTree();
+        /* Destructor */
+        virtual ~AbstractBinarySearchTree() = 0;
 
         /* Methods*/
 
@@ -67,7 +69,7 @@ class AbstractBinarySearchTree
         /* Inserimento di una chiave in un albero di ricerca binaria */
         virtual void insert(int key) = 0;
         /* Cancellazione di un nodo con una data chiave */
-        virtual void delete_node(int key) = 0;
+        virtual void delete_key(int key) = 0;
         /* Ricerca del nodo con chiave minima */
         virtual T *minimum(T *node) = 0;
         /* Ricerca del nodo con chiave massima */
@@ -165,5 +167,7 @@ void AbstractBinarySearchTree<T>::transplant(T *u, T *v)
         v->parent = u->parent;
     }
 }
+template<typename T>
+AbstractBinarySearchTree<T>::~AbstractBinarySearchTree<T>() = default;;
 
 #endif
