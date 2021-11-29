@@ -12,8 +12,6 @@ using std::vector;
 #include "GraphaNui.h"
 #include "GraphGenerator.h" /* Generatore di grafi */
 
-//TODO::OMOLOGARE IMPORT 
-
 GraphaNui *GraphaNui::instance = nullptr;
 
 GraphaNui *GraphaNui::get_instace()

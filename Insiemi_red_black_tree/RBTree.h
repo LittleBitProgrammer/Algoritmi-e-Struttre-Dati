@@ -91,7 +91,7 @@ class RBTree:public AbstractBinarySearchTree<RBNode>
         int black_height(RBNode *node);
 
         /* Setter */
-        void set_root(RBNode *root);
+        void set_root(RBNode *root) override;
 
         /* Getter */
         RBNode *get_tnull();

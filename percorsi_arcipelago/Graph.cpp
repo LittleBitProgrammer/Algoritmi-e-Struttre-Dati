@@ -56,8 +56,6 @@ dinamicamente alcuni puntatori presenti nella lista di adiacenza e la lista di a
 */
 Graph::~Graph()
 {
-     //TODO: Provare in debugger
-     //TODO: Fornire un distrutture a tutte le classi che ne hanno bisogno
      /* Iteriamo ogni nodo */
      for(auto i{0}; i < nodes_number; i++)
      {

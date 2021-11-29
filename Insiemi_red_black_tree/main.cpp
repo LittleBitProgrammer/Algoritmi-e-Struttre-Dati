@@ -167,9 +167,9 @@ int main()
 
                     NumSet *union_set = temp_set1->set_union(temp_set2);
 
-                    cout << "Unione = ";
+                    cout << "\nUnione = ";
                     union_set->inorder();
-                    cout << endl;
+                    cout << "\n" << endl;
                 }
                 else
                 {
@@ -213,9 +213,9 @@ int main()
 
                     NumSet *intersect_set = temp_set1->set_intersection(temp_set2);
 
-                    cout << "Intersezione = ";
+                    cout << "\nIntersezione = ";
                     intersect_set->inorder();
-                    cout << endl;
+                    cout << "\n" << endl;
                 }
                 else
                 {
@@ -260,9 +260,9 @@ int main()
 
                     NumSet *difference_set = temp_set1->set_difference(temp_set2);
 
-                    cout << "Difference = ";
+                    cout << "\nDifference = ";
                     difference_set->inorder();
-                    cout << endl;
+                    cout << "\n" << endl;
                 }
                 else
                 {

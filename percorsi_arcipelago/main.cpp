@@ -18,9 +18,14 @@ int main()
 {
     try
     {
+        int source = 0;
+
         GraphaNui *graphanui = GraphaNui::get_instace();
         graphanui->get_archipelago()->display_adj_list();
-        graphanui->maximize_tourism(1);
+
+        std::cout << "Immettere la sorgente: ";
+        std::cin >> source;
+        graphanui->maximize_tourism(source);
     }
     catch(const std::exception& e)
     {

@@ -115,16 +115,22 @@ Le istruzioni dei tre casi vengono commentate nella fixup dell'insert.
 void RBTree::insert_fixup(RBNode *&root, RBNode *&k)
 {
      RBNode *u;
-    while (k->parent->color == RED) {
-      if (k->parent == k->parent->parent->right) {
+    while (k->parent->color == RED)
+    {
+      if (k->parent == k->parent->parent->right)
+      {
         u = k->parent->parent->left;
-        if (u->color == RED) {
+        if (u->color == RED)
+        {
           u->color = BLACK;
           k->parent->color = BLACK;
           k->parent->parent->color = RED;
           k = k->parent->parent;
-        } else {
-          if (k == k->parent->left) {
+        }
+        else
+        {
+          if (k == k->parent->left)
+          {
             k = k->parent;
             right_rotate(k);
           }

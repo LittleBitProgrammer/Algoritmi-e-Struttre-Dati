@@ -62,7 +62,7 @@ class AbstractBinarySearchTree
         T *get_root();
 
         /* Setter */
-        void set_root(T *root);
+        virtual void set_root(T *root);
 
         /* Pure virtual function */
 
