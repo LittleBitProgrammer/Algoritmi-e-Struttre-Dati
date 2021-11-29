@@ -47,9 +47,9 @@ ToDo List:
 - [X] Implementare Unione tra alberi Red Black
 - [X] Implementare Intersezione tra alberi Red Black
 - [X] Implementare Differenza tra alberi Red Black
-- [ ] Implementare operation Overloading per le operazioni canoniche degli insiemi
+- [X] Implementare operation Overloading per le operazioni canoniche degli insiemi
 - [X] Implementare lettura da file per costruzione degli insiemi
-- [ ] Implementare un menu per effettuare operazioni canoniche sull'insieme
+- [X] Implementare un menu per effettuare operazioni canoniche sull'insieme
 - [X] Implementare un Max Heap per simulare una max priority queue
 - [X] Implementare un grafo orientato pesato con funzione peso w:E->Z
 - [X] Implementare lettura da file per generazione grafo
